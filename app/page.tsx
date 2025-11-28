@@ -55,103 +55,6 @@ const scaleOnHover = {
   }
 };
 
-// --- Components ---
-
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Work', href: '#portfolio' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
-  return (
-    <>
-      <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className={`fixed w-full z-50 transition-all duration-500 ease-in-out px-4 md:px-0 ${
-          scrolled 
-            ? 'py-4' 
-            : 'py-6'
-        }`}
-      >
-        <div className={`max-w-7xl mx-auto px-6 rounded-2xl transition-all duration-300 flex justify-between items-center ${
-          scrolled 
-            ? 'bg-zinc-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/10 py-3' 
-            : 'bg-transparent'
-        }`}>
-          <a href="#" className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 group">
-            <div className="relative w-8 h-8 flex items-center justify-center">
-               <div className="absolute inset-0 bg-blue-600 rounded-lg rotate-0 group-hover:rotate-12 transition-transform duration-300"></div>
-               <div className="absolute inset-0 bg-black rounded-lg rotate-0 scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-500/30"></div>
-               <span className="relative z-10 text-blue-500 font-bold text-sm">11X</span>
-            </div>
-            <span className="group-hover:text-blue-400 transition-colors">Solutions</span>
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="relative text-sm font-medium text-zinc-400 hover:text-white transition-colors group">
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
-              </a>
-            ))}
-            <a href="#contact" className="relative overflow-hidden px-6 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-full group hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]">
-              <span className="relative z-10 flex items-center gap-2">Book a Call <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform"/></span>
-            </a>
-          </div>
-
-          {/* Mobile Toggle */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2">
-            {isOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-black md:hidden pt-24 px-6"
-          >
-             <div className="flex flex-col gap-6 text-center">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  onClick={() => setIsOpen(false)}
-                  className="text-2xl font-bold text-zinc-300 hover:text-blue-500 transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <div className="h-px bg-white/10 w-full my-4"></div>
-              <a href="#contact" onClick={() => setIsOpen(false)} className="text-xl font-bold text-blue-500">Book a Call</a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-};
-
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center pt-28 overflow-hidden bg-black selection:bg-blue-600/30">
@@ -832,7 +735,6 @@ const Footer = () => {
 const App = () => {
   return (
     <div className="bg-black min-h-screen text-zinc-200 selection:bg-blue-600/30 font-sans">
-      <Navbar />
       <main>
         <Hero />
         <Services />
