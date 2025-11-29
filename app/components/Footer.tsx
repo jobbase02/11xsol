@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-black pt-20 pb-10 border-t border-white/10">
+    <footer className="bg-black pt-16 lg:pt-20 pb-10 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
           <div className="max-w-xs">
@@ -20,7 +20,7 @@ const Footer = () => {
               href="#"
               className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-6"
             >
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-black font-bold">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-black font-bold">
                 11X
               </div>
               Solutions
