@@ -437,21 +437,21 @@ const Portfolio = () => {
       title: "CryptoDash",
       category: "FinTech",
       image:
-        "https://images.unsplash.com/photo-1642104704074-907c0698b98d?auto=format&fit=crop&q=80&w=600&h=400",
+        "https://www.admin-dashboards.com/content/images/2022/03/cryptodash-free-template-transactions-min.jpg",
       tech: ["Next.js", "Web3.js"],
     },
     {
       title: "Vessel",
       category: "Logistics",
       image:
-        "https://images.unsplash.com/photo-1494412574643-35d324698420?auto=format&fit=crop&q=80&w=600&h=400",
+        "https://themeslay.com/wp-content/uploads/2025/09/Lorita-Cruise-Ship-Yacht-Bootstrap-HTML-Template.jpg",
       tech: ["React", "Mapbox"],
     },
     {
       title: "LuxeStay",
       category: "Real Estate",
       image:
-        "https://images.unsplash.com/photo-1600596542815-60c37c663d12?auto=format&fit=crop&q=80&w=600&h=400",
+        "https://www.siddhiinfosoft.com/blog/wp-content/uploads/2024/10/luxestay-the-ultimate-hotel-booking_banner2.png",
       tech: ["Supabase", "Stripe"],
     },
   ];
@@ -499,7 +499,7 @@ const Portfolio = () => {
               className="group relative cursor-pointer"
             >
               <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-5 relative">
-                <div className="absolute inset-0 bg-blue-600/20 group-hover:bg-transparent transition-colors z-10"></div>
+                <div className="absolute inset-0 bg-black-600/60 group-hover:bg-transparent transition-colors z-10"></div>
                 <img
                   src={project.image}
                   alt={project.title}
