@@ -116,7 +116,7 @@ export default function BlogPostPage() {
       <div className="min-h-screen bg-[#030303] flex items-center justify-center text-white">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="animate-spin text-blue-500" size={40} />
-          <p className="text-gray-500 font-mono text-sm tracking-widest">DECRYPTING CONTENT...</p>
+          <p className="text-gray-500 font-mono text-sm tracking-widest">LOADING CONTENT...</p>
         </div>
       </div>
     );

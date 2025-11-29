@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import GlareHover from "@/components/GlareHover";
 import CountUp from "@/components/CountUp";
+import Footer from "./components/Footer"
+import Contact from "./components/Contact";
 
 // --- Animation Variants ---
 const fadeInUp = {
@@ -69,7 +71,7 @@ const Hero = () => {
       <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
         <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-blue-900/20 rounded-full blur-[120px] mix-blend-screen animate-pulse duration-[5000ms]" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-indigo-900/20 rounded-full blur-[120px] mix-blend-screen" />
-        <div className="absolute top-[30%] left-[50%] -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+        <div className="absolute top-[30%] left-[90%] -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       </div>
@@ -595,7 +597,8 @@ const Pricing = () => {
               ))}
             </div>
             <button className="w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white hover:text-black transition-colors">
-              Choose Starter
+            <a href="#contact">Choose Starter</a>
+             
             </button>
           </motion.div>
 
@@ -640,7 +643,7 @@ const Pricing = () => {
               ))}
             </div>
             <button className="w-full py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/25">
-              Choose Business
+            <a href="#contact"> Choose Business</a>
             </button>
           </motion.div>
 
@@ -836,271 +839,9 @@ const InfiniteTestimonials = () => {
   );
 };
 
-const Contact = () => {
-  const [formState, setFormState] = useState("idle");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormState("submitting");
-    setTimeout(() => {
-      setFormState("success");
-    }, 1500);
-  };
 
-  return (
-    <section id="contact" className="py-24 bg-black relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-          >
-            <div className="inline-block px-3 py-1 mb-6 rounded-full bg-blue-900/20 text-blue-400 text-sm font-semibold border border-blue-800/50">
-              Contact Us
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Let's Build Something <br /> Legendry.
-            </h2>
-            <p className="text-zinc-400 text-lg mb-10 max-w-md">
-              Ready to scale? We are currently accepting 2 new enterprise
-              clients for Q1 2025.
-            </p>
 
-            <div className="space-y-8">
-              <div className="flex items-start gap-4 text-zinc-300 group">
-                <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  <Mail size={20} />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-1">
-                    Email Us
-                  </p>
-                  <p className="font-medium text-lg">hello@11xsolutions.com</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 text-zinc-300 group">
-                <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  <Smartphone size={20} />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-500 uppercase tracking-wide mb-1">
-                    Call Us
-                  </p>
-                  <p className="font-medium text-lg">+1 (555) 000-1111</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-zinc-900/30 backdrop-blur-sm p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl"
-          >
-            {formState === "success" ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-12 min-h-[400px]">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mb-6"
-                >
-                  <CheckCircle2 size={40} />
-                </motion.div>
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  Message Sent!
-                </h3>
-                <p className="text-zinc-400">
-                  Our team will review your request and reply within 24 hours.
-                </p>
-                <button
-                  onClick={() => setFormState("idle")}
-                  className="mt-8 text-blue-500 text-sm font-semibold hover:text-blue-400"
-                >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-zinc-400">
-                      Name
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-700"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-zinc-400">
-                      Email
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-700"
-                      placeholder="john@company.com"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-400">
-                    Service Interest
-                  </label>
-                  <select className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 transition-all appearance-none cursor-pointer">
-                    <option>Custom Web Application</option>
-                    <option>Mobile App Development</option>
-                    <option>UI/UX Design</option>
-                    <option>Consultation</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-400">
-                    Message
-                  </label>
-                  <textarea
-                    required
-                    rows="4"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-zinc-700 resize-none"
-                    placeholder="Tell us about your project..."
-                  ></textarea>
-                </div>
-                <button
-                  disabled={formState === "submitting"}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-blue-600/20 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transform active:scale-[0.98]"
-                >
-                  {formState === "submitting" ? "Sending..." : "Send Message"}
-                  {!formState === "submitting" && <ArrowRight size={18} />}
-                </button>
-              </form>
-            )}
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="bg-black pt-20 pb-10 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
-          <div className="max-w-xs">
-            <a
-              href="#"
-              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-6"
-            >
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-black font-bold">
-                11X
-              </div>
-              Solutions
-            </a>
-            <p className="text-zinc-500 text-sm leading-relaxed">
-              Premium web development agency building the next generation of
-              digital products.
-            </p>
-          </div>
-
-          <div className="flex gap-16 flex-wrap">
-            <div>
-              <h4 className="text-white font-bold mb-6">Services</h4>
-              <ul className="space-y-4 text-sm text-zinc-500">
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Web Development
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Mobile Apps
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    UI/UX Design
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Consulting
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-6">Company</h4>
-              <ul className="space-y-4 text-sm text-zinc-500">
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Github size={18} />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Twitter size={18} />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Linkedin size={18} />
-            </a>
-          </div>
-        </div>
-
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600">
-          <p>
-            &copy; {new Date().getFullYear()} 11XSolutions Agency. All rights
-            reserved.
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-400">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-zinc-400">
-              Terms of Service
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
 
 // --- Main App Component ---
 const App = () => {
@@ -1114,7 +855,7 @@ const App = () => {
         <InfiniteTestimonials />
         <Contact />
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
