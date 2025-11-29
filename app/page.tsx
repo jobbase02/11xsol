@@ -369,14 +369,14 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-black relative">
+    <section id="services" className=" py-16 lg:py-20 bg-black relative">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="text-center mb-20"
+          className="text-center mb-10 lg:mb-20"
         >
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-6 font-almarena">
             Expertise That Matters
@@ -471,8 +471,8 @@ const Portfolio = () => {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              Selected Work
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-almarena">
+              What We’ve Built
             </h2>
             <p className="text-zinc-400 max-w-xl">
               We let our code speak for itself. Here are a few projects we've
@@ -537,7 +537,7 @@ const Portfolio = () => {
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-24 bg-black relative overflow-hidden">
+    <section id="pricing" className="py-16 lg:py-24 bg-black relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-blue-900/10 blur-[100px] rounded-full pointer-events-none"></div>
 
@@ -547,10 +547,10 @@ const Pricing = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-center mb-20"
+          className="text-center mb-12 lg:mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Investment Packages
+          <h2 className="text-5xl md:text-5xl font-bold text-white mb-6 font-almarena">
+            Invest in Your Growth
           </h2>
           <p className="text-zinc-400">
             Clear pricing for every stage of your business growth.
@@ -729,9 +729,9 @@ const InfiniteTestimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-zinc-950 overflow-hidden relative border-y border-white/5">
+    <section className="py-14 lg:py-24 bg-zinc-950 overflow-hidden relative border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <h2 className="text-3xl font-bold text-white text-center">
+        <h2 className="text-4xl font-bold text-white text-center font-almarena">
           Trusted by Industry Leaders
         </h2>
       </div>

@@ -35,7 +35,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-black relative">
+    <section id="contact" className="py-16 lg:py-24 bg-black relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -44,10 +44,10 @@ const Contact = () => {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <div className="inline-block px-3 py-1 mb-6 rounded-full bg-blue-900/20 text-blue-400 text-sm font-semibold border border-blue-800/50">
+            <div className="inline-block px-3 py-1 mb-6 rounded-full bg-blue-900/20 text-blue-400 text-sm font-semibold border border-blue-800/50 font-almarena">
               Contact Us
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-almarena">
               Let's Build Something <br /> Legendry.
             </h2>
             <p className="text-zinc-400 text-lg mb-10 max-w-md">
