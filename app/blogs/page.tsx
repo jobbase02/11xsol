@@ -4,65 +4,54 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight, Sparkles, TrendingUp, Code2, Palette } from "lucide-react";
+import { ArrowUpRight, Sparkles, TrendingUp, Loader2 } from "lucide-react";
 
-// --- DUMMY DATA ---
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "The Death of Traditional SEO: Enter SGE",
-    slug: "future-of-seo-ai",
-    category: "Strategy",
-    date: "MAR 15",
-    readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
-    size: "hero", // Takes up 2x2 space
-  },
-  {
-    id: 2,
-    title: "Scaling Ads: The 'Vertical' Method",
-    slug: "facebook-ads-scaling",
-    category: "Growth",
-    date: "MAR 10",
-    readTime: "7 min",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop",
-    size: "tall", // Takes up 1x2 space
-  },
-  {
-    id: 3,
-    title: "Design Systems in 2025",
-    slug: "design-systems",
-    category: "Design",
-    date: "MAR 05",
-    readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2500&auto=format&fit=crop",
-    size: "normal",
-  },
-  {
-    id: 4,
-    title: "Next.js 14 Server Actions",
-    slug: "nextjs-server-actions",
-    category: "Tech",
-    date: "FEB 28",
-    readTime: "10 min",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2670&auto=format&fit=crop",
-    size: "normal",
-  },
-  {
-    id: 5,
-    title: "Copywriting Psychology",
-    slug: "copywriting-psych",
-    category: "Strategy",
-    date: "FEB 22",
-    readTime: "6 min",
-    image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?q=80&w=2668&auto=format&fit=crop",
-    size: "wide", // Takes up 2x1 space
-  },
-];
+// --- INTERFACES ---
+interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  category: string;
+  date: string;
+  readTime: string;
+  image: string;
+  size: "hero" | "tall" | "wide" | "normal";
+}
 
-const CATEGORIES = ["All", "Strategy", "Growth", "Design", "Tech"];
+interface Category {
+  id: number;
+  name: string;
+  count: number;
+  slug: string;
+}
 
-// --- NOISE OVERLAY COMPONENT ---
+// --- UTILITIES ---
+
+// 1. HTML Entity Decoder
+const decodeHtml = (html: string) => {
+  if (typeof window === 'undefined') return html; // Server-side safety
+  const txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+};
+
+// 2. Calculate Read Time
+const getReadTime = (content: string) => {
+  const wordsPerMinute = 200;
+  const text = content.replace(/<[^>]*>?/gm, '');
+  const wordCount = text.split(/\s+/).length;
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+  return `${minutes} min`;
+};
+
+// 3. Format Date
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toUpperCase();
+};
+
+// --- COMPONENTS ---
+
 const NoiseOverlay = () => (
   <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.03] mix-blend-overlay">
     <svg className="w-full h-full">
@@ -74,7 +63,6 @@ const NoiseOverlay = () => (
   </div>
 );
 
-// --- MARQUEE COMPONENT ---
 const Marquee = () => {
   return (
     <div className="relative flex overflow-x-hidden bg-blue-600 text-black py-3 font-mono text-sm font-bold uppercase tracking-widest select-none rotate-[-1deg] scale-110 mb-20 border-y-2 border-black">
@@ -94,11 +82,63 @@ const Marquee = () => {
 };
 
 export default function UltraModernBlog() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
-  const filteredPosts = BLOG_POSTS.filter((post) => 
+  // --- FETCHING LOGIC ---
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [postsRes, categoriesRes] = await Promise.all([
+          fetch('https://cms.elevenxsolutions.com/wp-json/wp/v2/posts?_embed&per_page=12'),
+          fetch('https://cms.elevenxsolutions.com/wp-json/wp/v2/categories')
+        ]);
+
+        const postsData = await postsRes.json();
+        const categoriesData = await categoriesRes.json();
+
+        const validCategories = categoriesData.filter((cat: any) => cat.count > 0);
+        setCategories(validCategories);
+
+        const mappedPosts: BlogPost[] = postsData.map((post: any, index: number) => {
+          
+          let size: "hero" | "tall" | "wide" | "normal" = "normal";
+          if (index === 0) size = "hero";       
+          else if (index === 1) size = "tall";  
+          else if (index === 4) size = "wide";  
+
+          const imageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80';
+          const categoryName = post._embedded?.['wp:term']?.[0]?.[0]?.name || "Uncategorized";
+
+          return {
+            id: post.id,
+            title: decodeHtml(post.title.rendered),
+            slug: post.slug,
+            category: decodeHtml(categoryName),
+            date: formatDate(post.date),
+            readTime: getReadTime(post.content.rendered),
+            image: imageUrl,
+            size: size,
+          };
+        });
+
+        setPosts(mappedPosts);
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const filteredPosts = posts.filter((post) => 
     selectedCategory === "All" || post.category === selectedCategory
   );
 
@@ -131,17 +171,28 @@ export default function UltraModernBlog() {
             
             {/* Filter Pills */}
             <div className="flex flex-wrap gap-2 mt-8 md:mt-0">
-              {CATEGORIES.map((cat) => (
+              <button
+                onClick={() => setSelectedCategory("All")}
+                className={`cursor-pointer px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border ${
+                  selectedCategory === "All"
+                    ? "bg-white text-black border-white" 
+                    : "bg-transparent text-gray-500 border-white/10 hover:border-white/40 hover:text-white"
+                }`}
+              >
+                All
+              </button>
+
+              {categories.map((cat) => (
                 <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border ${
-                    selectedCategory === cat 
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(decodeHtml(cat.name))}
+                  className={`cursor-pointer px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 border ${
+                    selectedCategory === decodeHtml(cat.name)
                       ? "bg-white text-black border-white" 
                       : "bg-transparent text-gray-500 border-white/10 hover:border-white/40 hover:text-white"
                   }`}
                 >
-                  {cat}
+                  {decodeHtml(cat.name)}
                 </button>
               ))}
             </div>
@@ -153,12 +204,17 @@ export default function UltraModernBlog() {
       <Marquee />
 
       {/* --- THE ULTRA GRID --- */}
-      <section className="relative z-10 px-4 md:px-6 pb-32 max-w-[1600px] mx-auto">
+      <section className="relative z-10 px-4 md:px-6 pb-32 max-w-[1600px] mx-auto min-h-[500px]">
+        {loading ? (
+           <div className="flex justify-center items-center w-full h-64">
+             <Loader2 className="animate-spin text-blue-500" size={48} />
+           </div>
+        ) : (
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[300px] md:auto-rows-[350px]">
           
           <AnimatePresence mode="popLayout">
-            {filteredPosts.map((post, index) => {
-              // Grid Logic
+            {filteredPosts.map((post) => {
+              
               const isHero = post.size === "hero";
               const isTall = post.size === "tall";
               const isWide = post.size === "wide";
@@ -178,7 +234,8 @@ export default function UltraModernBlog() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className={`group relative rounded-2xl overflow-hidden bg-[#0a0a0a] border border-white/5 cursor-pointer ${gridClass}`}
                 >
-                  <Link href={`/blog/${post.slug}`} className="block w-full h-full relative">
+                  {/* --- LINK TO DYNAMIC POST PAGE --- */}
+                  <Link href={`/${post.slug}`} className="block w-full h-full relative z-20">
                     
                     {/* Image Layer */}
                     <div className="absolute inset-0 z-0">
@@ -196,7 +253,7 @@ export default function UltraModernBlog() {
                     <div className="absolute inset-0 z-10 p-6 md:p-8 flex flex-col justify-between">
                       
                       <div className="flex justify-between items-start">
-                        <span className="inline-block px-3 py-1 rounded-sm bg-white/10 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest border border-white/10">
+                        <span className="inline-block px-3 py-1 rounded-sm bg-white/10 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest border border-white/10 text-white">
                            {post.category}
                         </span>
                         <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 border border-white/10">
@@ -210,9 +267,10 @@ export default function UltraModernBlog() {
                            <span className="w-1 h-1 rounded-full bg-blue-500"></span>
                            <span>{post.readTime} READ</span>
                          </div>
-                         <h2 className={`${isHero ? 'text-4xl md:text-5xl' : 'text-2xl'} font-bold leading-[0.95] text-white group-hover:text-blue-200 transition-colors`}>
-                           {post.title}
-                         </h2>
+                         <h2 
+                            className={`${isHero ? 'text-4xl md:text-5xl' : 'text-xl md:text-2xl'} font-bold leading-[0.95] text-white group-hover:text-blue-200 transition-colors`}
+                            dangerouslySetInnerHTML={{ __html: post.title }}
+                         />
                       </div>
                     </div>
 
@@ -221,7 +279,7 @@ export default function UltraModernBlog() {
               );
             })}
 
-            {/* --- INTEGRATED CTA CARD (Appears naturally in grid) --- */}
+            {/* --- INTEGRATED CTA CARD --- */}
             <motion.div 
                layout
                initial={{ opacity: 0 }}
@@ -239,7 +297,7 @@ export default function UltraModernBlog() {
                </div>
                
                <div className="relative z-10">
-                 <button className="w-full py-3 bg-black text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-white hover:text-black transition-colors duration-300">
+                 <button className="w-full py-3 bg-black text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-white hover:text-black transition-colors duration-300 cursor-pointer">
                    Book Strategy Call
                  </button>
                </div>
@@ -247,6 +305,7 @@ export default function UltraModernBlog() {
 
           </AnimatePresence>
         </motion.div>
+        )}
       </section>
 
       {/* --- FOOTER TEASER --- */}
@@ -258,7 +317,6 @@ export default function UltraModernBlog() {
               VIEW CASE STUDIES <ArrowUpRight />
            </div>
         </div>
-        {/* Background Grid Decoration */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </section>
 

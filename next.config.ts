@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
+        hostname: 'cms.elevenxsolutions.com', // <--- ADDED THIS
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com', // Keep this for fallbacks
       },
     ],
   },
