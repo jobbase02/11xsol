@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             ))}
 
             <a
-              href="#contact"
+              href="/book"
               className="relative overflow-hidden px-5 py-2.5 bg-blue-600 text-white text-normal font-bold font-almarena rounded-full group hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]"
             >
               <span className="relative z-10 flex items-center gap-2 font-almarena">

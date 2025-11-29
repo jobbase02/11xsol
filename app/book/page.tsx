@@ -109,7 +109,12 @@ function BookingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (captchaStatus !== 'verified') return;
+    
+    // Validation Check: Captcha
+    if (captchaStatus !== 'verified') {
+      alert("Please fill the form and complete the human verification check.");
+      return;
+    }
 
     setIsSubmitting(true);
     setErrorMessage("");
@@ -142,7 +147,9 @@ function BookingForm() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full h-full flex flex-col items-center justify-center text-center p-12 bg-white/5 border border-white/10 rounded-3xl"
+        // REMOVED: bg-white/5 border border-white/10 rounded-3xl p-12
+        // KEPT: Layout classes to center content
+        className="w-full h-full flex flex-col items-center justify-center text-center py-10"
       >
         <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 border border-green-500/30">
           <CheckCircle2 size={40} />
@@ -304,10 +311,10 @@ function BookingForm() {
       {/* Submit Button */}
       <button 
         type="submit" 
-        disabled={isSubmitting || captchaStatus !== 'verified'}
+        disabled={isSubmitting} // Only disable while actively submitting
         className={`
            w-full py-4 font-bold text-lg rounded-xl transition-all transform flex items-center justify-center gap-2 group
-           ${isSubmitting || captchaStatus !== 'verified' 
+           ${isSubmitting 
              ? "bg-gray-800 text-gray-500 cursor-not-allowed opacity-50" 
              : "bg-white text-black hover:bg-blue-500 hover:text-white hover:scale-[1.01] active:scale-[0.99]"}
         `}
@@ -344,7 +351,8 @@ export default function BookingPage() {
          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[120px]" />
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 px-6 py-20 lg:py-32 items-center">
+      {/* INCREASED TOP PADDING TO pt-32 (128px) for mobile to prevent navbar overlap */}
+      <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 px-6 pt-32 pb-20 lg:py-32 items-center">
         
         {/* LEFT COLUMN: Context & Value */}
         <div className="lg:col-span-5 flex flex-col justify-center">
