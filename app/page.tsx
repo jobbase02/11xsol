@@ -998,9 +998,9 @@ const Footer = () => {
               className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-6"
             >
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-black font-bold">
-                11
+                11X
               </div>
-              XSolutions
+              Solutions
             </a>
             <p className="text-zinc-500 text-sm leading-relaxed">
               Premium web development agency building the next generation of
