@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+// Removed next/navigation import to fix preview error
+import { motion } from "framer-motion";
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -44,6 +44,20 @@ const NoiseOverlay = () => (
     </svg>
   </div>
 );
+
+// Mock Next.js useSearchParams for standalone React preview
+// This replaces the import from 'next/navigation' which causes errors in environments without Next.js
+const useSearchParams = () => {
+  const [params, setParams] = useState(new URLSearchParams());
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setParams(new URLSearchParams(window.location.search));
+    }
+  }, []);
+  
+  return params;
+};
 
 // Form Component (Isolated for Suspense)
 function BookingForm() {
@@ -119,24 +133,49 @@ function BookingForm() {
     setIsSubmitting(true);
     setErrorMessage("");
 
+    // Helper to capture UTM parameters from URL
+    const getUtmParams = () => {
+      // In Next.js client components, we can use window.location or searchParams
+      // Using window.location.search to ensure we catch everything
+      const params = new URLSearchParams(window.location.search);
+      const utm: Record<string, string> = {};
+      const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+      
+      keys.forEach(key => {
+        const value = params.get(key);
+        if (value) utm[key] = value;
+      });
+      
+      return Object.keys(utm).length > 0 ? utm : null;
+    };
+
     try {
+      // Prepare Payload matching API expectation
+      const payload = {
+        ...formData,
+        utm: getUtmParams()
+      };
+
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to submit booking. Please try again.');
+        // Use the error message from the API if available
+        throw new Error(data.error || 'Failed to submit booking. Please try again.');
       }
 
       // Success
       setSubmitted(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Booking Error:", error);
-      setErrorMessage("Something went wrong. Please check your connection and try again.");
+      setErrorMessage(error.message || "Something went wrong. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -147,8 +186,6 @@ function BookingForm() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        // REMOVED: bg-white/5 border border-white/10 rounded-3xl p-12
-        // KEPT: Layout classes to center content
         className="w-full h-full flex flex-col items-center justify-center text-center py-10"
       >
         <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 border border-green-500/30">
@@ -277,15 +314,15 @@ function BookingForm() {
       <div className="space-y-2">
          <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Security Check</label>
          <div 
-            onClick={handleCaptchaClick}
-            className={`
-               flex items-center gap-4 p-4 bg-[#0a0a0a] border rounded-xl w-fit cursor-pointer transition-all duration-300
-               ${captchaStatus === 'verified' ? 'border-green-500/50 bg-green-500/5' : 'border-white/10 hover:border-white/30'}
+           onClick={handleCaptchaClick}
+           className={`
+              flex items-center gap-4 p-4 bg-[#0a0a0a] border rounded-xl w-fit cursor-pointer transition-all duration-300
+              ${captchaStatus === 'verified' ? 'border-green-500/50 bg-green-500/5' : 'border-white/10 hover:border-white/30'}
             `}
          >
              <div className={`
-                w-7 h-7 border-2 rounded-md flex items-center justify-center transition-all duration-300
-                ${captchaStatus === 'verified' ? 'bg-green-500 border-green-500' : 'border-gray-500 bg-transparent'}
+               w-7 h-7 border-2 rounded-md flex items-center justify-center transition-all duration-300
+               ${captchaStatus === 'verified' ? 'bg-green-500 border-green-500' : 'border-gray-500 bg-transparent'}
              `}>
                 {captchaStatus === 'verifying' && <Loader2 className="animate-spin text-gray-400" size={16} />}
                 {captchaStatus === 'verified' && <Check className="text-black" size={18} strokeWidth={3} />}
