@@ -63,14 +63,64 @@ export async function GET(request: Request) {
           from: 'info@elevenxsolutions.com', 
           subject: 'Thank you for contacting Eleven X Solutions',
           html: `
-            <div style="font-family: sans-serif; color: #333;">
-              <h1>Hi ${name},</h1>
-              <p>Thank you for showing interest in <strong>Eleven X Solutions</strong>.</p>
-              <p>We have received your inquiry regarding <strong>${service || 'our services'}</strong>. Our engineering team is already reviewing your requirements and will get back to you shortly.</p>
-              <br/>
-              <p>Best Regards,</p>
-              <p><strong>The Eleven X Team</strong></p>
-            </div>
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            </head>
+            <body style="margin: 0; padding: 0; background-color: #f6f9fc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+              
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f6f9fc; padding: 40px 0;">
+                <tr>
+                  <td align="center">
+                    
+                    <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                      
+                      <tr>
+                        <td style="background-color: #000000; padding: 30px; text-align: center;">
+                          <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 1px;">ELEVEN X SOLUTIONS</h1>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td style="padding: 40px 30px;">
+                          <h2 style="color: #333333; margin-top: 0; font-size: 20px;">Hi ${name},</h2>
+                          
+                          <p style="color: #555555; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                            Thank you for reaching out to us. We have successfully received your inquiry.
+                          </p>
+                          
+                          <p style="color: #555555; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
+                            Our engineering team is currently reviewing your requirements. We aim to respond to all inquiries within 24 hours to discuss how we can help bring your vision to life.
+                          </p>
+
+                          <div style="text-align: center; margin: 35px 0;">
+                            <a href="https://elevenxsolutions.com" style="background-color: #000000; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px;">Visit Our Website</a>
+                          </div>
+
+                          <hr style="border: none; border-top: 1px solid #eeeeee; margin: 30px 0;" />
+
+                          <p style="color: #888888; font-size: 14px; line-height: 1.5;">
+                            Best Regards,<br/>
+                            <strong>The Eleven X Team</strong>
+                          </p>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td style="background-color: #f8f9fa; padding: 20px; text-align: center; color: #999999; font-size: 12px;">
+                          &copy; ${new Date().getFullYear()} Eleven X Solutions. All rights reserved.
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+            </body>
+            </html>
           `,
         };
 
