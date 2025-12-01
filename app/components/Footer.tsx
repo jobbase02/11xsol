@@ -26,7 +26,7 @@ const Footer = () => {
               Solutions
             </a>
             <p className="text-zinc-500 text-sm leading-relaxed">
-              Premium web development agency building the next generation of
+              <span className="text-blue-400 font-semibold">ElevenX Solutions</span> is a Premium Web Development agency building the next generation
               digital products.
             </p>
           </div>
@@ -108,7 +108,7 @@ const Footer = () => {
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600">
           <p>
-            &copy; {new Date().getFullYear()} 11XSolutions Agency. All rights
+            &copy; {new Date().getFullYear()} ElevenX Solutions Agency. All rights
             reserved.
           </p>
           <div className="flex gap-6">

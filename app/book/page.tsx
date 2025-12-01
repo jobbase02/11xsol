@@ -27,9 +27,9 @@ const SERVICES = [
 ];
 
 const PLANS = [
-  { id: "mvp", label: "MVP Launch", icon: <Rocket size={18} />, desc: "For startups validating ideas." },
-  { id: "scale", label: "Scale Up", icon: <Zap size={18} />, desc: "For growing businesses." },
-  { id: "enterprise", label: "Enterprise", icon: <Building2 size={18} />, desc: "Full-scale custom solutions." },
+  { id: "mvp", label: "Basic", icon: <Rocket size={18} />, desc: "For startups validating ideas." },
+  { id: "scale", label: "Business", icon: <Zap size={18} />, desc: "For growing businesses." },
+  { id: "enterprise", label: "Premium", icon: <Building2 size={18} />, desc: "Full-scale custom solutions." },
 ];
 
 // --- COMPONENTS ---

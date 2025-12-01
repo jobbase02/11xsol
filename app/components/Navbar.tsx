@@ -23,6 +23,7 @@ const Navbar: React.FC = () => {
   const navLinks: NavLink[] = [
     { name: "Services", href: "#services" },
     { name: "Work", href: "#portfolio" },
+    { name: "About Us", href: "#aboutus" },
     { name: "Blogs", href: "/blogs" },
     { name: "Contact", href: "#contact" },
   ];
@@ -49,12 +50,18 @@ const Navbar: React.FC = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed w-full z-50 transition-all duration-500 ease-in-out px-2 md:px-0 ${
-          scrolled ? "py-4" : "py-6"
+          isOpen
+            ? "py-6 bg-transparent backdrop-blur-none border-0 shadow-none"
+            : scrolled
+            ? "py-4"
+            : "py-6"
         }`}
       >
         <div
           className={`max-w-7xl mx-auto px-6 rounded-2xl transition-all duration-300 flex justify-between items-center ${
-            scrolled
+            isOpen
+              ? "bg-transparent backdrop-blur-none border-0 shadow-none py-3"
+              : scrolled
               ? "bg-zinc-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/10 py-3"
               : "bg-transparent"
           }`}
