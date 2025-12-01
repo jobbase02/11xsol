@@ -82,7 +82,7 @@ export async function GET(request: Request) {
 
         // 4. Update Database: Mark as seen
         // THIS IS THE UPDATE YOU REQUESTED
-        // It only runs if the emails above sent successfully (didn't throw error)
+        // It only runs if the emails above sent successfully (didn't throw error)!
         const { error: updateError } = await supabase
           .from('bookings')
           .update({ seen: true }) // <--- MARKS AS TRUE
