@@ -36,22 +36,22 @@ const Footer = () => {
               <h4 className="text-white font-bold mb-6">Services</h4>
               <ul className="space-y-4 text-sm text-zinc-500">
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#services" className="hover:text-blue-500 transition-colors">
                     Web Development
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#services" className="hover:text-blue-500 transition-colors">
                     Mobile Apps
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#services" className="hover:text-blue-500 transition-colors">
                     UI/UX Design
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#services" className="hover:text-blue-500 transition-colors">
                     Consulting
                   </a>
                 </li>
@@ -61,22 +61,22 @@ const Footer = () => {
               <h4 className="text-white font-bold mb-6">Company</h4>
               <ul className="space-y-4 text-sm text-zinc-500">
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#aboutus" className="hover:text-blue-500 transition-colors">
                     About
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
-                    Careers
+                  <a href="#services" className="hover:text-blue-500 transition-colors">
+                    Services
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="/blogs" className="hover:text-blue-500 transition-colors">
                     Blog
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-500 transition-colors">
+                  <a href="#contact" className="hover:text-blue-500 transition-colors">
                     Contact
                   </a>
                 </li>
@@ -86,19 +86,19 @@ const Footer = () => {
 
           <div className="flex gap-4">
             <a
-              href="#"
+              href="#contact"
               className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
             >
               <Github size={18} />
             </a>
             <a
-              href="#"
+              href="#contact"
               className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
             >
               <Twitter size={18} />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/company/103705779/admin/dashboard/" target="/blank"
               className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
             >
               <Linkedin size={18} />
