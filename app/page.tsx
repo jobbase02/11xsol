@@ -468,7 +468,7 @@ const AboutUs = () => {
               {/* Overlay Text */}
               <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
                 <p className="text-white font-semibold text-sm">
-                  Built With Precision. Delivered With Passion
+                  Built With Precision. Delivered With Passion.
                 </p>
               </div>
             </div>
