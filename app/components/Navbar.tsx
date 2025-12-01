@@ -42,6 +42,8 @@ const Navbar: React.FC = () => {
     };
   }, [isOpen]);
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
     <>
       {/* Navbar */}
@@ -67,7 +69,28 @@ const Navbar: React.FC = () => {
           }`}
         >
           {/* Logo */}
-          <a
+          {isMobile && isOpen ? (
+            // placeholder to keep spacing
+            <div className="w-9 h-9"></div>
+          ) : (
+            <a
+              href="/"
+              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 group"
+            >
+              <div className="relative w-9 h-9 flex items-center justify-center">
+                <div className="absolute inset-0 bg-blue-600 rounded-lg rotate-0 group-hover:rotate-12 transition-transform duration-300"></div>
+                <div className="absolute inset-0 bg-black rounded-lg rotate-0 scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-500/30"></div>
+                <span className="relative z-10 text-blue-500 font-bold text-base lg:text-xl">
+                  11X
+                </span>
+              </div>
+              <span className="group-hover:text-blue-400 transition-colors">
+                Solutions
+              </span>
+            </a>
+          )}
+
+          {/* <a
             href="/"
             className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 group"
           >
@@ -81,7 +104,7 @@ const Navbar: React.FC = () => {
             <span className="group-hover:text-blue-400 transition-colors">
               Solutions
             </span>
-          </a>
+          </a> */}
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8 font-almarena">
@@ -153,15 +176,13 @@ const Navbar: React.FC = () => {
             >
               {/* Links Container */}
               <motion.div
-                className="flex flex-col items-start gap-10"
+                className="flex flex-col items-start gap-8"
                 initial="hidden"
                 animate="visible"
                 variants={{
                   hidden: {},
                   visible: {
-                    transition: {
-                      staggerChildren: 0.15,
-                    },
+                    transition: { staggerChildren: 0.15 },
                   },
                 }}
               >
@@ -180,7 +201,6 @@ const Navbar: React.FC = () => {
                   </motion.a>
                 ))}
 
-                {/* Modern Divider */}
                 <motion.div
                   variants={{
                     hidden: { width: 0, opacity: 0 },
@@ -189,7 +209,6 @@ const Navbar: React.FC = () => {
                   className="h-px bg-white/10 my-4"
                 />
 
-                {/* Book A Call Button — Only Mobile */}
                 <motion.a
                   href="/book"
                   onClick={() => setIsOpen(false)}
@@ -206,6 +225,11 @@ const Navbar: React.FC = () => {
                   Book a Call
                 </motion.a>
               </motion.div>
+
+              {/* Footer */}
+              <div className="absolute bottom-9 left-6 right-6 text-zinc-500 text-xs font-light text-center opacity-70">
+                © 2025 ElevenX Solutions Agency. All rights reserved.
+              </div>
             </motion.div>
           </motion.div>
         )}

@@ -690,7 +690,7 @@ const Pricing = () => {
           className="text-center mb-12 lg:mb-20"
         >
           <h2 className="text-5xl md:text-5xl font-bold text-white mb-6 font-almarena">
-            Invest in Your Growth
+            Invest In Your Growth
           </h2>
           <p className="text-zinc-400">
             We have got a plan for every level. From startup's to industry leader.
