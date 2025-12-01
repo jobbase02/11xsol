@@ -64,7 +64,7 @@ const Contact = () => {
                   <p className="text-xs text-zinc-500 uppercase tracking-wide mb-1">
                     Email Us
                   </p>
-                  <p className="font-medium text-lg">hello@11xsolutions.com</p>
+                  <p className="font-medium text-lg">Info@elevenxsolutions.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 text-zinc-300 group">
@@ -75,7 +75,7 @@ const Contact = () => {
                   <p className="text-xs text-zinc-500 uppercase tracking-wide mb-1">
                     Call Us
                   </p>
-                  <p className="font-medium text-lg">+1 (555) 000-1111</p>
+                  <p className="font-medium text-lg">91+ 8630377915</p>
                 </div>
               </div>
             </div>

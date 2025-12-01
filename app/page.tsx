@@ -11,6 +11,7 @@ import {
   Code2,
   Rocket,
   Settings,
+  Book,
   Layout,
   Menu,
   X,
@@ -110,9 +111,8 @@ const Hero = () => {
             variants={fadeInUp}
             className="text-lg md:text-xl text-zinc-400 max-w-xl leading-relaxed"
           >
-            11XSolutions transforms ambitious ideas into scalable,
-            high-performance web applications. Zero fluff, 100% engineering
-            excellence.
+            ElevenX Solutions transforms your ideas into scalable,
+            high-performance web applications. We don’t just build websites. We build weapons your business can win with.
           </motion.p>
 
           <motion.div
@@ -180,19 +180,18 @@ const Hero = () => {
           >
             <div>
               <div className="text-2xl md:text-3xl font-bold text-white">
-                $
                 <CountUp
                   from={0}
-                  to={50}
+                  to={5}
                   separator=","
                   direction="up"
                   duration={1}
                   className="count-up-text"
                 />
-                M+
+                +
               </div>
               <div className="text-xs md:text-sm text-zinc-500 uppercase tracking-wide font-medium">
-                Revenue Generated
+                Years of Experience
               </div>
             </div>
             <div>
@@ -205,10 +204,10 @@ const Hero = () => {
                   duration={1}
                   className="count-up-text"
                 />
-                +
+                %
               </div>
               <div className="text-xs md:text-sm text-zinc-500 uppercase tracking-wide font-medium">
-                Projects Shipped
+                Custom-Built Solutions
               </div>
             </div>
             <div>
@@ -340,24 +339,165 @@ const Hero = () => {
   );
 };
 
+const AboutUs = () => {
+  return (
+    <section
+      id="aboutus"
+      className="py-10 lg:py-28 bg-zinc-950 relative overflow-hidden border-t border-white/5"
+    >
+      {/* Background glow */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-900/20 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-900/20 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Section Heading */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="text-center mb-14"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold text-white font-almarena">
+            About Us
+          </h2>
+          <p className="text-zinc-400 max-w-2xl mx-auto mt-4">
+            ElevenX Solutions isn’t just a development agency,
+            we are your growth engine. We design, develop and deliver digital products that help your business scale effortlessly.
+          </p>
+        </motion.div>
+
+        {/* About Grid */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Text Content */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="space-y-6"
+          >
+            <motion.p
+              variants={fadeInUp}
+              className="text-zinc-300 leading-relaxed text-lg px-3"
+            >
+              We create powerful, modern, fully-optimized digital products
+              that bring results. Every line of code is crafted with strategy,
+              scalability, and performance in mind. From startups to
+              established brands. We build tools that accelerate growth.
+            </motion.p>
+
+            <motion.p
+              variants={fadeInUp}
+              className="text-zinc-300 leading-relaxed text-lg px-3"
+            >
+              Our focus is simple:  
+              <span className="text-blue-400 font-semibold"> build systems that help you win. </span>
+              Whether it’s a high-speed website, a custom dashboard, a
+              booking system, or a scalable API. We turn ideas into
+              battle-ready digital assets.
+            </motion.p>
+
+            {/* Bullet Points */}
+            <motion.div variants={fadeInUp} className="space-y-4 pt-4 px-3">
+              {[
+                "Performance-driven applications",
+                "Clean & scalable code structure",
+                "Modern animations (GSAP + Framer Motion)",
+                "Advanced SEO & speed optimization",
+                "Tailor-made solutions for each business",
+              ].map((point, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="w-6 h-6 bg-blue-900/40 rounded-full flex items-center justify-center border border-blue-500/40">
+                    <CheckCircle2 size={14} className="text-blue-400" />
+                  </div>
+                  <span className="text-zinc-300 text-sm md:text-base">
+                    {point}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Button */}
+            <motion.div variants={fadeInUp}>
+              <a
+                href="/book"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 transition-all font-semibold text-white"
+              >
+                Let’s Work Together
+                <ArrowRight size={18} />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Right: Animated Visual Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="relative"
+          >
+            <div className="relative rounded-3xl border border-white/10 bg-zinc-900/50 backdrop-blur-xl p-6 shadow-2xl overflow-hidden">
+              {/* Floating Icons */}
+              <motion.div
+                animate={{ y: [0, -15, 0] }}
+                transition={{ repeat: Infinity, duration: 6 }}
+                className="absolute -right-6 top-8 bg-black/70 p-4 rounded-2xl border border-zinc-800"
+              >
+                <Rocket className="text-blue-400 w-7 h-7" />
+              </motion.div>
+
+              <motion.div
+                animate={{ y: [0, 15, 0] }}
+                transition={{ repeat: Infinity, duration: 5, delay: 0.5 }}
+                className="absolute -left-6 bottom-12 bg-black/70 p-4 rounded-2xl border border-zinc-800"
+              >
+                <Shield className="text-purple-400 w-7 h-7" />
+              </motion.div>
+
+              {/* Main Image */}
+              <img
+                src="https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_1280.jpg"
+                className="rounded-2xl w-full object-cover"
+                alt="Team working"
+              />
+
+              {/* Overlay Text */}
+              <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
+                <p className="text-white font-semibold text-sm">
+                  Built With Precision. Delivered With Passion.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
 const Services = () => {
   const services = [
     {
       icon: <Layout className="text-white" size={28} />,
-      title: "Web Applications",
-      desc: "Complex SaaS platforms built with Next.js 14 and React. We handle the hard stuff: SSR, caching, and state management.",
+      title: "Website Development",
+      desc: "Make your brand stand out online with high-performance, custom-engineered web applications.",
       color: "bg-blue-600",
     },
     {
-      icon: <Globe className="text-white" size={28} />,
+      icon: <Book className="text-white" size={28} />,
       title: "Booking Systems",
       desc: "Custom booking engines that sync seamlessly with your calendar and payment gateways like Stripe.",
       color: "bg-indigo-600",
     },
     {
-      icon: <Shield className="text-white" size={28} />,
-      title: "Enterprise Security",
-      desc: "Bank-grade security implementation, role-based access control (RBAC), and data encryption.",
+      icon: <Globe className="text-white" size={28} />,
+      title: "Influencer marketing",
+      desc: "Turn influencer power into unstoppable brand momentum. More reach, more trust, more sales.",
       color: "bg-purple-600",
     },
     {
@@ -381,8 +521,8 @@ const Services = () => {
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-6 font-almarena">
             Expertise That Matters
           </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-            Tell us how you work. We’ll build the system that works for you.{" "}
+          <p className="text-zinc-400 max-w-3xl mx-auto text-lg">
+            Tell us how you work? ElevenX Solution will build you the system that works for you.
             <br />
             Built to grow, Built to win.
           </p>
@@ -475,7 +615,7 @@ const Portfolio = () => {
               What We’ve Built
             </h2>
             <p className="text-zinc-400 max-w-xl">
-              We let our code speak for itself. Here are a few projects we've
+              We let <span className="text-blue-400 font-semibold">our code speak for ourself.</span> Here are a few projects we've
               recently deployed.
             </p>
           </motion.div>
@@ -550,10 +690,10 @@ const Pricing = () => {
           className="text-center mb-12 lg:mb-20"
         >
           <h2 className="text-5xl md:text-5xl font-bold text-white mb-6 font-almarena">
-            Invest in Your Growth
+            Invest In Your Growth
           </h2>
           <p className="text-zinc-400">
-            Clear pricing for every stage of your business growth.
+            We have got a plan for every level. From startup's to industry leader.
           </p>
         </motion.div>
 
@@ -567,23 +707,26 @@ const Pricing = () => {
             whileHover={{ y: -5 }}
             className="p-8 rounded-3xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-900/60 transition-colors"
           >
-            <h3 className="text-lg font-bold text-zinc-300 mb-2">MVP Launch</h3>
+            <h3 className="text-lg font-bold text-zinc-300 mb-2">BASIC</h3>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="text-4xl font-bold text-white">₹5,000</span>
               <span className="text-sm text-zinc-500">starting</span>
             </div>
             <p className="text-zinc-400 text-sm mb-8 min-h-[40px]">
-              Get your idea to market quickly with a high-performance landing
-              page or basic app.
+              For small businesses or individuals who need a clean, functional online presence.
             </p>
 
             <div className="space-y-4 mb-8">
               {[
-                "React/Next.js Landing Page",
-                "Mobile Responsive",
-                "SEO Basic Setup",
-                "Contact Forms",
-                "1 Month Support",
+                "Upto 5 pages (Home, About, Services, Contact, etc)",
+                "Modern UI/UX Design",
+                "Mobile & Tablet Responsive (Fast)",
+                "SSL Setup",
+                "Website Speed (Basic)",
+                "Stock Images (Limited)",
+                "1 Round of Revisons",
+                "7-Days Custom Support",
+                "Devivery 5-7 Days",               
               ].map((item) => (
                 <div
                   key={item}
@@ -597,7 +740,7 @@ const Pricing = () => {
               ))}
             </div>
             <button className="w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white hover:text-black transition-colors">
-            <a href="#contact">Choose Starter</a>
+            <a href="#contact">Choose Basic</a>
              
             </button>
           </motion.div>
@@ -613,23 +756,28 @@ const Pricing = () => {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
               Most Popular
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Scale Up</h3>
+            <h3 className="text-lg font-bold text-white mb-2">Business</h3>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="text-5xl font-bold text-white">₹8,000</span>
               <span className="text-sm text-zinc-500">starting</span>
             </div>
             <p className="text-zinc-400 text-sm mb-8 min-h-[40px]">
-              Full-featured web application with authentication, database, and
-              dynamic content.
+              Perfect for growing companies that need features, branding, and better performance.
             </p>
 
             <div className="space-y-4 mb-8">
               {[
-                "Everything in MVP",
-                "User Authentication (Auth0/Supabase)",
-                "Admin Dashboard",
-                "Payment Integration",
-                "Database Design",
+                "Everything in Baisc",
+                "Upto 10-12 pages",
+                "Custom UI/UX Design",
+                "Mobile & Tablet Responsive (Advanced)",
+                "Stock Images (Unlimited)",
+                "Basic Animation",
+                "CMS Integration (Wordpress)",
+                "On-Page SEO Optimazation",
+                "3 Round of Revisons",
+                "14-Days Custom Support",
+                "Devivery 10-14 Days",   
               ].map((item) => (
                 <div
                   key={item}
@@ -655,22 +803,27 @@ const Pricing = () => {
             whileHover={{ y: -5 }}
             className="p-8 rounded-3xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-900/60 transition-colors"
           >
-            <h3 className="text-lg font-bold text-zinc-300 mb-2">Enterprise</h3>
+            <h3 className="text-lg font-bold text-zinc-300 mb-2">PREMIUM</h3>
             <div className="flex items-baseline gap-1 mb-6">
               <span className="text-4xl font-bold text-white">₹14,000</span>
             </div>
             <p className="text-zinc-400 text-sm mb-8 min-h-[40px]">
-              For established organizations requiring complex architecture and
-              dedicated teams.
+              For brands that want automation, custom functionality, and enterprise-grade performance.
             </p>
 
             <div className="space-y-4 mb-8">
               {[
-                "Dedicated Development Team",
-                "Microservices Architecture",
-                "Legacy System Migration",
-                "SLA Support",
-                "Advanced Security Audit",
+                "Everything in Popular Plan",
+                "Unlimited pages",
+                "Advanced Security + Firewall Setup",
+                "Ultra High Speed Website",
+                "Premium Animation (GSAP & Framer-motion)",
+                "Backup & Restoring System",
+                "Advanced SEO",
+                "Basic Website Traning",
+                "7 Round of Revisons",
+                "30-Days Custom Support",
+                "Devivery 20-30 Days",   
               ].map((item) => (
                 <div
                   key={item}
@@ -849,6 +1002,7 @@ const App = () => {
     <div className="bg-black w-screen overflow-x-hidden min-h-screen text-zinc-200 selection:bg-blue-600/30">
       <main>
         <Hero />
+        <AboutUs/>
         <Services />
         <Portfolio />
         <Pricing />
