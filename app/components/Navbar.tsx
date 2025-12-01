@@ -13,223 +13,199 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
 
+  // Handle Scroll Effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock Body Scroll when Mobile Menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isOpen]);
 
   const navLinks: NavLink[] = [
     { name: "Services", href: "#services" },
     { name: "Work", href: "#portfolio" },
-    { name: "About Us", href: "#aboutus" },
-    { name: "Blogs", href: "/blogs" },
-    { name: "Contact", href: "#contact" },
+    { name: "About", href: "#aboutus" },
+    { name: "Insights", href: "/blogs" }, // Renamed for professional feel
   ];
-
-  useEffect(() => {
-    if (isOpen) {
-      // Freeze background scroll
-      document.body.style.overflow = "hidden";
-    } else {
-      // Restore scroll
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
-
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
     <>
-      {/* Navbar */}
+      {/* --- DESKTOP & MOBILE NAVBAR --- */}
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className={`fixed w-full z-50 transition-all duration-500 ease-in-out px-2 md:px-0 ${
-          isOpen
-            ? "py-6 bg-transparent backdrop-blur-none border-0 shadow-none"
-            : scrolled
-            ? "py-4"
-            : "py-6"
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300 ${
+          scrolled ? "pt-4" : "pt-6"
         }`}
       >
         <div
-          className={`max-w-7xl mx-auto px-6 rounded-2xl transition-all duration-300 flex justify-between items-center ${
-            isOpen
-              ? "bg-transparent backdrop-blur-none border-0 shadow-none py-3"
-              : scrolled
-              ? "bg-zinc-950/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-blue-900/10 py-3"
-              : "bg-transparent"
+          className={`relative flex items-center justify-between px-6 transition-all duration-500 ease-in-out ${
+            scrolled || isOpen
+              ? "w-[95%] md:w-[70%] lg:w-[60%] bg-zinc-900/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 py-3 rounded-full"
+              : "w-[95%] md:w-[85%] bg-transparent border-transparent py-4"
           }`}
         >
-          {/* Logo */}
-          {isMobile && isOpen ? (
-            // placeholder to keep spacing
-            <div className="w-9 h-9"></div>
-          ) : (
-            <a
-              href="/"
-              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 group"
-            >
-              <div className="relative w-9 h-9 flex items-center justify-center">
-                <div className="absolute inset-0 bg-blue-600 rounded-lg rotate-0 group-hover:rotate-12 transition-transform duration-300"></div>
-                <div className="absolute inset-0 bg-black rounded-lg rotate-0 scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-500/30"></div>
-                <span className="relative z-10 text-blue-500 font-bold text-base lg:text-xl">
-                  11X
-                </span>
-              </div>
-              <span className="group-hover:text-blue-400 transition-colors">
-                Solutions
-              </span>
-            </a>
-          )}
-
-          {/* <a
+          {/* LOGO */}
+          <a
             href="/"
-            className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 group"
+            className="flex items-center gap-2 group z-50 relative"
+            onClick={() => setIsOpen(false)}
           >
-            <div className="relative w-9 h-9 flex items-center justify-center">
-              <div className="absolute inset-0 bg-blue-600 rounded-lg rotate-0 group-hover:rotate-12 transition-transform duration-300"></div>
-              <div className="absolute inset-0 bg-black rounded-lg rotate-0 scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-500/30"></div>
-              <span className="relative z-10 text-blue-500 font-bold text-base lg:text-xl">
-                11X
-              </span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-105 transition-transform duration-300 border border-white/10">
+              <span className="font-almarena font-bold text-white text-lg tracking-tighter">11X</span>
             </div>
-            <span className="group-hover:text-blue-400 transition-colors">
+            <span className={`font-bold text-lg tracking-tight transition-colors ${scrolled || isOpen ? "text-white" : "text-white/90"}`}>
               Solutions
             </span>
-          </a> */}
+          </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 font-almarena">
+          {/* DESKTOP LINKS */}
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="relative text-sm lg:text-base font-medium text-zinc-400 hover:text-white transition-colors group"
+                className="relative px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors rounded-full group overflow-hidden"
               >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                <span className="relative z-10">{link.name}</span>
+                {/* Hover Glow Effect */}
+                <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></span>
               </a>
             ))}
+          </div>
 
+          {/* DESKTOP CTA */}
+          <div className="hidden md:block">
             <a
-              href="/book"
-              className="relative overflow-hidden px-5 py-2.5 bg-blue-600 text-white text-normal font-bold font-almarena rounded-full group hover:bg-blue-500 transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]"
+              href="/book?utm_source=navbar&utm_medium=cta&utm_campaign=book_call"
+              className="group relative inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full overflow-hidden transition-all hover:bg-zinc-200"
             >
-              <span className="relative z-10 flex items-center gap-2 font-almarena">
-                Book a Call{" "}
-                <ArrowRight
-                  size={14}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </span>
+               <span className="relative z-10 flex items-center gap-2">
+                 Book Call <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+               </span>
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-
+          {/* MOBILE TOGGLE */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white p-2 relative"
+            className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white active:scale-90 transition-all"
           >
-            <motion.div
-              initial={false}
-              animate={
-                isOpen ? { rotate: 180, scale: 1.2 } : { rotate: 0, scale: 1 }
-              }
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
+            <AnimatePresence mode="wait">
               {isOpen ? (
-                <X className="text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                >
+                  <X size={20} />
+                </motion.div>
               ) : (
-                <Menu className="text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                >
+                  <Menu size={20} />
+                </motion.div>
               )}
-            </motion.div>
+            </AnimatePresence>
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* --- MOBILE FULLSCREEN MENU --- */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-40 bg-black md:hidden flex flex-col justify-center"
           >
-            {/* Slide Panel */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 120, damping: 18 }}
-              className="absolute right-0 top-0 h-full w-[80%] bg-zinc-900/90 backdrop-blur-xl border-l border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)] px-6 pt-28"
-            >
-              {/* Links Container */}
-              <motion.div
-                className="flex flex-col items-start gap-8"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: { staggerChildren: 0.15 },
-                  },
-                }}
-              >
-                {navLinks.map((link) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    variants={{
-                      hidden: { opacity: 0, x: 30 },
-                      visible: { opacity: 1, x: 0 },
-                    }}
-                    className="text-3xl font-light text-zinc-300 hover:text-blue-500 transition-colors drop-shadow-sm"
-                  >
-                    {link.name}
-                  </motion.a>
-                ))}
+            {/* Background Tech Grid (To match theme) */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-50"></div>
+            
+            {/* Ambient Glow */}
+            <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-blue-600/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-                <motion.div
+            <div className="relative w-full px-6 flex flex-col gap-6">
+               <motion.div
+                  initial="hidden"
+                  animate="visible"
                   variants={{
-                    hidden: { width: 0, opacity: 0 },
-                    visible: { width: "100%", opacity: 1 },
-                  }}
-                  className="h-px bg-white/10 my-4"
-                />
-
-                <motion.a
-                  href="/book"
-                  onClick={() => setIsOpen(false)}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8 },
+                    hidden: { opacity: 0 },
                     visible: {
                       opacity: 1,
-                      scale: 1,
-                      transition: { type: "spring", stiffness: 200 },
+                      transition: { staggerChildren: 0.1 },
                     },
                   }}
-                  className="px-6 py-3 bg-blue-600 text-white text-xl rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] active:scale-95 transition-all"
-                >
-                  Book a Call
-                </motion.a>
-              </motion.div>
+                  className="flex flex-col gap-6"
+               >
+                 <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2 border-b border-white/10 pb-4">
+                    Navigation
+                 </div>
 
-              {/* Footer */}
-              <div className="absolute bottom-9 left-6 right-6 text-zinc-500 text-xs font-light text-center opacity-70">
-                © 2025 ElevenX Solutions Agency. All rights reserved.
-              </div>
+                 {navLinks.map((link) => (
+                   <motion.a
+                     key={link.name}
+                     href={link.href}
+                     onClick={() => setIsOpen(false)}
+                     variants={{
+                        hidden: { opacity: 0, x: -50 },
+                        visible: { opacity: 1, x: 0 },
+                     }}
+                     className="text-4xl font-bold text-white hover:text-blue-500 transition-colors tracking-tight flex items-center gap-4 group"
+                   >
+                     {/* Decorative Dot */}
+                     <span className="w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-blue-500 transition-colors"></span>
+                     {link.name}
+                   </motion.a>
+                 ))}
+
+                  <motion.div 
+                    variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                     }}
+                    className="pt-8"
+                  >
+                     <a
+                        href="/book"
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center justify-between px-8 py-5 bg-blue-600 text-white rounded-2xl font-bold text-xl active:scale-95 transition-all shadow-[0_0_40px_rgba(37,99,235,0.3)]"
+                      >
+                        Start a Project
+                        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                           <ArrowRight size={20} />
+                        </div>
+                     </a>
+                  </motion.div>
+               </motion.div>
+            </div>
+
+            {/* Footer Info */}
+            <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ delay: 0.5 }}
+               className="absolute bottom-10 left-0 w-full text-center"
+            >
+               <p className="text-zinc-600 text-sm font-mono">
+                  Designed by Engineers.
+               </p>
             </motion.div>
           </motion.div>
         )}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import LocalFont from "next/font/local"
+import Footer from "./components/Footer";
 
 
 const almarena = LocalFont({
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="font-manrope">
         <Navbar />
         {children}
+        <Footer/>
       </body>
     </html>
   );

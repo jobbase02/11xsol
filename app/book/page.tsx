@@ -15,7 +15,8 @@ import {
   Rocket,
   Zap,
   Building2,
-  Check
+  Check,
+  Terminal
 } from "lucide-react";
 
 // --- STATIC DATA ---
@@ -27,26 +28,23 @@ const SERVICES = [
 ];
 
 const PLANS = [
-  { id: "mvp", label: "Basic", icon: <Rocket size={18} />, desc: "For startups validating ideas." },
-  { id: "scale", label: "Business", icon: <Zap size={18} />, desc: "For growing businesses." },
-  { id: "enterprise", label: "Premium", icon: <Building2 size={18} />, desc: "Full-scale custom solutions." },
+  { id: "basic", label: "Basic", icon: <Rocket size={18} />, desc: "For startups validating ideas." },
+  { id: "business", label: "Business", icon: <Zap size={18} />, desc: "For growing businesses." },
+  { id: "premium", label: "Premium", icon: <Building2 size={18} />, desc: "Full-scale custom solutions." },
 ];
 
 // --- COMPONENTS ---
 
-const NoiseOverlay = () => (
-  <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] mix-blend-overlay">
-    <svg className="w-full h-full">
-      <filter id="noise">
-        <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="3" stitchTiles="stitch" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#noise)" />
-    </svg>
+const TechGridBackground = () => (
+  <div className="fixed inset-0 pointer-events-none z-0">
+    {/* Grid Pattern */}
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    {/* Radial Fade */}
+    <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,transparent_70%,black_100%)]"></div>
   </div>
 );
 
 // Mock Next.js useSearchParams for standalone React preview
-// This replaces the import from 'next/navigation' which causes errors in environments without Next.js
 const useSearchParams = () => {
   const [params, setParams] = useState(new URLSearchParams());
   
@@ -74,11 +72,8 @@ function BookingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
-  // Captcha State: 'idle' | 'verifying' | 'verified'
   const [captchaStatus, setCaptchaStatus] = useState<'idle' | 'verifying' | 'verified'>('idle');
 
-  // Initialize from URL - STRICT LOGIC
   useEffect(() => {
     const serviceParam = searchParams.get("service");
     const planParam = searchParams.get("plan");
@@ -87,7 +82,6 @@ function BookingForm() {
       let newService = prev.service;
       let newPlan = prev.plan;
 
-      // Only update service if param exists and matches a valid option
       if (serviceParam) {
         const matchedService = SERVICES.find(s => 
           s.id === serviceParam || s.label.toLowerCase().includes(serviceParam.toLowerCase())
@@ -95,7 +89,6 @@ function BookingForm() {
         if (matchedService) newService = matchedService.id;
       }
 
-      // Only update plan if param exists and matches a valid option
       if (planParam) {
         const matchedPlan = PLANS.find(p => 
           p.id === planParam || p.label.toLowerCase().includes(planParam.toLowerCase())
@@ -103,19 +96,13 @@ function BookingForm() {
         if (matchedPlan) newPlan = matchedPlan.id;
       }
 
-      return {
-        ...prev,
-        service: newService,
-        plan: newPlan
-      };
+      return { ...prev, service: newService, plan: newPlan };
     });
   }, [searchParams]);
 
   const handleCaptchaClick = () => {
     if (captchaStatus === 'verified') return;
     setCaptchaStatus('verifying');
-    
-    // Simulate verification delay
     setTimeout(() => {
       setCaptchaStatus('verified');
     }, 1500);
@@ -124,58 +111,39 @@ function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation Check: Captcha
     if (captchaStatus !== 'verified') {
-      alert("Please fill the form and complete the human verification check.");
+      alert("Please complete the security check.");
       return;
     }
 
     setIsSubmitting(true);
     setErrorMessage("");
 
-    // Helper to capture UTM parameters from URL
     const getUtmParams = () => {
-      // In Next.js client components, we can use window.location or searchParams
-      // Using window.location.search to ensure we catch everything
       const params = new URLSearchParams(window.location.search);
       const utm: Record<string, string> = {};
       const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-      
       keys.forEach(key => {
         const value = params.get(key);
         if (value) utm[key] = value;
       });
-      
       return Object.keys(utm).length > 0 ? utm : null;
     };
 
     try {
-      // Prepare Payload matching API expectation
-      const payload = {
-        ...formData,
-        utm: getUtmParams()
-      };
-
+      const payload = { ...formData, utm: getUtmParams() };
       const response = await fetch('/api/bookings', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        // Use the error message from the API if available
-        throw new Error(data.error || 'Failed to submit booking. Please try again.');
-      }
-
-      // Success
+      if (!response.ok) throw new Error(data.error || 'Failed to submit booking.');
       setSubmitted(true);
     } catch (error: any) {
       console.error("Booking Error:", error);
-      setErrorMessage(error.message || "Something went wrong. Please check your connection and try again.");
+      setErrorMessage(error.message || "Connection failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -184,26 +152,26 @@ function BookingForm() {
   if (submitted) {
     return (
       <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full h-full flex flex-col items-center justify-center text-center py-10"
+        className="w-full h-[600px] flex flex-col items-center justify-center text-center p-8"
       >
-        <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mb-6 border border-green-500/30">
-          <CheckCircle2 size={40} />
+        <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-8 border border-green-500/20 shadow-[0_0_40px_-10px_rgba(34,197,94,0.3)]">
+          <CheckCircle2 size={48} />
         </div>
-        <h3 className="text-3xl font-bold text-white mb-4">Request Received</h3>
-        <p className="text-gray-400 mb-8 max-w-md">
-          Our engineers are analyzing your requirements. Expect a strategy breakdown in your inbox within 24 hours.
+        <h3 className="text-3xl font-bold text-white mb-4 font-almarena">System Acknowledged</h3>
+        <p className="text-zinc-400 mb-10 max-w-md text-lg leading-relaxed">
+          Your request has been logged. Our engineering team is currently analyzing your requirements and will deploy a strategy to your inbox within 24 hours.
         </p>
         <button 
           onClick={() => {
             setSubmitted(false);
             setCaptchaStatus('idle');
-            setFormData(prev => ({...prev, message: ""})); // Clear message but keep context
+            setFormData(prev => ({...prev, message: ""}));
           }}
-          className="text-blue-400 hover:text-white font-semibold transition-colors"
+          className="text-white hover:text-blue-400 font-mono text-sm uppercase tracking-widest border-b border-white/20 hover:border-blue-400 pb-1 transition-all"
         >
-          Submit another request
+          Initialize New Request
         </button>
       </motion.div>
     );
@@ -215,23 +183,23 @@ function BookingForm() {
       {/* 1. Personal Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Full Name</label>
+          <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Identity</label>
           <input 
             required
             type="text" 
-            placeholder="John Doe"
-            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-700"
+            placeholder="Your Name"
+            className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all placeholder:text-zinc-700"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})}
           />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Work Email</label>
+          <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Contact Node</label>
           <input 
             required
             type="email" 
-            placeholder="john@company.com"
-            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-700"
+            placeholder="work@email.com"
+            className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all placeholder:text-zinc-700"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
           />
@@ -240,7 +208,7 @@ function BookingForm() {
 
       {/* 2. Services Selection */}
       <div className="space-y-3">
-        <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Service Required (Optional)</label>
+        <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Select Protocol (Optional)</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {SERVICES.map((service) => (
             <div 
@@ -249,11 +217,11 @@ function BookingForm() {
               className={`
                 cursor-pointer relative px-4 py-3 rounded-xl border flex items-center gap-3 transition-all duration-200 select-none
                 ${formData.service === service.id 
-                  ? "bg-blue-600/20 border-blue-500 text-white shadow-[0_0_15px_-3px_rgba(37,99,235,0.3)]" 
-                  : "bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-white/30 hover:bg-white/5"}
+                  ? "bg-blue-500/10 border-blue-500/50 text-white shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)]" 
+                  : "bg-zinc-900/30 border-white/5 text-zinc-400 hover:border-white/20 hover:bg-white/5"}
               `}
             >
-              <div className={`${formData.service === service.id ? "text-blue-400" : "text-gray-500"}`}>
+              <div className={`${formData.service === service.id ? "text-blue-400" : "text-zinc-600"}`}>
                 {service.icon}
               </div>
               <span className="text-sm font-medium">{service.label}</span>
@@ -269,28 +237,28 @@ function BookingForm() {
 
       {/* 3. Plan Selection */}
       <div className="space-y-3">
-        <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Project Scale (Optional)</label>
+        <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Bandwidth Scale (Optional)</label>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {PLANS.map((plan) => (
             <div 
               key={plan.id}
               onClick={() => setFormData({...formData, plan: formData.plan === plan.id ? "" : plan.id})}
               className={`
-                cursor-pointer p-4 rounded-xl border flex flex-col gap-2 transition-all duration-200 select-none
+                cursor-pointer p-4 rounded-xl border flex flex-col gap-3 transition-all duration-200 select-none
                 ${formData.plan === plan.id 
-                  ? "bg-purple-600/20 border-purple-500 text-white shadow-[0_0_15px_-3px_rgba(147,51,234,0.3)]" 
-                  : "bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-white/30 hover:bg-white/5"}
+                  ? "bg-purple-500/10 border-purple-500/50 text-white shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]" 
+                  : "bg-zinc-900/30 border-white/5 text-zinc-400 hover:border-white/20 hover:bg-white/5"}
               `}
             >
               <div className="flex justify-between items-center">
-                <div className={`${formData.plan === plan.id ? "text-purple-400" : "text-gray-500"}`}>
+                <div className={`${formData.plan === plan.id ? "text-purple-400" : "text-zinc-600"}`}>
                   {plan.icon}
                 </div>
                 {formData.plan === plan.id && <CheckCircle2 size={16} className="text-purple-400" />}
               </div>
               <div>
-                <span className="block text-sm font-bold">{plan.label}</span>
-                <span className="text-[10px] opacity-60 leading-tight block mt-1">{plan.desc}</span>
+                <span className="block text-sm font-bold text-white">{plan.label}</span>
+                <span className="text-[10px] text-zinc-500 leading-tight block mt-1">{plan.desc}</span>
               </div>
             </div>
           ))}
@@ -299,48 +267,47 @@ function BookingForm() {
 
       {/* 4. Message */}
       <div className="space-y-2">
-        <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Project Details</label>
+        <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Project Specs</label>
         <textarea 
           required
           rows={4}
-          placeholder="Tell us about your goals, timeline, and current challenges..."
-          className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-700 resize-none"
+          placeholder="Brief us on your objectives, timeline, and current infrastructure..."
+          className="w-full bg-zinc-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all placeholder:text-zinc-700 resize-none"
           value={formData.message}
           onChange={(e) => setFormData({...formData, message: e.target.value})}
         />
       </div>
 
-      {/* 5. Working ReCAPTCHA Simulation */}
+      {/* 5. Security Check */}
       <div className="space-y-2">
-         <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Security Check</label>
+         <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Security Clearance</label>
          <div 
            onClick={handleCaptchaClick}
            className={`
-              flex items-center gap-4 p-4 bg-[#0a0a0a] border rounded-xl w-fit cursor-pointer transition-all duration-300
-              ${captchaStatus === 'verified' ? 'border-green-500/50 bg-green-500/5' : 'border-white/10 hover:border-white/30'}
-            `}
+             flex items-center gap-4 p-3 pr-6 bg-zinc-900/30 border rounded-xl w-fit cursor-pointer transition-all duration-300
+             ${captchaStatus === 'verified' ? 'border-green-500/30 bg-green-500/5' : 'border-white/10 hover:border-white/20'}
+           `}
          >
              <div className={`
-               w-7 h-7 border-2 rounded-md flex items-center justify-center transition-all duration-300
-               ${captchaStatus === 'verified' ? 'bg-green-500 border-green-500' : 'border-gray-500 bg-transparent'}
+               w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 border
+               ${captchaStatus === 'verified' ? 'bg-green-500/20 border-green-500/50' : 'border-white/10 bg-white/5'}
              `}>
-                {captchaStatus === 'verifying' && <Loader2 className="animate-spin text-gray-400" size={16} />}
-                {captchaStatus === 'verified' && <Check className="text-black" size={18} strokeWidth={3} />}
+                {captchaStatus === 'verifying' && <Loader2 className="animate-spin text-zinc-400" size={16} />}
+                {captchaStatus === 'verified' && <Check className="text-green-400" size={18} strokeWidth={3} />}
              </div>
              
              <div className="flex flex-col">
-                <span className={`text-sm font-medium ${captchaStatus === 'verified' ? 'text-green-500' : 'text-gray-300'}`}>
-                   {captchaStatus === 'verified' ? 'Verified Human' : 'I am human'}
+                <span className={`text-sm font-bold ${captchaStatus === 'verified' ? 'text-green-400' : 'text-zinc-300'}`}>
+                   {captchaStatus === 'verified' ? 'Verified Human' : 'Verify Humanity'}
                 </span>
-                <span className="text-[10px] text-gray-600">Protected by 11xGuard</span>
              </div>
 
-             <ShieldCheck size={18} className={`ml-4 ${captchaStatus === 'verified' ? 'text-green-500' : 'text-gray-600'}`} />
+             <ShieldCheck size={18} className={`ml-2 ${captchaStatus === 'verified' ? 'text-green-500' : 'text-zinc-700'}`} />
          </div>
       </div>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm font-semibold bg-red-500/10 p-3 rounded-lg border border-red-500/20 text-center">
+        <p className="text-red-400 text-sm font-semibold bg-red-500/10 p-3 rounded-xl border border-red-500/20 text-center">
           {errorMessage}
         </p>
       )}
@@ -348,29 +315,31 @@ function BookingForm() {
       {/* Submit Button */}
       <button 
         type="submit" 
-        disabled={isSubmitting} // Only disable while actively submitting
+        disabled={isSubmitting} 
         className={`
-           w-full py-4 font-bold text-lg rounded-xl transition-all transform flex items-center justify-center gap-2 group
+           w-full py-4 font-bold text-lg rounded-xl transition-all transform flex items-center justify-center gap-3 group border
            ${isSubmitting 
-             ? "bg-gray-800 text-gray-500 cursor-not-allowed opacity-50" 
-             : "bg-white text-black hover:bg-blue-500 hover:text-white hover:scale-[1.01] active:scale-[0.99]"}
+             ? "bg-zinc-800 border-white/5 text-zinc-500 cursor-not-allowed" 
+             : "bg-white text-black border-white hover:bg-zinc-200 hover:scale-[1.01] active:scale-[0.99]"}
         `}
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="animate-spin" /> Processing...
+            <Loader2 className="animate-spin" /> Uplinking...
           </>
         ) : (
           <>
-            {captchaStatus !== 'verified' ? 'Complete Verification Above' : 'Secure Your Slot'} 
-            {captchaStatus === 'verified' && <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
+            {captchaStatus !== 'verified' ? 'Complete Verification Above' : 'Initiate Sequence'} 
+            {captchaStatus === 'verified' && <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
           </>
         )}
       </button>
 
-      <p className="text-center text-xs text-gray-600 mt-4">
-        By submitting, you agree to our privacy policy. Your data is encrypted and secure.
-      </p>
+      <div className="text-center pt-2">
+         <p className="text-[10px] text-zinc-600 font-mono uppercase tracking-widest">
+            Encrypted Transmission /// 256-Bit SSL Secure
+         </p>
+      </div>
 
     </form>
   );
@@ -378,55 +347,57 @@ function BookingForm() {
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-[#030303] text-white font-sans selection:bg-blue-500/50 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-blue-500/30 selection:text-white overflow-x-hidden">
       
-      <NoiseOverlay />
+      <TechGridBackground />
 
       {/* --- AMBIENT GLOWS --- */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
-         <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
-         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[120px]" />
+         <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[150px] animate-pulse" />
       </div>
 
-      {/* INCREASED TOP PADDING TO pt-32 (128px) for mobile to prevent navbar overlap */}
-      <div className="relative z-10 max-w-[1400px] mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 px-6 pt-32 pb-20 lg:py-32 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto min-h-screen grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 px-6 pt-32 pb-20 lg:py-32 items-start">
         
         {/* LEFT COLUMN: Context & Value */}
-        <div className="lg:col-span-5 flex flex-col justify-center">
+        <div className="lg:col-span-5 flex flex-col justify-center lg:sticky lg:top-32">
            <motion.div
              initial={{ opacity: 0, x: -20 }}
              animate={{ opacity: 1, x: 0 }}
              transition={{ duration: 0.6 }}
            >
-             <h4 className="text-blue-500 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
-               <span className="w-8 h-[1px] bg-blue-500"></span> Start the Conversation
-             </h4>
-             <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
+             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-400 text-[10px] font-mono font-bold uppercase tracking-widest mb-8">
+               <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+               Systems Online
+             </div>
+
+             <h1 className="text-5xl md:text-6xl font-bold font-almarena tracking-tight leading-[1] mb-6 text-white">
                Let’s Build <br/>
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Something Legendary.</span>
+               <span className="text-zinc-500">Something Legendary.</span>
              </h1>
-             <p className="text-gray-400 text-lg leading-relaxed mb-10">
+             
+             <p className="text-zinc-400 text-lg leading-relaxed mb-12">
                Whether you need a rapid MVP launch or an enterprise-grade scaling strategy, our engineers are ready. 
-               Tell us your vision, and we'll handle the architecture.
+               Tell us your vision, and we'll architect the solution.
              </p>
 
-             <div className="space-y-6 border-l border-white/10 pl-6">
-               <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white shrink-0">
+             <div className="space-y-8 border-l border-white/10 pl-8">
+               <div className="flex items-start gap-5 group">
+                  <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-blue-500/50 transition-colors shrink-0">
                     <Rocket size={20} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-white">Fast-Track Execution</h5>
-                    <p className="text-sm text-gray-500">We don't do fluff. We ship code and campaigns that work from Day 1.</p>
+                    <h5 className="font-bold text-white text-lg mb-1 group-hover:text-blue-400 transition-colors">Fast-Track Execution</h5>
+                    <p className="text-sm text-zinc-500 leading-relaxed">We don't do fluff. We ship code and campaigns that perform from Day 1.</p>
                   </div>
                </div>
-               <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white shrink-0">
+               
+               <div className="flex items-start gap-5 group">
+                  <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:border-purple-500/50 transition-colors shrink-0">
                     <ShieldCheck size={20} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-white">Enterprise Security</h5>
-                    <p className="text-sm text-gray-500">Data protection and scalable architecture included in every tier.</p>
+                    <h5 className="font-bold text-white text-lg mb-1 group-hover:text-purple-400 transition-colors">Enterprise Security</h5>
+                    <p className="text-sm text-zinc-500 leading-relaxed">Data protection and scalable architecture included in every service tier.</p>
                   </div>
                </div>
              </div>
@@ -439,14 +410,16 @@ export default function BookingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-[#111] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl shadow-black/50 relative overflow-hidden"
+            className="bg-zinc-900/40 border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden backdrop-blur-md"
           >
             {/* Form Background Decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
             <Suspense fallback={
-              <div className="flex items-center justify-center h-96">
+              <div className="flex flex-col items-center justify-center h-96 gap-4">
                 <Loader2 className="animate-spin text-blue-500" size={32} />
+                <p className="text-zinc-600 font-mono text-xs uppercase tracking-widest">Loading Interface...</p>
               </div>
             }>
               <BookingForm />

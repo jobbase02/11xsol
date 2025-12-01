@@ -1,122 +1,142 @@
-
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Github,
   Twitter,
   Linkedin,
+  Mail,
+  Phone,
+  MapPin
 } from "lucide-react";
 
-
-
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-black pt-16 lg:pt-20 pb-10 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
-          <div className="max-w-xs">
-            <a
-              href="#"
-              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-6"
-            >
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-black font-bold">
-                11X
-              </div>
-              Solutions
+    <footer className="relative bg-black pt-20 pb-10 border-t border-white/5 overflow-hidden">
+      
+      {/* Background Tech Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+      {/* Ambient Glow */}
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+      {/* Main Content Container (Full Width) */}
+      <div className="w-full px-6 md:px-12 lg:px-24 relative z-10">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-24 mb-16">
+          
+          {/* COLUMN 1: BRAND (Span 4) */}
+          <div className="lg:col-span-4">
+            <a href="/" className="flex items-center gap-3 group mb-6">
+                {/* Navbar Logo Code */}
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-105 transition-transform duration-300 border border-white/10">
+                    <span className="font-almarena font-bold text-white text-xl tracking-tighter">11X</span>
+                </div>
+                <div className="flex flex-col justify-center">
+                    <span className="font-bold text-xl text-white tracking-tight leading-none">
+                        ElevenX
+                    </span>
+                    <span className="text-[10px] text-zinc-500 uppercase tracking-widest leading-none mt-1">
+                        Solutions
+                    </span>
+                </div>
             </a>
-            <p className="text-zinc-500 text-sm leading-relaxed">
-              <span className="text-blue-400 font-semibold">ElevenX Solutions</span> is a Premium Web Development agency building the next generation
-              digital products.
+            <p className="text-zinc-400 text-base leading-relaxed max-w-sm mb-8">
+              ElevenX Solutions is a premium digital engineering agency. We build high-performance websites, scalable apps, and next-gen interfaces for ambitious brands.
             </p>
-          </div>
-
-          <div className="flex gap-16 flex-wrap">
-            <div>
-              <h4 className="text-white font-bold mb-6">Services</h4>
-              <ul className="space-y-4 text-sm text-zinc-500">
-                <li>
-                  <a href="#services" className="hover:text-blue-500 transition-colors">
-                    Web Development
+            
+            {/* Social Icons */}
+            <div className="flex gap-3">
+               {[
+                 { icon: <Github size={20} />, href: "#" },
+                 { icon: <Twitter size={20} />, href: "#" },
+                 { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/company/103705779" }
+               ].map((social, i) => (
+                  <a
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white hover:border-blue-500 transition-all"
+                  >
+                    {social.icon}
                   </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-blue-500 transition-colors">
-                    Mobile Apps
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-blue-500 transition-colors">
-                    UI/UX Design
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-blue-500 transition-colors">
-                    Consulting
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-6">Company</h4>
-              <ul className="space-y-4 text-sm text-zinc-500">
-                <li>
-                  <a href="#aboutus" className="hover:text-blue-500 transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#services" className="hover:text-blue-500 transition-colors">
-                    Services
-                  </a>
-                </li>
-                <li>
-                  <a href="/blogs" className="hover:text-blue-500 transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" className="hover:text-blue-500 transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
+               ))}
             </div>
           </div>
 
-          <div className="flex gap-4">
-            <a
-              href="#contact"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Github size={18} />
-            </a>
-            <a
-              href="#contact"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Twitter size={18} />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/103705779/admin/dashboard/" target="/blank"
-              className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:bg-blue-600 hover:text-white transition-all"
-            >
-              <Linkedin size={18} />
-            </a>
+          {/* LINKS GRID (Span 8) */}
+          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+             
+             {/* Services */}
+             <div>
+                <h4 className="text-white font-bold mb-8 text-lg">Services</h4>
+                <ul className="space-y-4 text-base text-zinc-500">
+                   <li><a href="#services" className="hover:text-blue-400 transition-colors">Web Development</a></li>
+                   <li><a href="#services" className="hover:text-blue-400 transition-colors">SaaS Engineering</a></li>
+                   <li><a href="#services" className="hover:text-blue-400 transition-colors">UI/UX Design</a></li>
+                   <li><a href="#services" className="hover:text-blue-400 transition-colors">API Integration</a></li>
+                   <li><a href="#services" className="hover:text-blue-400 transition-colors">SEO Optimization</a></li>
+                </ul>
+             </div>
+
+             {/* Company */}
+             <div>
+                <h4 className="text-white font-bold mb-8 text-lg">Company</h4>
+                <ul className="space-y-4 text-base text-zinc-500">
+                   <li><a href="#aboutus" className="hover:text-blue-400 transition-colors">About Us</a></li>
+                   <li><a href="#portfolio" className="hover:text-blue-400 transition-colors">Our Work</a></li>
+                   <li><a href="/blogs" className="hover:text-blue-400 transition-colors">Insights / Blog</a></li>
+                   <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
+                   <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
+                </ul>
+             </div>
+
+             {/* Contact Info */}
+             <div>
+                <h4 className="text-white font-bold mb-8 text-lg">Contact</h4>
+                <ul className="space-y-6 text-base text-zinc-500">
+                   <li>
+                      <a href="mailto:info@elevenxsolutions.com" className="flex items-center gap-3 hover:text-blue-400 transition-colors group">
+                         <Mail size={18} className="text-zinc-600 group-hover:text-blue-500 transition-colors" />
+                         info@elevenxsolutions.com
+                      </a>
+                   </li>
+                   <li>
+                      <a href="tel:+1234567890" className="flex items-center gap-3 hover:text-blue-400 transition-colors group">
+                         <Phone size={18} className="text-zinc-600 group-hover:text-blue-500 transition-colors" />
+                         +91 (Business Inquiry)
+                      </a>
+                   </li>
+                   <li className="flex items-start gap-3">
+                       <MapPin size={18} className="text-zinc-600 mt-1 flex-shrink-0" />
+                       <span>
+                          Bangalore, India <br/>
+                          Remote Worldwide
+                       </span>
+                   </li>
+                </ul>
+             </div>
+
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600">
+        {/* Bottom Bar */}
+        <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-600 font-mono">
           <p>
-            &copy; {new Date().getFullYear()} ElevenX Solutions Agency. All rights
-            reserved.
+            &copy; {currentYear} ElevenX Solutions. Engineered for Growth.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-400">
+          <div className="flex gap-8 md:gap-12">
+            <a href="#" className="hover:text-zinc-400 transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-zinc-400">
+            <a href="#" className="hover:text-zinc-400 transition-colors">
               Terms of Service
+            </a>
+            <a href="#" className="hover:text-zinc-400 transition-colors">
+              Sitemap
             </a>
           </div>
         </div>
