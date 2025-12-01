@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  Menu,
-  X,
-} from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
 interface NavLink {
   name: string;
@@ -30,6 +26,20 @@ const Navbar: React.FC = () => {
     { name: "Blogs", href: "/blogs" },
     { name: "Contact", href: "#contact" },
   ];
+
+  useEffect(() => {
+    if (isOpen) {
+      // Freeze background scroll
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scroll
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -94,11 +104,24 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Menu Button */}
+
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 relative"
           >
-            {isOpen ? <X /> : <Menu />}
+            <motion.div
+              initial={false}
+              animate={
+                isOpen ? { rotate: 180, scale: 1.2 } : { rotate: 0, scale: 1 }
+              }
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {isOpen ? (
+                <X className="text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
+              ) : (
+                <Menu className="text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
+              )}
+            </motion.div>
           </button>
         </div>
       </motion.nav>
@@ -107,33 +130,76 @@ const Navbar: React.FC = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-black md:hidden pt-24 px-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
           >
-            <div className=" h-full flex flex-col justify-start items-center gap-14 text-center font-almarena mt-10">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-3xl font-normal text-zinc-300 hover:text-blue-500 transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <div className="h-px bg-white/10 w-full my-4"></div>
-{/* 
-              <a
-                href="#contact"
-                onClick={() => setIsOpen(false)}
-                className="text-2xl font-semibold text-blue-500 font-almarena"
+            {/* Slide Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 120, damping: 18 }}
+              className="absolute right-0 top-0 h-full w-[80%] bg-zinc-900/90 backdrop-blur-xl border-l border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.4)] px-6 pt-28"
+            >
+              {/* Links Container */}
+              <motion.div
+                className="flex flex-col items-start gap-10"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.15,
+                    },
+                  },
+                }}
               >
-                Book a Call
-              </a> */}
-            </div>
+                {navLinks.map((link) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    variants={{
+                      hidden: { opacity: 0, x: 30 },
+                      visible: { opacity: 1, x: 0 },
+                    }}
+                    className="text-3xl font-light text-zinc-300 hover:text-blue-500 transition-colors drop-shadow-sm"
+                  >
+                    {link.name}
+                  </motion.a>
+                ))}
+
+                {/* Modern Divider */}
+                <motion.div
+                  variants={{
+                    hidden: { width: 0, opacity: 0 },
+                    visible: { width: "100%", opacity: 1 },
+                  }}
+                  className="h-px bg-white/10 my-4"
+                />
+
+                {/* Book A Call Button — Only Mobile */}
+                <motion.a
+                  href="/book"
+                  onClick={() => setIsOpen(false)}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: {
+                      opacity: 1,
+                      scale: 1,
+                      transition: { type: "spring", stiffness: 200 },
+                    },
+                  }}
+                  className="px-6 py-3 bg-blue-600 text-white text-xl rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] active:scale-95 transition-all"
+                >
+                  Book a Call
+                </motion.a>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

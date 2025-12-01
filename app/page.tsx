@@ -11,6 +11,7 @@ import {
   Code2,
   Rocket,
   Settings,
+  Book,
   Layout,
   Menu,
   X,
@@ -110,9 +111,8 @@ const Hero = () => {
             variants={fadeInUp}
             className="text-lg md:text-xl text-zinc-400 max-w-xl leading-relaxed"
           >
-            11XSolutions transforms ambitious ideas into scalable,
-            high-performance web applications. Zero fluff, 100% engineering
-            excellence.
+            ElevenX Solutions transforms ambitious ideas into scalable,
+            high-performance web applications. We don’t build websites. We build weapons your business can win with.
           </motion.p>
 
           <motion.div
@@ -344,20 +344,20 @@ const Services = () => {
   const services = [
     {
       icon: <Layout className="text-white" size={28} />,
-      title: "Web Applications",
-      desc: "Complex SaaS platforms built with Next.js 14 and React. We handle the hard stuff: SSR, caching, and state management.",
+      title: "Website Development",
+      desc: "Make your brand stand out online with high-performance, custom-engineered web applications.",
       color: "bg-blue-600",
     },
     {
-      icon: <Globe className="text-white" size={28} />,
+      icon: <Book className="text-white" size={28} />,
       title: "Booking Systems",
       desc: "Custom booking engines that sync seamlessly with your calendar and payment gateways like Stripe.",
       color: "bg-indigo-600",
     },
     {
-      icon: <Shield className="text-white" size={28} />,
-      title: "Enterprise Security",
-      desc: "Bank-grade security implementation, role-based access control (RBAC), and data encryption.",
+      icon: <Globe className="text-white" size={28} />,
+      title: "Influencer marketing",
+      desc: "Turn influencer power into unstoppable brand momentum. More reach, more trust, more sales.",
       color: "bg-purple-600",
     },
     {
@@ -382,7 +382,7 @@ const Services = () => {
             Expertise That Matters
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
-            Tell us how you work. We’ll build the system that works for you.{" "}
+            Tell us how you work. ElevenX Solution will build the system that works for you.{" "}
             <br />
             Built to grow, Built to win.
           </p>
@@ -475,7 +475,7 @@ const Portfolio = () => {
               What We’ve Built
             </h2>
             <p className="text-zinc-400 max-w-xl">
-              We let our code speak for itself. Here are a few projects we've
+              We let our code speak for ourself. Here are a few projects we've
               recently deployed.
             </p>
           </motion.div>
