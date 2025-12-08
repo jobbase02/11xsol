@@ -1,12 +1,17 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-// FIX: Added ArrowUpRight to the import list below
-import { Terminal, Shield, Zap, Globe, Cpu, Award, ArrowUpRight } from "lucide-react";
-import CountUp from "@/components/CountUp"; 
+import { 
+  Terminal, 
+  ShieldCheck, 
+  Zap, 
+  Mountain, // Represents the 'Hills/Farm' grounding but tech-focused
+  Scale, 
+  Code2, 
+  BookOpen,
+  HeartHandshake
+} from "lucide-react";
 
 const TechGridBackground = () => (
   <div className="fixed inset-0 pointer-events-none z-0">
@@ -15,19 +20,32 @@ const TechGridBackground = () => (
   </div>
 );
 
-const ValueCard = ({ icon, title, desc, delay }: { icon: any, title: string, desc: string, delay: number }) => (
+const ManifestoCard = ({ 
+  icon, 
+  title, 
+  desc, 
+  delay 
+}: { 
+  icon: React.ReactNode, 
+  title: string, 
+  desc: string, 
+  delay: number 
+}) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ delay }}
-    className="p-8 rounded-3xl bg-zinc-900/20 border border-white/5 hover:border-blue-500/30 transition-all group"
+    className="p-8 rounded-3xl bg-zinc-900/20 border border-white/5 hover:border-blue-500/30 transition-all group relative overflow-hidden"
   >
-    <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 group-hover:text-blue-400 group-hover:bg-blue-500/10 transition-colors mb-6">
-        {icon}
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    <div className="relative z-10">
+        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 group-hover:text-blue-400 group-hover:bg-blue-500/10 transition-colors mb-6">
+            {icon}
+        </div>
+        <h3 className="text-xl font-bold text-white mb-3 font-almarena">{title}</h3>
+        <p className="text-zinc-400 text-sm leading-relaxed">{desc}</p>
     </div>
-    <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-    <p className="text-zinc-400 text-sm leading-relaxed">{desc}</p>
   </motion.div>
 );
 
@@ -46,135 +64,175 @@ export default function AboutPage() {
                 transition={{ duration: 0.8 }}
             >
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-500/5 text-blue-400 text-[10px] font-mono font-bold uppercase tracking-widest mb-6">
-                    <Cpu size={12} />
-                    Who We Are
+                    <Terminal size={12} />
+                    Our Philosophy
                 </div>
                 <h1 className="text-5xl md:text-7xl font-bold font-almarena text-white leading-[1.1] mb-6">
-                    Architects of the <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">New Internet.</span>
+                    Technology for <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">Human Potential.</span>
                 </h1>
                 <p className="text-zinc-400 text-lg leading-relaxed mb-8 max-w-lg">
-                    ElevenX Solutions wasn't founded by marketers. It was founded by engineers who were tired of bloated code and slow websites. We believe speed is the ultimate feature.
+                    We are a collective of Pragmatic Programmers. We believe software isn&apos;t just about code—it&apos;s about craftsmanship, impact, and building the future responsibly.
                 </p>
                 <div className="flex gap-4">
-                    <Link href="/book" className="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors">
-                        Join the Movement
-                    </Link>
-                    <Link href="/work" className="px-6 py-3 bg-zinc-900 border border-white/10 text-white font-bold rounded-xl hover:bg-zinc-800 transition-colors">
-                        View Work
+                    <Link href="/book" className="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors flex items-center gap-2">
+                        Partner With Us
                     </Link>
                 </div>
             </motion.div>
 
-            {/* Abstract Code Visual */}
+            {/* Visual: The "Code" Block - kept abstract to show technical depth */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative"
             >
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-full blur-[100px]"></div>
-                <div className="relative bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-6 font-mono text-xs md:text-sm text-zinc-400 shadow-2xl">
-                    <div className="flex gap-2 mb-4 border-b border-white/5 pb-4">
-                        <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                        <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                        <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/10 to-purple-600/10 rounded-full blur-[100px]"></div>
+                <div className="relative bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-8 font-mono text-xs md:text-sm text-zinc-400 shadow-2xl">
+                    <div className="flex gap-2 mb-6 border-b border-white/5 pb-4">
+                        <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
+                        <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
                     </div>
-                    <div className="space-y-1">
-                        <p><span className="text-purple-400">const</span> <span className="text-blue-400">ElevenX</span> = <span className="text-purple-400">new</span> Agency({`{`}</p>
-                        <p className="pl-4">mission: <span className="text-green-400">'Dominate Digital'</span>,</p>
-                        <p className="pl-4">focus: [<span className="text-green-400">'Speed'</span>, <span className="text-green-400">'Scale'</span>, <span className="text-green-400">'Security'</span>],</p>
-                        <p className="pl-4">founded: <span className="text-orange-400">2024</span>,</p>
-                        <p className="pl-4">location: <span className="text-green-400">'Global'</span>,</p>
-                        <p>{`}`});</p>
-                        <br/>
-                        <p><span className="text-purple-400">await</span> ElevenX.<span className="text-blue-300">deploy</span>();</p>
-                        <p className="text-zinc-600">// System Ready...</p>
+                    <div className="space-y-3 leading-loose">
+                        <p className="text-zinc-500">  {"/* The 11X Manifesto */"}</p>
+                        <p><span className="text-purple-400">class</span> <span className="text-yellow-100">PragmaticAgency</span> <span className="text-purple-400">implements</span> <span className="text-yellow-100">Impact</span> {`{`}</p>
+                        <p className="pl-6"><span className="text-blue-400">constructor</span>() {`{`}</p>
+                        <p className="pl-12">this.<span className="text-blue-300">values</span> = [<span className="text-green-400">&apos;Craftsmanship&apos;</span>, <span className="text-green-400">&apos;Trust&apos;</span>, <span className="text-green-400">&apos;Harmony&apos;</span>];</p>
+                        <p className="pl-12">this.<span className="text-blue-300">vision</span> = <span className="text-green-400">&apos;Long Term Sustainability&apos;</span>;</p>
+                        <p className="pl-6">{`}`}</p>
+                        <p className="pl-6"><span className="text-blue-400">build</span>(<span className="text-orange-300">client</span>) {`{`}</p>
+                        <p className="pl-12"><span className="text-purple-400">return</span> client.<span className="text-blue-300">empower</span>().<span className="text-blue-300">scale</span>();</p>
+                        <p className="pl-6">{`}`}</p>
+                        <p>{`}`}</p>
                     </div>
                 </div>
             </motion.div>
         </div>
       </section>
 
-      {/* --- STATS SECTION --- */}
-      <section className="border-y border-white/10 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-                { label: "Lines of Code", value: 1000000, suffix: "+" },
-                { label: "Projects Shipped", value: 50, suffix: "+" },
-                { label: "Client Revenue", value: 10, suffix: "M+" },
-                { label: "Uptime", value: 99.9, suffix: "%" },
-            ].map((stat, i) => (
-                <div key={i} className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-white mb-2 flex justify-center items-baseline">
-                        <CountUp to={stat.value} duration={2} separator="," />
-                        <span className="text-blue-500 ml-1">{stat.suffix}</span>
-                    </div>
-                    <div className="text-xs font-mono text-zinc-500 uppercase tracking-widest">{stat.label}</div>
-                </div>
-            ))}
+      {/* --- THE PRAGMATIC STANDARD (Replaces Stats) --- */}
+      <section className="border-y border-white/10 bg-zinc-900/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+            <div className="flex flex-wrap justify-between items-center gap-8 md:gap-4">
+                 <div className="flex items-center gap-3">
+                    <BookOpen size={20} className="text-blue-500" />
+                    <span className="text-sm font-bold text-zinc-300">Life Long Learners</span>
+                 </div>
+                 <div className="hidden md:block w-px h-8 bg-white/10"></div>
+                 <div className="flex items-center gap-3">
+                    <Scale size={20} className="text-purple-500" />
+                    <span className="text-sm font-bold text-zinc-300">Responsible Finance</span>
+                 </div>
+                 <div className="hidden md:block w-px h-8 bg-white/10"></div>
+                 <div className="flex items-center gap-3">
+                    <ShieldCheck size={20} className="text-green-500" />
+                    <span className="text-sm font-bold text-zinc-300">No Broken Windows</span>
+                 </div>
+                 <div className="hidden md:block w-px h-8 bg-white/10"></div>
+                 <div className="flex items-center gap-3">
+                    <HeartHandshake size={20} className="text-orange-500" />
+                    <span className="text-sm font-bold text-zinc-300">Relationship Over Revenue</span>
+                 </div>
+            </div>
         </div>
       </section>
 
-      {/* --- VALUES GRID --- */}
+      {/* --- CORE PILLARS --- */}
       <section className="py-24 relative z-10 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold font-almarena text-white mb-4">Our Core Protocol</h2>
-            <p className="text-zinc-400">The non-negotiable principles that drive our engineering.</p>
+            <h2 className="text-3xl md:text-5xl font-bold font-almarena text-white mb-6">The 11X Approach</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
+                We don&apos;t just &quot;shippit.&quot; We engineer systems that last. 
+                Our approach is grounded in the belief that great software is a byproduct of great thinking.
+            </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6">
-            <ValueCard 
+        <div className="grid md:grid-cols-2 gap-6">
+            <ManifestoCard 
                 delay={0.1}
-                icon={<Zap size={24} />}
-                title="Extreme Performance"
-                desc="We treat milliseconds like gold. Every site we build is optimized for Core Web Vitals, ensuring near-instant load times."
+                icon={<Code2 size={24} />}
+                title="Software Craftsmanship"
+                desc="We view coding as an art form. We adhere to the 'Broken Windows' theory—we fix bad code immediately. We build solutions that are robust, readable, and maintainable, ensuring your tech debt stays at zero."
             />
-            <ValueCard 
+            <ManifestoCard 
                 delay={0.2}
-                icon={<Shield size={24} />}
-                title="Ironclad Security"
-                desc="Security isn't an addon; it's the foundation. We implement enterprise-grade firewalls and encryption by default."
+                icon={<Zap size={24} />}
+                title="Impact-Driven Engineering"
+                desc="What we build matters as much as how we build it. We actively seek projects that contribute to a better future. We aren't just a vendor; we are partners in your mission to create positive change."
             />
-            <ValueCard 
+            <ManifestoCard 
                 delay={0.3}
-                icon={<Globe size={24} />}
-                title="Global Scalability"
-                desc="Built on edge networks. Whether you have 100 visitors or 1 million, your infrastructure will handle the load automatically."
+                icon={<Mountain size={24} />}
+                title="Deep Work & Harmony"
+                desc="We embrace Work-Life Harmony. Operating with a 'Remote-First' mindset often from quiet, high-altitude environments, we prioritize deep focus over hustle culture. This clarity translates directly into the quality of your product."
+            />
+            <ManifestoCard 
+                delay={0.4}
+                icon={<ShieldCheck size={24} />}
+                title="The Long View"
+                desc="We are bootstrapped and independent. This gives us the freedom to value long-term sustainability over short-term profits. We practice responsible management to ensure we are here to support you for decades, not just quarters."
             />
         </div>
       </section>
 
-      {/* --- TEAM SECTION (Placeholder) --- */}
-      <section className="py-24 bg-zinc-900/20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6">
-             <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div>
-                    <h2 className="text-3xl md:text-5xl font-bold font-almarena text-white mb-4">The Engineers</h2>
-                    <p className="text-zinc-400 max-w-md">A distributed team of senior developers, designers, and system architects.</p>
-                </div>
-                <Link href="/book" className="hidden md:flex items-center gap-2 text-blue-400 hover:text-white transition-colors text-sm font-bold">
-                    Join the team <ArrowUpRight size={16} />
-                </Link>
-             </div>
+      {/* --- CULTURE / BOTTOM SECTION (Replaces Team) --- */}
+      <section className="py-24 bg-zinc-900/20 border-t border-white/5 relative overflow-hidden">
+        {/* Abstract background for 'Trust' */}
+        <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-900/10 to-transparent pointer-events-none"></div>
 
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[1, 2, 3].map((i) => (
-                    <div key={i} className="group relative overflow-hidden rounded-2xl bg-zinc-900 border border-white/5 aspect-[4/5]">
-                         {/* Replace with real team photos later */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
-                        <Image 
-                            src={`https://images.unsplash.com/photo-${i === 1 ? '1507003211169-0a1dd7228f2d' : i === 2 ? '1494790108377-be9c29b29330' : '1500648767791-00dcc994a43e'}?auto=format&fit=crop&q=80`}
-                            alt="Team Member"
-                            fill
-                            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                        />
-                        <div className="absolute bottom-0 left-0 p-6 z-20">
-                            <h3 className="text-xl font-bold text-white">Member Name</h3>
-                            <p className="text-blue-400 text-xs font-mono uppercase tracking-widest">Full Stack Engineer</p>
-                        </div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+             <div className="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-500/20 bg-green-500/5 text-green-400 text-[10px] font-mono font-bold uppercase tracking-widest mb-6">
+                        Sustainability
                     </div>
-                ))}
+                    <h2 className="text-4xl md:text-6xl font-bold font-almarena text-white mb-6">
+                        Growth rooted in <span className="text-zinc-500">Grounding.</span>
+                    </h2>
+                    <p className="text-zinc-400 text-lg leading-relaxed mb-6">
+                        We redefine talent. We champion potential over credentials and make mentorship a core value of our tribe. 
+                    </p>
+                    <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+                        Just as we nurture our code, we nurture our environment. We believe in being &quot;Bootstrapped and Independent,&quot; allowing us to stay true to our vision without external pressure. When you work with us, you get a team that is grounded, focused, and in it for the long haul.
+                    </p>
+                    
+                    <Link href="/book" className="text-white border-b border-white pb-1 hover:text-blue-400 hover:border-blue-400 transition-all font-mono uppercase tracking-widest text-sm">
+                        Join Our Collective &rarr;
+                    </Link>
+                </div>
+
+                {/* Abstract Visual Representation of "Harmony/Connection" */}
+                <div className="relative h-[400px] w-full rounded-3xl overflow-hidden border border-white/10 bg-black">
+                     <div className="absolute inset-0 flex items-center justify-center">
+                        {/* Central Node */}
+                        <div className="w-4 h-4 bg-white rounded-full shadow-[0_0_20px_white] z-20"></div>
+                        {/* Orbiting Nodes */}
+                        <motion.div 
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                            className="absolute w-64 h-64 border border-blue-500/30 rounded-full"
+                        >
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-blue-500 rounded-full"></div>
+                        </motion.div>
+                        <motion.div 
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                            className="absolute w-48 h-48 border border-purple-500/30 rounded-full"
+                        >
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-purple-500 rounded-full"></div>
+                        </motion.div>
+                        {/* Connecting Lines */}
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
+                     </div>
+                     <div className="absolute bottom-6 left-6 right-6">
+                        <div className="p-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl">
+                            <p className="text-xs text-zinc-400 font-mono">
+                                &quot;We build more than just software; we build connections between people, ideas, and positive change.&quot;
+                            </p>
+                        </div>
+                     </div>
+                </div>
              </div>
         </div>
       </section>
