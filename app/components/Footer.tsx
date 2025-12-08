@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import React from "react";
 import {
   Github,
@@ -123,19 +123,21 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+{/* Bottom Bar */}
         <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-600 font-mono">
           <p>
             &copy; {currentYear} ElevenX Solutions. Engineered for Growth.
           </p>
           <div className="flex gap-8 md:gap-12">
-            <a href="#" className="hover:text-zinc-400 transition-colors">
+            <Link href="/privacy" className="hover:text-zinc-400 transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-zinc-400 transition-colors">
+            </Link>
+            
+            <Link href="/terms" className="hover:text-zinc-400 transition-colors">
               Terms of Service
-            </a>
-            <a href="#" className="hover:text-zinc-400 transition-colors">
+            </Link>
+            
+            <a href="/sitemap.xml" className="hover:text-zinc-400 transition-colors">
               Sitemap
             </a>
           </div>
