@@ -63,6 +63,19 @@ const staggerContainer = {
   },
 };
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 // --- Sections ---
 
 const Hero = () => {
@@ -326,6 +339,98 @@ const Hero = () => {
 };
 
 
+// const Services = () => {
+//   const services = [
+//     {
+//       icon: <Layout className="text-white" size={24} />,
+//       title: "Website Development",
+//       desc: "Make your brand stand out online with high-performance, custom-engineered web applications.",
+//       color: "from-blue-600 to-blue-400",
+//     },
+//     {
+//       icon: <Book className="text-white" size={24} />,
+//       title: "Booking Systems",
+//       desc: "Custom booking engines that sync seamlessly with your calendar and payment gateways like Stripe.",
+//       color: "from-indigo-600 to-indigo-400",
+//     },
+//     {
+//       icon: <Globe className="text-white" size={24} />,
+//       title: "Influencer Marketing",
+//       desc: "Turn influencer power into unstoppable brand momentum. More reach, more trust, more sales.",
+//       color: "from-purple-600 to-purple-400",
+//     },
+//     {
+//       icon: <Database className="text-white" size={24} />,
+//       title: "API Development",
+//       desc: "Scalable REST and GraphQL APIs that serve as the backbone for your mobile and web ecosystem.",
+//       color: "from-teal-600 to-teal-400",
+//     },
+//   ];
+
+//   return (
+//     <section id="services" className="py-20 lg:py-24 bg-black relative">
+//       <div className="max-w-7xl mx-auto px-6">
+//         <motion.div
+//           initial="hidden"
+//           whileInView="visible"
+//           viewport={{ once: true, margin: "-100px" }}
+//           variants={fadeInUp}
+//           className="text-center mb-16"
+//         >
+//           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-almarena">
+//             Expertise That Matters
+//           </h2>
+//           <p className="text-zinc-400 max-w-3xl mx-auto text-lg leading-relaxed">
+//             Tell us how you work? ElevenX Solution will build you the system that works for you.
+//             <br className="hidden md:block" /> Built to grow, Built to win.
+//           </p>
+//         </motion.div>
+
+//         <motion.div
+//           initial="hidden"
+//           whileInView="visible"
+//           viewport={{ once: true, margin: "-50px" }}
+//           variants={staggerContainer}
+//           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+//         >
+//           {services.map((service, index) => (
+//             <motion.div
+//               key={index}
+//               variants={{
+//                 hidden: { opacity: 0, y: 20 },
+//                 visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+//               }}
+//               whileHover={{ y: -5 }}
+//               className="bg-zinc-900/30 p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
+//             >
+//               <div
+//                 className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 rounded-bl-full blur-2xl transition-opacity duration-500`}
+//               ></div>
+
+//               <div
+//                 className={`mb-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}
+//               >
+//                 {service.icon}
+//               </div>
+              
+//               <h3 className="text-xl font-bold text-white mb-4">
+//                 {service.title}
+//               </h3>
+//               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+//                 {service.desc}
+//               </p>
+
+//               <div className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
+//                 Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+//               </div>
+//             </motion.div>
+//           ))}
+//         </motion.div>
+//       </div>
+//     </section>
+//   );
+// };
+
 const Services = () => {
   const services = [
     {
@@ -356,7 +461,15 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 lg:py-24 bg-black relative">
-      <div className="max-w-7xl mx-auto px-6">
+      {/* Subtle moving gradient background */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-72 max-w-3xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-teal-500/10 blur-3xl"
+        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="max-w-7xl mx-auto px-6 relative">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -383,32 +496,76 @@ const Services = () => {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              variants={cardVariants}
+              whileHover={{
+                y: -8,
+                scale: 1.02,
+                rotateX: 2,
+                rotateY: -2,
               }}
-              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.98, rotateX: 0, rotateY: 0 }}
+              transition={{ type: "spring", stiffness: 220, damping: 18 }}
               className="bg-zinc-900/30 p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
             >
+              {/* Animated diagonal shimmer on hover */}
+              <motion.div
+                className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100"
+                initial={{ x: "-120%" }}
+                animate={{ x: ["-120%", "120%"] }}
+                transition={{
+                  duration: 1.4,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  ease: "easeInOut",
+                }}
+                style={{
+                  background:
+                    "linear-gradient(120deg, transparent, rgba(255,255,255,0.16), transparent)",
+                }}
+              />
+
+              {/* Soft color gradient burst in top-right */}
               <div
                 className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 rounded-bl-full blur-2xl transition-opacity duration-500`}
               ></div>
 
-              <div
-                className={`mb-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}
+              {/* Floating icon */}
+              <motion.div
+                className={`mb-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg relative z-10`}
+                animate={{
+                  y: [0, -4, 0],
+                }}
+                transition={{
+                  duration: 3 + index * 0.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 {service.icon}
-              </div>
-              
-              <h3 className="text-xl font-bold text-white mb-4">
+              </motion.div>
+
+              <h3 className="text-xl font-bold text-white mb-4 relative z-10">
                 {service.title}
               </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+              <p className="text-zinc-400 text-sm leading-relaxed mb-6 relative z-10">
                 {service.desc}
               </p>
 
-              <div className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
-                Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <div className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer relative z-10">
+                <span className="relative">
+                  <motion.span
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-white/30 origin-left"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 * index }}
+                  />
+                  Learn more
+                </span>
+                <ChevronRight
+                  size={14}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
               </div>
             </motion.div>
           ))}
