@@ -61,9 +61,9 @@ const Navbar: React.FC = () => {
             onClick={() => setIsOpen(false)}
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-105 transition-transform duration-300 border border-white/10">
-              <span className="font-almarena font-bold text-white text-lg tracking-tighter">11X</span>
+              <span className="font-manrope font-bold text-white text-lg tracking-tighter">11X</span>
             </div>
-            <span className={`font-bold text-lg tracking-tight transition-colors ${scrolled || isOpen ? "text-white" : "text-white/90"}`}>
+            <span className={`font-bold font-almarena text-lg tracking-tight transition-colors ${scrolled || isOpen ? "text-white" : "text-white/90"}`}>
               Solutions
             </span>
           </a>
