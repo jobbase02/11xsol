@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 
+const TITLE = "Services | ElevenXsolutions - Custom Web Development & SaaS Engineering";
+const DESCRIPTION = "We architect custom, high-performance digital ecosystems. Specializing in custom web applications, SaaS product engineering, and headless e-commerce solutions.";
+const OG_IMAGE = "/og-services.jpg";
+
 export const metadata: Metadata = {
-  title: "Services | ElevenXsolutions - Custom Web Development & SaaS Engineering",
-  description: "We architect custom, high-performance digital ecosystems. Specializing in custom web applications, SaaS product engineering, and headless e-commerce solutions.",
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Services | ElevenXsolutions - Custom Web Development & SaaS Engineering",
-    description: "We architect custom, high-performance digital ecosystems. Specializing in custom web applications, SaaS product engineering, and headless e-commerce solutions.",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
     url: "https://elevenxsolutions.com/services",
     images: [
       {
-        url: "/og-services.jpg",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "ElevenXsolutions Services",
@@ -19,9 +23,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Services | ElevenXsolutions - Custom Web Development & SaaS Engineering",
-    description: "We architect custom, high-performance digital ecosystems. Specializing in custom web applications, SaaS product engineering, and headless e-commerce solutions.",
-    images: ["/og-services.jpg"],
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 
