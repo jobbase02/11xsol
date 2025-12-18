@@ -105,7 +105,6 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-const Hero = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
       <GridBackground />
@@ -221,11 +220,15 @@ const Hero = () => {
                 {/* CHANGED: Removed blue color */}
                 <span className="text-white">%</span>
               </div>
-              <div>
-                 <h4 className="text-3xl font-bold text-white">&lt;100ms</h4>
-                 <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Latency API</p>
+              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
+                Uptime SLA
               </div>
-           </motion.div>
+            </div>
+            <div>
+              <h4 className="text-xl md:text-2xl font-bold text-white">&lt;100ms</h4>
+              <p className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">Latency API</p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* RIGHT COLUMN: The Visual Hook */}

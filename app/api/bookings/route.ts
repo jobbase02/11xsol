@@ -3,6 +3,14 @@ import { supabase } from '@/lib/supabase'; // Ensure this matches your actual ex
 
 export async function POST(request: Request) {
   try {
+    // Check if supabase is configured
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database configuration is missing. Please contact support.' },
+        { status: 503 }
+      );
+    }
+
     // 1. Parse the incoming JSON body
     const body = await request.json();
     const { name, email, service, plan, message, utm } = body;

@@ -10,6 +10,14 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   try {
+    // Check if supabase is configured
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database configuration is missing' },
+        { status: 503 }
+      );
+    }
+
     // Optional security check
     // const authHeader = request.headers.get('authorization');
     // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
