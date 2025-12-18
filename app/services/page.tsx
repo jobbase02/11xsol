@@ -65,7 +65,7 @@ const ServiceSection = ({ title, desc, features, icon, align = "left" }: Service
             {desc}
         </p>
         <ul className="space-y-4">
-            {features.map((item: string) => (
+            {features.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-zinc-300">
                     <CheckCircle2 className="text-blue-500 shrink-0 mt-1" size={18} />
                     <span>{item}</span>
@@ -161,7 +161,7 @@ export default function ServicesPage() {
                     { title: "03. Optimization", desc: "Once features are built, we obsess over speed. We optimize images, fonts, and scripts to ensure you hit that 100/100 Lighthouse score." },
                     { title: "04. Handover", desc: "We don't hold your code hostage. You receive full repository access, documentation, and a training session on how to manage your content." }
                 ].map((step, i) => (
-                    <div key={i} className="group">
+                    <div key={step.title} className="group">
                         <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{step.title}</h3>
                         <p className="text-zinc-400 leading-relaxed max-w-lg">{step.desc}</p>
                     </div>
