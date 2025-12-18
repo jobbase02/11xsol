@@ -164,21 +164,10 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="relative h-full min-h-[500px] flex items-center justify-center"
         >
-          {/* REPLACE THIS VIDEO SRC WITH A TECH ABSTRACT VIDEO 
-             Good free sources: Pexels, Mixkit (Search: "Abstract Technology", "Network", "Server")
-          */}
           <div className="relative w-full aspect-square rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+            {/* Animated gradient background - replaces external video for better performance and privacy */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 animate-pulse opacity-80"></div>
             <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay z-10"></div>
-            <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="w-full h-full object-cover opacity-80"
-            >
-                {/* Placeholder Video URL - Replace with a local file in public/ later */}
-                <source src="https://cdn.pixabay.com/video/2019/04/20/22908-331624367_large.mp4" type="video/mp4" />
-            </video>
             
             {/* Overlay UI Card */}
             <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl z-20">
