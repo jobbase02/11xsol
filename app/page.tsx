@@ -466,7 +466,7 @@ const OurStory = () => {
             viewport={{ once: true }}
             className="max-w-2xl"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-white font-almarena mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-white font-manrope mb-6">
               The <span className="text-blue-500">ElevenX</span> Origin
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed">
