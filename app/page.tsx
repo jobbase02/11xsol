@@ -175,6 +175,7 @@ const Hero = () => {
                 muted 
                 playsInline 
                 className="w-full h-full object-cover opacity-80"
+                aria-label="Abstract technology background video showcasing digital innovation"
             >
                 {/* Placeholder Video URL - Replace with a local file in public/ later */}
                 <source src="https://cdn.pixabay.com/video/2019/04/20/22908-331624367_large.mp4" type="video/mp4" />
