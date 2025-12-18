@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
   }, [isOpen]);
 
   const navLinks: NavLink[] = [
-    { name: "Services", href: "#services" },
+    { name: "Services", href: "/services" },
     { name: "Work", href: "/work" },
     { name: "About", href: "/about" },
     { name: "Insights", href: "/blogs" }, // Renamed for professional feel

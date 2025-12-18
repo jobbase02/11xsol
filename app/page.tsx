@@ -26,6 +26,7 @@ import {
 import GlareHover from "@/components/GlareHover";
 import CountUp from "@/components/CountUp";
 import Faq from "./components/Faqs";
+import Link from "next/link";
 
 // --- Utility Components ---
 
@@ -78,6 +79,7 @@ const cardVariants = {
 
 // --- Sections ---
 
+// Inside app/page.tsx
 const Hero = () => {
   // Simple Typewriter Logic for the code block
   const [codeLines, setCodeLines] = useState<string[]>([]);
@@ -103,10 +105,12 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
+const Hero = () => {
   return (
-    <section className="relative min-h-[85vh] flex items-center pt-26 lg:pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
       <GridBackground />
-
+        
+        {/* LEFT COLUMN: Copy (Same as before) */}
       <div className="max-w-6xl mx-auto px-6 w-full z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
         {/* LEFT COLUMN */}
         {/* CHANGED: Added 'h-full flex flex-col justify-between py-4' to spread content vertically */}
@@ -114,36 +118,33 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="relative h-full flex flex-col justify-between py-2 md:py-6 gap-8 lg:gap-0"
+          className="relative flex flex-col justify-center gap-8"
         >
-          {/* Top Content Wrapper */}
           <div className="space-y-6">
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/20 border border-blue-500/20 text-blue-400 text-xs font-semibold backdrop-blur-sm hover:bg-blue-950/40 transition-colors cursor-default"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/20 border border-blue-500/20 text-blue-400 text-xs font-semibold backdrop-blur-sm"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              Accepting New Clients for 2025
+              Accepting New Clients
             </motion.div>
 
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold font-almarena text-white leading-[1.1] tracking-tight"
+              className="text-5xl md:text-7xl font-bold font-almarena text-white leading-[1.05] tracking-tight"
             >
-              Want Growth? <br />
+              We Engineer <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                Welcome
-              </span>{" "}
-              To <br />
-              The Right Place.
+                Digital Dominance.
+              </span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
-              className="text-base md:text-lg text-zinc-400 max-w-lg leading-relaxed"
+              className="text-lg text-zinc-400 max-w-lg leading-relaxed"
             >
               ElevenXSolutions transforms your ideas into scalable, high
               performance web applications. We build digital weapons your
@@ -152,33 +153,21 @@ const Hero = () => {
 
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col sm:flex-row items-center gap-4 font-almarena pt-2"
+              className="flex flex-col sm:flex-row items-center gap-4 pt-4"
             >
-              {/* CHANGED: Updated Link to /book?utm... */}
               <a
-                href="/book?utm_source=landing_page_hero"
-                className="px-6 py-3 w-full md:w-fit bg-white text-black font-bold text-base rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                href="/book?utm_source=hero"
+                className="px-8 py-4 w-full md:w-fit bg-white text-black font-bold text-lg rounded-xl hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
-                Start Project <ArrowRight size={18} />
+                Initialize Project <ArrowRight size={20} />
               </a>
 
-              <div className="w-full md:w-fit h-full">
-                <GlareHover
-                  glareColor="#ffffff"
-                  glareOpacity={0.1}
-                  glareAngle={-30}
-                  glareSize={200}
-                  transitionDuration={800}
-                >
-                  {/* CHANGED: Text to 'Insights' and Link to /blogs */}
-                  <a
-                    href="/blogs"
-                    className="px-6 py-3 w-full md:w-fit block bg-zinc-900/80 border border-zinc-800 text-white font-medium text-base rounded-xl hover:bg-zinc-800 transition-all text-center backdrop-blur-md"
-                  >
-                    Insights
-                  </a>
-                </GlareHover>
-              </div>
+              <a
+                href="/work"
+                className="px-8 py-4 w-full md:w-fit block bg-zinc-900 border border-zinc-800 text-white font-medium text-lg rounded-xl hover:bg-zinc-800 transition-all text-center"
+              >
+                View Case Studies
+              </a>
             </motion.div>
           </div>
 
@@ -232,14 +221,14 @@ const Hero = () => {
                 {/* CHANGED: Removed blue color */}
                 <span className="text-white">%</span>
               </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Retention
+              <div>
+                 <h4 className="text-3xl font-bold text-white">&lt;100ms</h4>
+                 <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Latency API</p>
               </div>
-            </div>
-          </motion.div>
+           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN (3D Tech Visual) */}
+        {/* RIGHT COLUMN: The Visual Hook */}
         <motion.div
   initial={{ opacity: 0, scale: 0.92, y: 20 }}
   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -605,7 +594,9 @@ const Services = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 * index }}
                   />
-                  Learn more
+                  <Link href="/services" className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
+   Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+</Link>
                 </span>
                 <ChevronRight
                   size={14}
