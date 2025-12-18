@@ -230,92 +230,48 @@ const Hero = () => {
 
         {/* RIGHT COLUMN: The Visual Hook */}
         <motion.div
-  initial={{ opacity: 0, scale: 0.92, y: 20 }}
-  animate={{ opacity: 1, scale: 1, y: 0 }}
-  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-  whileHover={{ y: -6 }}
-  className="relative flex items-center justify-center lg:justify-end py-6 lg:py-0"
->
-  <div className="relative w-full max-w-sm aspect-square md:aspect-[4/5] lg:aspect-[4/5] mx-auto">
-
-    {/* Animated Glow */}
-    <motion.div
-      animate={{
-        opacity: [0.4, 0.7, 0.4],
-        scale: [1, 1.05, 1],
-        rotate: [3, 6, 3],
-      }}
-      transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-      className="absolute inset-0 bg-gradient-to-tr from-blue-600/30 to-purple-600/30 rounded-[3rem] blur-3xl"
-    />
-
-    {/* Main Card */}
-    <motion.div
-      animate={{ y: [0, -2, 0] }}
-      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-      className="absolute inset-0 bg-[#0A0A0A] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col z-10"
-    >
-
-      {/* Header */}
-      <motion.div
-        animate={{ opacity: [0.9, 1, 0.9] }}
-        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5"
-      >
-        <div className="flex gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/30" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/30" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/30" />
-        </div>
-        <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-          <Terminal size={10} />
-          <span>server-main.tsx</span>
-        </div>
-      </motion.div>
-
-      {/* Code Content */}
-      <div className="flex-1 p-5 md:p-6 font-mono text-xs md:text-sm space-y-3 relative">
-        <div className="absolute top-0 right-8 w-[1px] h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-
-        <div className="space-y-2">
-          {codeLines.map((line, idx) => {
-            if (!line) return null;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="flex gap-3"
-              >
-                <span className="text-zinc-600 select-none">
-                  {(idx + 1).toString().padStart(2, "0")}
-                </span>
-                <span
-                  className="text-zinc-200"
-                  dangerouslySetInnerHTML={{
-                    __html: (line || "").replace(
-                      /'(.*?)'/g,
-                      "<span class='text-white/90'>'$1'</span>"
-                    ),
-                  }}
-                />
-              </motion.div>
-            );
-          })}
-
-          {/* Cursor */}
-          <motion.div
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-            className="w-1.5 h-4 bg-white/80 ml-7 rounded-sm"
-          />
-        </div>
-
-        {/* System Status */}
-        <div className="absolute bottom-6 left-6 right-6 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
-          <div className="text-zinc-400 text-[9px] uppercase tracking-widest mb-1.5 font-bold">
-            System Status
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="relative h-full min-h-[500px] flex items-center justify-center"
+        >
+          {/* REPLACE THIS VIDEO SRC WITH A TECH ABSTRACT VIDEO 
+             Good free sources: Pexels, Mixkit (Search: "Abstract Technology", "Network", "Server")
+          */}
+          <div className="relative w-full aspect-square rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+            <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay z-10"></div>
+            <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover opacity-80"
+                aria-label="Abstract technology background video showcasing digital innovation"
+            >
+                {/* Placeholder Video URL - Replace with a local file in public/ later */}
+                <source src="https://cdn.pixabay.com/video/2019/04/20/22908-331624367_large.mp4" type="video/mp4" />
+            </video>
+            
+            {/* Overlay UI Card */}
+            <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl z-20">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                        <CheckCircle2 className="text-green-500" size={20} />
+                    </div>
+                    <div>
+                        <div className="text-white font-bold text-sm">System Optimization</div>
+                        <div className="text-zinc-400 text-xs">Performance Index: 100/100</div>
+                    </div>
+                </div>
+                <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+                    <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.5, ease: "circOut" }}
+                        className="h-full bg-green-500"
+                    />
+                </div>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
