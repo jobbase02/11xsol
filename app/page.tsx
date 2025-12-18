@@ -26,6 +26,7 @@ import {
 import GlareHover from "@/components/GlareHover";
 import CountUp from "@/components/CountUp";
 import Faq from "./components/Faqs";
+import Link from "next/link";
 
 // --- Utility Components ---
 
@@ -78,260 +79,131 @@ const cardVariants = {
 
 // --- Sections ---
 
+// Inside app/page.tsx
+
 const Hero = () => {
-  // Simple Typewriter Logic for the code block
-  const [codeLines, setCodeLines] = useState<string[]>([]);
-  const fullCode = [
-    "interface Performance {",
-    "  speed: 'Lightning';",
-    "  security: 'FortKnox';",
-    "  scale: 'Infinite';",
-    "}"
-  ];
-
-  useEffect(() => {
-    let currentLine = 0;
-    const interval = setInterval(() => {
-      if (currentLine < fullCode.length) {
-        setCodeLines((prev) => [...prev, fullCode[currentLine]]);
-        currentLine++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 600); 
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative min-h-[85vh] flex items-center pt-26 lg:pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
       <GridBackground />
 
-      <div className="max-w-6xl mx-auto px-6 w-full z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
+      <div className="max-w-7xl mx-auto px-6 w-full z-10 grid lg:grid-cols-2 gap-12 items-center">
         
-        {/* LEFT COLUMN */}
-        {/* CHANGED: Added 'h-full flex flex-col justify-between py-4' to spread content vertically */}
+        {/* LEFT COLUMN: Copy (Same as before) */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="relative h-full flex flex-col justify-between py-2 md:py-6 gap-8 lg:gap-0"
+          className="relative flex flex-col justify-center gap-8"
         >
-          {/* Top Content Wrapper */}
           <div className="space-y-6">
             <motion.div
               variants={fadeInUp}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/20 border border-blue-500/20 text-blue-400 text-xs font-semibold backdrop-blur-sm hover:bg-blue-950/40 transition-colors cursor-default"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/20 border border-blue-500/20 text-blue-400 text-xs font-semibold backdrop-blur-sm"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              Accepting New Clients for 2025
+              Accepting New Clients
             </motion.div>
 
             <motion.h1
               variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold font-almarena text-white leading-[1.1] tracking-tight"
+              className="text-5xl md:text-7xl font-bold font-almarena text-white leading-[1.05] tracking-tight"
             >
-              Want Growth? <br />
+              We Engineer <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                Welcome
-              </span>{" "}
-              To <br />
-              The Right Place.
+                Digital Dominance.
+              </span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
-              className="text-base md:text-lg text-zinc-400 max-w-lg leading-relaxed"
+              className="text-lg text-zinc-400 max-w-lg leading-relaxed"
             >
-              ElevenXSolutions transforms your ideas into scalable,
-              high performance web applications. We build digital weapons your business can win with.
+              Stop building websites. Start building systems. ElevenX transforms scattered ideas into high-performance, scalable digital infrastructure.
             </motion.p>
 
             <motion.div
               variants={fadeInUp}
-              className="flex flex-col sm:flex-row items-center gap-4 font-almarena pt-2"
+              className="flex flex-col sm:flex-row items-center gap-4 pt-4"
             >
-              {/* CHANGED: Updated Link to /book?utm... */}
               <a
-                href="/book?utm_source=landing_page_hero"
-                className="px-6 py-3 w-full md:w-fit bg-white text-black font-bold text-base rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                href="/book?utm_source=hero"
+                className="px-8 py-4 w-full md:w-fit bg-white text-black font-bold text-lg rounded-xl hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
-                Start Project <ArrowRight size={18} />
+                Initialize Project <ArrowRight size={20} />
               </a>
 
-              <div className="w-full md:w-fit h-full">
-                <GlareHover
-                  glareColor="#ffffff"
-                  glareOpacity={0.1}
-                  glareAngle={-30}
-                  glareSize={200}
-                  transitionDuration={800}
-                >
-                  {/* CHANGED: Text to 'Insights' and Link to /blogs */}
-                  <a
-                    href="/blogs"
-                    className="px-6 py-3 w-full md:w-fit block bg-zinc-900/80 border border-zinc-800 text-white font-medium text-base rounded-xl hover:bg-zinc-800 transition-all text-center backdrop-blur-md"
-                  >
-                    Insights
-                  </a>
-                </GlareHover>
-              </div>
+              <a
+                href="/work"
+                className="px-8 py-4 w-full md:w-fit block bg-zinc-900 border border-zinc-800 text-white font-medium text-lg rounded-xl hover:bg-zinc-800 transition-all text-center"
+              >
+                View Case Studies
+              </a>
             </motion.div>
           </div>
-
-          {/* Stats Section */}
-          {/* CHANGED: Added 'w-full justify-between' to take whole width and 'text-white' for icons */}
-          <motion.div
-            variants={fadeInUp}
-            className="w-full flex justify-between items-center border-t border-white/5 pt-6 mt-4"
-          >
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp from={0} to={5} separator="," direction="up" duration={1} />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">+</span>
+          
+           {/* Trust Indicators */}
+           <motion.div variants={fadeInUp} className="pt-8 border-t border-white/10 flex gap-8">
+              <div>
+                 <h4 className="text-3xl font-bold text-white">99.9%</h4>
+                 <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Uptime Guaranteed</p>
               </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Years Exp.
+              <div>
+                 <h4 className="text-3xl font-bold text-white">&lt;100ms</h4>
+                 <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">Latency API</p>
               </div>
-            </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp from={0} to={100} separator="," direction="up" duration={1} />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">%</span>
-              </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Custom Built
-              </div>
-            </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp from={0} to={98} separator="," direction="up" duration={1} />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">%</span>
-              </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Retention
-              </div>
-            </div>
-          </motion.div>
+           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN (3D Tech Visual) */}
+        {/* RIGHT COLUMN: The Visual Hook */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative flex items-center justify-center lg:justify-end py-6 lg:py-0"
+          className="relative h-full min-h-[500px] flex items-center justify-center"
         >
-          <div className="relative w-full max-w-sm aspect-square md:aspect-[4/5] lg:aspect-[4/5] mx-auto">
-            {/* Glow behind */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/30 to-purple-600/30 rounded-[3rem] rotate-3 blur-3xl"></div>
-
-            {/* Main Card */}
-            <div className="absolute inset-0 bg-[#0A0A0A] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col z-10">
-              {/* Header */}
-              <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-                <div className="flex gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+          {/* REPLACE THIS VIDEO SRC WITH A TECH ABSTRACT VIDEO 
+             Good free sources: Pexels, Mixkit (Search: "Abstract Technology", "Network", "Server")
+          */}
+          <div className="relative w-full aspect-square rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+            <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay z-10"></div>
+            <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover opacity-80"
+            >
+                {/* Placeholder Video URL - Replace with a local file in public/ later */}
+                <source src="https://cdn.pixabay.com/video/2019/04/20/22908-331624367_large.mp4" type="video/mp4" />
+            </video>
+            
+            {/* Overlay UI Card */}
+            <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl z-20">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                        <CheckCircle2 className="text-green-500" size={20} />
+                    </div>
+                    <div>
+                        <div className="text-white font-bold text-sm">System Optimization</div>
+                        <div className="text-zinc-400 text-xs">Performance Index: 100/100</div>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-                  <Terminal size={10} />
-                  <span>server-main.tsx</span>
-                </div>
-              </div>
-
-              {/* Code Content */}
-              <div className="flex-1 p-5 md:p-6 font-mono text-xs md:text-sm space-y-3 relative">
-                <div className="absolute top-0 right-8 w-[1px] h-full bg-gradient-to-b from-transparent via-blue-500/10 to-transparent"></div>
-
-                <div className="space-y-2">
-                  {codeLines.map((line, idx) => {
-                     if (!line) return null;
-                     return (
-                      <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex gap-3"
-                      >
-                        <span className="text-zinc-700 select-none">{(idx + 1).toString().padStart(2, '0')}</span>
-                        <span dangerouslySetInnerHTML={{ 
-                          __html: (line || "")
-                            .replace("interface", "<span class='text-purple-400'>interface</span>")
-                            .replace("Performance", "<span class='text-yellow-100'>Performance</span>")
-                            .replace("speed:", "<span class='text-blue-400'>speed:</span>")
-                            .replace("security:", "<span class='text-blue-400'>security:</span>")
-                            .replace("scale:", "<span class='text-blue-400'>scale:</span>")
-                            .replace(/'(.*?)'/g, "<span class='text-green-400'>'$1'</span>")
-                        }} />
-                      </motion.div>
-                     );
-                  })}
-                  
-                  {/* Blinking Cursor */}
-                  <motion.div 
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ repeat: Infinity, duration: 0.8 }}
-                    className="w-1.5 h-4 bg-blue-500 ml-7"
-                  />
-                </div>
-
-                <div className="absolute bottom-6 left-6 right-6 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 backdrop-blur-sm">
-                  <div className="text-blue-300 text-[9px] uppercase tracking-widest mb-1.5 font-bold">
-                    Deploy Status
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-                    <span className="text-white font-bold text-xs">
-                      Production Ready
-                    </span>
-                  </div>
-                  <div className="mt-2 h-0.5 w-full bg-blue-900/30 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 1.5, ease: "circOut", delay: 1 }}
-                      className="h-full bg-gradient-to-r from-blue-600 to-indigo-400"
+                <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+                    <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.5, ease: "circOut" }}
+                        className="h-full bg-green-500"
                     />
-                  </div>
                 </div>
-              </div>
             </div>
-
-            {/* Floating Elements */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="absolute -right-4 top-20 bg-zinc-900/90 backdrop-blur-xl p-3 rounded-xl border border-zinc-800 shadow-2xl z-20"
-            >
-              <Zap className="text-yellow-400 w-6 h-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]" />
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 5,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-              className="absolute -left-8 bottom-32 bg-zinc-900/90 backdrop-blur-xl p-3 rounded-xl border border-zinc-800 shadow-2xl z-20 flex items-center gap-2"
-            >
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-600/20">
-                <BarChart className="text-white w-4 h-4" />
-              </div>
-              <div>
-                <div className="text-[10px] text-zinc-400">Growth</div>
-                <div className="text-white font-bold text-sm">+114%</div>
-              </div>
-            </motion.div>
           </div>
+
+          {/* Background Glow */}
+          <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-600/20 blur-[120px] rounded-full"></div>
         </motion.div>
       </div>
     </section>
@@ -560,7 +432,9 @@ const Services = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 * index }}
                   />
-                  Learn more
+                  <Link href="/services" className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
+   Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+</Link>
                 </span>
                 <ChevronRight
                   size={14}
