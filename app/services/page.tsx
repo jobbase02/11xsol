@@ -21,7 +21,15 @@ const TechGridBackground = () => (
   </div>
 );
 
-const ServiceSection = ({ title, desc, features, icon, align = "left" }: any) => (
+interface ServiceSectionProps {
+  title: string;
+  desc: string;
+  features: string[];
+  icon: React.ReactNode;
+  align?: "left" | "right";
+}
+
+const ServiceSection = ({ title, desc, features, icon, align = "left" }: ServiceSectionProps) => (
   <motion.div 
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
