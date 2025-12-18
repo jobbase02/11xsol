@@ -65,7 +65,7 @@ const ServiceSection = ({ title, desc, features, icon, align = "left" }: Service
             {desc}
         </p>
         <ul className="space-y-4">
-            {features.map((item: string) => (
+            {features.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-zinc-300">
                     <CheckCircle2 className="text-blue-500 shrink-0 mt-1" size={18} />
                     <span>{item}</span>
