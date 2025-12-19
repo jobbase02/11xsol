@@ -1,7 +1,7 @@
 Targets #ISSUE_ID
 
 <!---
-If there is an open issue, please link to the issue here by replacing [ISSUE_ID]. For eg. #1202
+If there is an open issue, please link to the issue here by replacing [ISSUE_ID]. For example, #1202
 -->
 
 ## Description of the changes
