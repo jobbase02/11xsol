@@ -1010,7 +1010,7 @@ const InfiniteTestimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-black overflow-hidden relative border-t border-white/5">
+    <section className="py-10 lg:py-24  bg-black overflow-hidden relative border-t border-white/5">
       {/* Background Tech Grid (Consistent with OurStory) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 

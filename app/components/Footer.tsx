@@ -74,11 +74,11 @@ const Footer = () => {
              <div>
                 <h4 className="text-white font-bold mb-8 text-lg">Services</h4>
                 <ul className="space-y-4 text-base text-zinc-500">
-                   <li><a href="#services" className="hover:text-blue-400 transition-colors">Web Development</a></li>
-                   <li><a href="#services" className="hover:text-blue-400 transition-colors">SaaS Engineering</a></li>
-                   <li><a href="#services" className="hover:text-blue-400 transition-colors">UI/UX Design</a></li>
-                   <li><a href="#services" className="hover:text-blue-400 transition-colors">API Integration</a></li>
-                   <li><a href="#services" className="hover:text-blue-400 transition-colors">SEO Optimization</a></li>
+                   <li><a href="/WebDevelopment" className="hover:text-blue-400 transition-colors">Web Development</a></li>
+                   <li><a href="/saasengineering" className="hover:text-blue-400 transition-colors">SaaS Engineering</a></li>
+                   <li><a href="/ui-ux-design" className="hover:text-blue-400 transition-colors">UI/UX Design</a></li>
+                   <li><a href="/api-integration" className="hover:text-blue-400 transition-colors">API Integration</a></li>
+                   <li><a href="/seo-optimization" className="hover:text-blue-400 transition-colors">SEO Optimization</a></li>
                 </ul>
              </div>
 
@@ -86,11 +86,11 @@ const Footer = () => {
              <div>
                 <h4 className="text-white font-bold mb-8 text-lg">Company</h4>
                 <ul className="space-y-4 text-base text-zinc-500">
-                   <li><a href="#aboutus" className="hover:text-blue-400 transition-colors">About Us</a></li>
-                   <li><a href="#portfolio" className="hover:text-blue-400 transition-colors">Our Work</a></li>
+                   <li><a href="/about" className="hover:text-blue-400 transition-colors">About Us</a></li>
+                   <li><a href="/work" className="hover:text-blue-400 transition-colors">Our Work</a></li>
                    <li><a href="/blogs" className="hover:text-blue-400 transition-colors">Insights / Blog</a></li>
-                   <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
-                   <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
+                   <li><a href="/book" className="hover:text-blue-400 transition-colors">Contact</a></li>
+                   {/* <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li> */}
                 </ul>
              </div>
 
@@ -107,8 +107,7 @@ const Footer = () => {
                    <li>
                       <a href="tel:+1234567890" className="flex items-center gap-3 hover:text-blue-400 transition-colors group">
                          <Phone size={18} className="text-zinc-600 group-hover:text-blue-500 transition-colors" />
-                         +91 (Business Inquiry)
-                      </a>
+                         +91 8630377915                     </a>
                    </li>
                    <li className="flex items-start gap-3">
                        <MapPin size={18} className="text-zinc-600 mt-1 flex-shrink-0" />
