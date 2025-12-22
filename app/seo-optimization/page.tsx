@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   Search,
   BarChart3,
   Globe,
   Gauge,
-  ShieldCheck,
 } from "lucide-react";
 import img from "@/public/seo.jpg"
 
@@ -54,16 +54,16 @@ export default function SEOOptimizationPage() {
             </h1>
 
             <p className="text-zinc-400 max-w-xl">
-              We don’t chase keywords — we engineer SEO foundations that drive
+              We don&apos;t chase keywords — we engineer SEO foundations that drive
               consistent traffic, higher rankings, and real business growth.
             </p>
 
-            <a
+            <Link
               href="/book"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
             >
               Optimize Your Website <ArrowRight size={16} />
-            </a>
+            </Link>
           </motion.div>
 
           {/* Hero Image */}

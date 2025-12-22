@@ -19,9 +19,10 @@ export async function GET() {
     }
 
     return NextResponse.json({ ok: true, rows: data }, { status: 200 });
-  } catch (err: any) {
-    console.error("Unhandled GET /api/bookings error:", err);
-    return NextResponse.json({ error: "Internal server error", details: String(err?.message || err) }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("Unhandled GET /api/bookings error:", msg);
+    return NextResponse.json({ error: "Internal server error", details: msg }, { status: 500 });
   }
 }
 
@@ -48,8 +49,9 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ ok: true, data });
-  } catch (err: any) {
-    console.error("API POST error:", err);
-    return NextResponse.json({ error: "Internal server error", details: String(err?.message || err) }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("API POST error:", msg);
+    return NextResponse.json({ error: "Internal server error", details: msg }, { status: 500 });
   }
 }

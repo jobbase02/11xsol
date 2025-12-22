@@ -8,7 +8,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 // Force this route to be dynamic so it doesn't cache the DB result
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // Check if supabase is configured
     if (!supabase) {
@@ -153,10 +153,11 @@ export async function GET(request: Request) {
           results.push({ id, status: 'success' });
         }
 
-      } catch (emailError: any) {
-        console.error(`Failed to email ID ${id}:`, emailError);
+      } catch (emailError: unknown) {
+        const msg = emailError instanceof Error ? emailError.message : String(emailError);
+        console.error(`Failed to email ID ${id}:`, msg);
         // Important: We do NOT update 'seen' here, so the script will try again next time.
-        results.push({ id, status: 'failed_email', error: emailError.message });
+        results.push({ id, status: 'failed_email', error: msg });
       }
     }
 
@@ -166,10 +167,11 @@ export async function GET(request: Request) {
       details: results 
     });
 
-  } catch (err: any) {
-    console.error('Cron Job Error:', err);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('Cron Job Error:', msg);
     return NextResponse.json(
-      { error: 'Internal Server Error', details: err.message },
+      { error: 'Internal Server Error', details: msg },
       { status: 500 }
     );
   }

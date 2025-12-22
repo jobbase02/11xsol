@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   Layers,
   ShieldCheck,
-  Zap,
   Cloud,
   Workflow,
 } from "lucide-react";
@@ -58,12 +58,12 @@ export default function SaaSEngineeringPage() {
               future-ready.
             </p>
 
-            <a
+            <Link
               href="/book"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
             >
               Build Your SaaS <ArrowRight size={16} />
-            </a>
+            </Link>
           </motion.div>
 
           {/* Hero Image */}

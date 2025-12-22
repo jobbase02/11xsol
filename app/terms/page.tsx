@@ -42,7 +42,7 @@ export default function TermsPage() {
             <section>
                 <h2 className="text-xl font-bold text-white mb-4">4. Liability</h2>
                 <p>
-                    We provide software "as is". ElevenX Solutions is not liable for indirect damages, data loss, or business interruption resulting from the use of our code or services.
+                  We provide software as-is. ElevenX Solutions is not liable for indirect damages, data loss, or business interruption resulting from the use of our code or services.
                 </p>
             </section>
         </div>

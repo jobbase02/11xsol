@@ -67,7 +67,10 @@ const Marquee = () => {
       >
         {[...Array(10)].map((_, i) => (
           <span key={i} className="mx-8 flex items-center gap-4 text-zinc-400">
-            <Sparkles size={14} className="text-blue-500" /> SYSTEM INTELLIGENCE <span className="text-blue-500">///</span> MARKET DOMINANCE
+            <Sparkles size={14} className="text-blue-500" />
+            <span className="ml-2">SYSTEM INTELLIGENCE</span>
+            <span className="text-blue-500 mx-2">{'///'}</span>
+            <span>MARKET DOMINANCE</span>
           </span>
         ))}
       </motion.div>
@@ -93,26 +96,43 @@ export default function UltraModernBlog() {
         const postsData = await postsRes.json();
         const categoriesData = await categoriesRes.json();
 
-        const validCategories = categoriesData.filter((cat: any) => cat.count > 0);
+        const validCategories = (categoriesData as unknown[])
+          .filter((cat) => {
+            const c = cat as Record<string, unknown>;
+            return typeof c.count === 'number' && (c.count as number) > 0;
+          })
+          .map((cat) => {
+            const c = cat as Record<string, unknown>;
+            return {
+              id: Number(c.id as unknown ?? 0),
+              name: String(c.name ?? ""),
+              count: Number(c.count ?? 0),
+              slug: String(c.slug ?? ""),
+            } as Category;
+          });
         setCategories(validCategories);
 
-        const mappedPosts: BlogPost[] = postsData.map((post: any, index: number) => {
+        const mappedPosts: BlogPost[] = (postsData as unknown[]).map((post, index: number) => {
+          const p = post as Record<string, unknown>;
           let size: "hero" | "tall" | "wide" | "normal" = "normal";
           if (index === 0) size = "hero";       
           else if (index === 1) size = "tall";  
           else if (index === 4) size = "wide";  
 
-          const imageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80';
-          const categoryName = post._embedded?.['wp:term']?.[0]?.[0]?.name || "Uncategorized";
+          const embedded = p._embedded as unknown as Record<string, unknown> | undefined;
+          const featured = embedded?.['wp:featuredmedia'] as unknown as Array<Record<string, unknown>> | undefined;
+          const imageUrl = String(featured?.[0]?.['source_url'] ?? 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80');
+          const terms = embedded?.['wp:term'] as unknown as Array<unknown> | undefined;
+          const categoryName = String(((terms?.[0] as unknown as Array<Record<string, unknown>> | undefined)?.[0]?.['name']) ?? 'Uncategorized');
 
           return {
-            id: post.id,
-            title: decodeHtml(post.title.rendered),
-            slug: post.slug,
-            category: decodeHtml(categoryName),
-            date: formatDate(post.date),
-            readTime: getReadTime(post.content.rendered),
-            image: imageUrl,
+            id: Number(p.id as unknown ?? 0),
+            title: decodeHtml(String(((p.title as unknown as Record<string, unknown>)?.rendered) ?? '')),
+            slug: String(p.slug ?? ''),
+            category: decodeHtml(String(categoryName)),
+            date: formatDate(String(p.date ?? '')),
+            readTime: getReadTime(String(((p.content as unknown as Record<string, unknown>)?.rendered) ?? '')),
+            image: String(imageUrl),
             size: size,
           };
         });
