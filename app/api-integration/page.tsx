@@ -1,101 +1,194 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   Plug,
-  Database,
-  ShieldCheck,
   Workflow,
+  ShieldCheck,
   Zap,
+  Database,
+  Cloud,
+  Code2,
 } from "lucide-react";
-import img from "@/public/api-integration.jpg"
+import img from "@/public/api-integration.jpg";
+
+/* ---------------- ANIMATIONS ---------------- */
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
 };
 
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const float = {
+  animate: { y: [0, -14, 0] },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+};
+
 export default function APIIntegrationPage() {
   return (
     <>
-      {/* SEO */}
+      {/* ================= SEO ================= */}
       <Head>
         <title>API Integration Services | ElevenX Solutions</title>
         <meta
           name="description"
-          content="Secure, scalable API integration services by ElevenX Solutions. We connect apps, platforms, and services with reliable, high-performance APIs."
-        />
-        <meta
-          name="keywords"
-          content="API Integration Services, REST API Integration, Third Party API Integration, Backend Integration, API Development Company"
+          content="Secure, scalable API integration services. Connect platforms, automate workflows, and enable seamless data exchange."
         />
       </Head>
 
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center bg-zinc-950 overflow-hidden">
-        {/* Ambient Glow */}
-        <div className="absolute -top-40 left-[-20%] w-[520px] h-[520px] bg-blue-600/20 blur-[160px]" />
+      {/* ================= HERO ================= */}
+      <section className="relative min-h-screen bg-zinc-950 flex items-center overflow-hidden">
+        <motion.div {...float} className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-blue-600/20 blur-[170px]" />
+        <motion.div {...float} className="absolute bottom-[-220px] right-[-220px] w-[520px] h-[520px] bg-cyan-500/20 blur-[180px]" />
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10">
-          {/* Text */}
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-30 lg:mt-0">
+          {/* TEXT */}
           <motion.div
             initial="hidden"
             animate="visible"
-            variants={fadeUp}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            variants={stagger}
+            className="space-y-6 text-center md:text-left"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-              API Integration <br />
-              <span className="text-blue-500">That Just Works</span>
-            </h1>
-
-            <p className="text-zinc-400 max-w-xl">
-              We integrate APIs that are fast, secure, and reliable — connecting
-              your products, platforms, and services without breaking your
-              system or slowing it down.
-            </p>
-
-            <a
-              href="/book"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
+            <motion.h1
+              variants={fadeUp}
+              className="text-4xl md:text-6xl font-bold text-white leading-tight"
             >
-              Integrate Your Systems <ArrowRight size={16} />
-            </a>
+              API Integration <br />
+              <span className="text-blue-500 relative">
+                That Connects Everything
+                <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-gradient-to-r from-blue-500 to-cyan-500 hidden lg:block" />
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="text-zinc-400 max-w-xl mx-auto md:mx-0 text-lg"
+            >
+              Modern products don’t work in isolation.
+              We integrate APIs that enable seamless data flow, automate operations,
+              and connect your entire digital ecosystem.
+            </motion.p>
+
+            <motion.div variants={fadeUp}>
+              <a
+                href="/book"
+                className="group relative inline-flex items-center gap-2 px-7 py-3 bg-white text-black font-bold rounded-full overflow-hidden"
+              >
+                <span className="relative z-10">Integrate My Systems</span>
+                <ArrowRight
+                  size={16}
+                  className="relative z-10 group-hover:translate-x-1 transition"
+                />
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition" />
+              </a>
+            </motion.div>
           </motion.div>
 
-          {/* Hero Image */}
+          {/* IMAGE */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.04 }}
             transition={{ duration: 1 }}
             className="relative"
           >
             <Image
               src={img}
               alt="API Integration Architecture"
-              width={600}
-              height={500}
-              className="rounded-2xl shadow-2xl"
+              className="rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+              priority
             />
           </motion.div>
         </div>
       </section>
 
-      {/* WHAT WE INTEGRATE */}
-      <section className="py-24 bg-zinc-950 border-t border-white/5">
+      {/* ================= WHY API INTEGRATION ================= */}
+      <section className="relative py-20 bg-black border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-white">
+              Why API Integration <br />
+              <span className="text-blue-500">Drives Scalability</span>?
+            </h2>
+            <p className="mt-6 text-zinc-500 text-lg">
+              APIs are the backbone of modern, scalable digital products.
+            </p>
+          </motion.div>
+
+          <div className="space-y-14">
+            {[
+              {
+                tag: "AUTOMATION",
+                title: "Reduce manual work across systems",
+                desc: "APIs allow platforms to communicate automatically, saving time and eliminating human error.",
+              },
+              {
+                tag: "SCALABILITY",
+                title: "Build systems that grow together",
+                desc: "Integrated systems scale faster than isolated tools.",
+              },
+              {
+                tag: "REAL-TIME DATA",
+                title: "Decisions powered by live information",
+                desc: "APIs enable instant data sync across products and services.",
+              },
+              {
+                tag: "FLEXIBILITY",
+                title: "Swap tools without rebuilding everything",
+                desc: "Well-designed integrations make your stack adaptable.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+                className="grid md:grid-cols-[180px_1fr] gap-6"
+              >
+                <div className="text-sm font-bold text-blue-500 tracking-widest">
+                  {item.tag}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-white mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-400 max-w-3xl">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FEATURES ================= */}
+      <section className="py-20 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
             variants={fadeUp}
-            className="text-3xl md:text-4xl font-bold text-white mb-12"
+            className="text-3xl md:text-6xl font-bold text-blue-500 mb-12"
           >
-            What We Integrate
+            What We Integrate?
           </motion.h2>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -103,17 +196,32 @@ export default function APIIntegrationPage() {
               {
                 icon: <Plug />,
                 title: "Third-Party APIs",
-                desc: "Payment gateways, CRMs, analytics tools, maps, messaging, and more.",
+                desc: "Payments, CRMs, ERPs, analytics, and more.",
+              },
+              {
+                icon: <Cloud />,
+                title: "Cloud & SaaS Platforms",
+                desc: "AWS, Firebase, Stripe, Shopify, and custom SaaS tools.",
               },
               {
                 icon: <Database />,
-                title: "Internal Systems",
-                desc: "Connect microservices, databases, dashboards, and internal tools seamlessly.",
+                title: "Data Synchronization",
+                desc: "Reliable real-time and batch data syncing.",
               },
               {
                 icon: <Workflow />,
                 title: "Workflow Automation",
-                desc: "Automate data flow between apps to eliminate manual work and errors.",
+                desc: "Trigger-based and event-driven integrations.",
+              },
+              {
+                icon: <ShieldCheck />,
+                title: "Secure Authentication",
+                desc: "OAuth, JWT, API keys, and access control.",
+              },
+              {
+                icon: <Code2 />,
+                title: "Custom API Development",
+                desc: "Designing APIs tailored to your product needs.",
               },
             ].map((item, i) => (
               <motion.div
@@ -123,7 +231,8 @@ export default function APIIntegrationPage() {
                 viewport={{ once: true }}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-zinc-900/50 border border-white/10 hover:border-blue-500/40 transition"
+                whileHover={{ y: -10 }}
+                className="p-6 rounded-2xl bg-zinc-900/60 backdrop-blur border border-white/10 hover:border-blue-500/40 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.6)] transition"
               >
                 <div className="text-blue-500 mb-4">{item.icon}</div>
                 <h3 className="text-xl font-bold text-white mb-2">
@@ -136,7 +245,7 @@ export default function APIIntegrationPage() {
         </div>
       </section>
 
-      {/* PROCESS */}
+      {/* ================= API PROCESS ================= */}
       <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
@@ -150,10 +259,22 @@ export default function APIIntegrationPage() {
 
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              "Requirement Analysis",
-              "API Mapping & Security",
-              "Integration & Testing",
-              "Monitoring & Scaling",
+              {
+                title: "Requirement Analysis",
+                desc: "Understanding systems, data flow, and integration goals.",
+              },
+              {
+                title: "Architecture & Mapping",
+                desc: "Designing secure and scalable integration architecture.",
+              },
+              {
+                title: "Implementation & Testing",
+                desc: "Building, testing, and validating integrations.",
+              },
+              {
+                title: "Monitoring & Scaling",
+                desc: "Ongoing support, optimization, and performance monitoring.",
+              },
             ].map((step, i) => (
               <motion.div
                 key={i}
@@ -161,30 +282,46 @@ export default function APIIntegrationPage() {
                 whileInView="visible"
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-xl bg-zinc-900 border border-white/10"
+                className="relative p-6 rounded-xl bg-zinc-900 border border-white/10"
               >
-                <span className="text-blue-500 font-mono text-sm">
-                  0{i + 1}
+                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-blue-600 text-black flex items-center justify-center font-bold">
+                  {i + 1}
                 </span>
-                <h4 className="text-white font-bold mt-2">{step}</h4>
+                <h4 className="text-white font-bold mt-6 mb-2">
+                  {step.title}
+                </h4>
+                <p className="text-zinc-400 text-sm">
+                  {step.desc}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* TRUST / RELIABILITY */}
+      {/* ================= CTA ================= */}
       <section className="py-24 bg-zinc-950 border-t border-white/5">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <ShieldCheck className="mx-auto text-blue-500 mb-4" size={42} />
+          <motion.div
+            animate={{ scale: [1, 1.08, 1] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            <Zap className="mx-auto text-blue-500 mb-4" size={42} />
+          </motion.div>
+
           <h2 className="text-3xl font-bold text-white mb-4">
-            Secure, Reliable, Production-Ready Integrations
+            Ready to <span className="text-blue-500">Connect</span> Your Systems?
           </h2>
-          <p className="text-zinc-400">
-            We follow best practices for authentication, rate limiting,
-            validation, and error handling — so your integrations stay stable
-            under real-world load.
+          <p className="text-zinc-400 mb-8">
+            Let’s build integrations that make your software work smarter — together.
           </p>
+
+          <a
+            href="/book"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition"
+          >
+            Book a Free Integration Call <ArrowRight size={16} />
+          </a>
         </div>
       </section>
     </>
