@@ -77,17 +77,16 @@ const cardVariants = {
 const Hero = () => {
   // Simple Typewriter Logic for the code block
   const [codeLines, setCodeLines] = useState<string[]>([]);
+  const fullCode = [
+    " WhatYouGet  {",
+    "Fast Delivery: 'Yes';",
+    "Fast Delivery: 'Yes';",
+    "Clear Results: 'Guaranteed';",
+    "Future Ready: 'Always';",
+    "}",
+  ];
 
   useEffect(() => {
-    const fullCode = [
-      " WhatYouGet  {",
-      "Fast Delivery: 'Yes';",
-      "Fast Delivery: 'Yes';",
-      "Clear Results: 'Guaranteed';",
-      "Future Ready: 'Always';",
-      "}",
-    ];
-
     let currentLine = 0;
     const interval = setInterval(() => {
       if (currentLine < fullCode.length) {
