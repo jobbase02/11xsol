@@ -1,12 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Rocket,
   Book,
@@ -17,13 +13,11 @@ import {
   Globe,
   Database,
   Zap,
-  Shield,
   BarChart,
   Terminal,
-  Code2,
   Quote,
 } from "lucide-react";
-import GlareHover from "@/components/GlareHover";
+// GlareHover was removed because it is not used in this file
 import CountUp from "@/components/CountUp";
 import Faq from "./components/Faqs";
 import Link from "next/link";
@@ -83,16 +77,17 @@ const cardVariants = {
 const Hero = () => {
   // Simple Typewriter Logic for the code block
   const [codeLines, setCodeLines] = useState<string[]>([]);
-  const fullCode = [
-    " WhatYouGet  {",
-    "Fast Delivery: 'Yes';",
-    "Fast Delivery: 'Yes';",
-    "Clear Results: 'Guaranteed';",
-    "Future Ready: 'Always';",
-    "}",
-  ];
 
   useEffect(() => {
+    const fullCode = [
+      " WhatYouGet  {",
+      "Fast Delivery: 'Yes';",
+      "Fast Delivery: 'Yes';",
+      "Clear Results: 'Guaranteed';",
+      "Future Ready: 'Always';",
+      "}",
+    ];
+
     let currentLine = 0;
     const interval = setInterval(() => {
       if (currentLine < fullCode.length) {
@@ -154,19 +149,19 @@ const Hero = () => {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row items-center gap-4 pt-4"
             >
-              <a
+              <Link
                 href="/book?utm_source=hero"
                 className="px-8 py-4 w-full md:w-fit bg-white text-black font-bold text-lg rounded-xl hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
               >
                 Initialize Project <ArrowRight size={20} />
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/work"
                 className="px-8 py-4 w-full md:w-fit block bg-zinc-900 border border-zinc-800 text-white font-medium text-lg rounded-xl hover:bg-zinc-800 transition-all text-center"
               >
                 View Case Studies
-              </a>
+              </Link>
             </motion.div>
           </div>
 
@@ -374,13 +369,6 @@ const Hero = () => {
     </section>
   );
 };
-
-// const Services = () => {
-//   const services = [
-//     {
-//       icon: <Layout className="text-white" size={24} />,
-//       title: "Website Development",
-//       desc: "Make your brand stand out online with high-performance, custom-engineered web applications.",
 //       color: "from-blue-600 to-blue-400",
 //     },
 //     {
@@ -633,7 +621,7 @@ const OurStory = () => {
               The <span className="text-blue-500">ElevenX</span> Origin
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              We didn't start as an agency. We started as engineers tired of
+              We did not start as an agency. We started as engineers tired of
               slow, bloated software. We built ElevenX to prove that speed,
               aesthetics, and code quality can coexist.
             </p>
@@ -674,7 +662,7 @@ const OurStory = () => {
                 </h3>
                 <p className="text-zinc-400 leading-relaxed text-base md:text-lg max-w-lg">
                   We saw too many great businesses held back by clunky websites.
-                  We realized the market didn't need "more developers"—it needed{" "}
+                  We realized the market did not need more developers — it needed
                   <span className="text-white">better architects</span>. ElevenX
                   started in a small room with one obsession: Performance.
                 </p>
@@ -858,12 +846,12 @@ const Pricing = () => {
                 </div>
               ))}
             </div>
-            <a
+            <Link
               href="/book?plan=basic&upm_source=landing_page_pricing"
               className="block w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white hover:text-black transition-colors text-center"
             >
               Choose Basic
-            </a>
+            </Link>
           </motion.div>
 
           {/* Business Plan (Featured) */}
@@ -911,12 +899,12 @@ const Pricing = () => {
                 </div>
               ))}
             </div>
-            <a
+            <Link
               href="/book?plan=business&upm_source=landing_page_pricing"
               className="block w-full py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20 text-center"
             >
               Choose Business
-            </a>
+            </Link>
           </motion.div>
 
           {/* Enterprise Plan */}
@@ -961,12 +949,12 @@ const Pricing = () => {
                 </div>
               ))}
             </div>
-            <a
+            <Link
               href="/book?plan=premium&upm_source=landing_page_pricing"
               className="block w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white hover:text-black transition-colors text-center"
             >
               Contact Us
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>
@@ -983,7 +971,7 @@ const InfiniteTestimonials = () => {
       img: "sarah",
     },
     {
-      text: "The most professional dev team I've worked with. They understood our business logic better than we did.",
+      text: "The most professional dev team I&apos;ve worked with. They understood our business logic better than we did.",
       name: "Michael Ross",
       role: "Founder, EstateBook",
       img: "mike",
@@ -1020,7 +1008,7 @@ const InfiniteTestimonials = () => {
             Trusted by <span className="text-blue-500">Industry Leaders</span>
           </h2>
           <p className="text-zinc-400 max-w-xl mx-auto text-lg">
-            Don't take our word for it. Here is what the engineers and founders
+            Do not take our word for it. Here is what the engineers and founders
             we work with have to say.
           </p>
         </div>
@@ -1059,15 +1047,17 @@ const InfiniteTestimonials = () => {
                 </div>
 
                 <p className="text-zinc-200 text-lg leading-relaxed mb-8 font-light">
-                  "{item.text}"
+                  &ldquo;{item.text}&rdquo;
                 </p>
               </div>
 
               <div className="relative z-10 flex items-center gap-4 border-t border-white/5 pt-6">
                 <div className="w-12 h-12 bg-zinc-800 rounded-full overflow-hidden border border-white/10 group-hover:border-blue-500/50 transition-colors">
-                  <img
+                  <Image
                     src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${item.img}&backgroundColor=transparent`}
                     alt={item.name}
+                    width={48}
+                    height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>

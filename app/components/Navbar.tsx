@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X, ChevronDown } from "lucide-react";
 
@@ -66,12 +67,12 @@ const Navbar: React.FC = () => {
           }`}
         >
           {/* LOGO */}
-          <a href="/" className="flex items-center gap-2 z-50">
+          <Link href="/" className="flex items-center gap-2 z-50">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
               <span className="text-white font-bold">11X</span>
             </div>
             <span className="text-white font-bold text-lg">Solutions</span>
-          </a>
+          </Link>
 
           {/* DESKTOP NAV */}
           <div className="hidden md:flex items-center gap-1">
@@ -108,8 +109,8 @@ const Navbar: React.FC = () => {
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/10 to-transparent opacity-60 pointer-events-none" />
 
                     <div className="relative py-3">
-                      {serviceItems.map((service, i) => (
-                        <a
+                      {serviceItems.map((service) => (
+                        <Link
                           key={service.label}
                           href={service.href}
                           onClick={() => setIsOpen(false)}
@@ -131,31 +132,31 @@ const Navbar: React.FC = () => {
                           <span className="text-blue-500 opacity-0 translate-x-[-4px] group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200">
                             →
                           </span>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
                 </div>
               ) : (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors rounded-full"
                 >
                   {link.name}
-                </a>
+                </Link>
               )
             )}
           </div>
 
           {/* DESKTOP CTA */}
           <div className="hidden md:block">
-            <a
+            <Link
               href="/book"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full hover:bg-zinc-200 transition"
             >
               Book Call <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
 
           {/* MOBILE TOGGLE */}
@@ -220,7 +221,7 @@ const Navbar: React.FC = () => {
                     className="ml-4 space-y-3 overflow-hidden"
                   >
                     {serviceItems.map((service) => (
-                      <a
+                      <Link
                         key={service.label}
                         href={service.href}
                         onClick={() => {
@@ -230,7 +231,7 @@ const Navbar: React.FC = () => {
                         className="block text-lg text-zinc-400 hover:text-blue-500 transition-colors"
                       >
                         {service.label}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 )}
@@ -240,14 +241,14 @@ const Navbar: React.FC = () => {
               {navLinks
                 .filter((l) => l.name !== "Services")
                 .map((link) => (
-                  <a
+                  <Link
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className="block text-3xl font-bold text-white hover:text-blue-500"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 ))}
             </div>
           </motion.div>

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { notFound } from "next/navigation";
 import { 
@@ -18,7 +18,7 @@ import {
   ChevronRight,
   CheckCircle2,
   Terminal,
-  Cpu
+  
 } from "lucide-react";
 
 // --- TYPES ---
@@ -94,7 +94,10 @@ export default function BlogPostPage() {
         const categoryName = categories.length > 0 ? categories[0].name : "Insights";
 
         const tagsData = terms[1] || []; 
-        const tagNames = tagsData.map((t: any) => t.name);
+        const tagNames = (tagsData || []).map((t: unknown) => {
+          const rec = t as Record<string, unknown>;
+          return typeof rec?.name === 'string' ? rec.name : String(rec?.name ?? '');
+        });
 
         const authorName = wpPost._embedded?.['author']?.[0]?.name || "11x Editor";
 
@@ -334,7 +337,7 @@ export default function BlogPostPage() {
            </div>
            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white font-almarena">Turn these insights into <span className="text-blue-600">revenue.</span></h2>
            <p className="text-zinc-400 text-lg mb-12 max-w-2xl mx-auto">
-             You've read the theory. Now let our engineers build the engine. 
+             You&apos;ve read the theory. Now let our engineers build the engine. 
              Book a strategy call with 11xSolutions today.
            </p>
            <button className="group relative px-8 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden transition-all hover:bg-zinc-200 hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">

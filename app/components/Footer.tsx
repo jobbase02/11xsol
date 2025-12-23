@@ -29,7 +29,7 @@ const Footer = () => {
           
           {/* COLUMN 1: BRAND (Span 4) */}
           <div className="lg:col-span-4">
-            <a href="/" className="flex items-center gap-3 group mb-6">
+            <Link href="/" className="flex items-center gap-3 group mb-6">
                 {/* Navbar Logo Code */}
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-105 transition-transform duration-300 border border-white/10">
                     <span className="font-almarena font-bold text-white text-xl tracking-tighter">11X</span>
@@ -42,7 +42,7 @@ const Footer = () => {
                         Solutions
                     </span>
                 </div>
-            </a>
+            </Link>
             <p className="text-zinc-400 text-base leading-relaxed max-w-sm mb-8">
               ElevenX Solutions is a premium digital engineering agency. We build high-performance websites, scalable apps, and next-gen interfaces for ambitious brands.
             </p>
@@ -74,11 +74,11 @@ const Footer = () => {
              <div>
                 <h4 className="text-white font-bold mb-8 text-lg">Services</h4>
                 <ul className="space-y-4 text-base text-zinc-500">
-                   <li><a href="/WebDevelopment" className="hover:text-blue-400 transition-colors">Web Development</a></li>
-                   <li><a href="/saasengineering" className="hover:text-blue-400 transition-colors">SaaS Engineering</a></li>
-                   <li><a href="/ui-ux-design" className="hover:text-blue-400 transition-colors">UI/UX Design</a></li>
-                   <li><a href="/api-integration" className="hover:text-blue-400 transition-colors">API Integration</a></li>
-                   <li><a href="/seo-optimization" className="hover:text-blue-400 transition-colors">SEO Optimization</a></li>
+                   <li><Link href="/WebDevelopment" className="hover:text-blue-400 transition-colors">Web Development</Link></li>
+                   <li><Link href="/saasengineering" className="hover:text-blue-400 transition-colors">SaaS Engineering</Link></li>
+                   <li><Link href="/ui-ux-design" className="hover:text-blue-400 transition-colors">UI/UX Design</Link></li>
+                   <li><Link href="/api-integration" className="hover:text-blue-400 transition-colors">API Integration</Link></li>
+                   <li><Link href="/seo-optimization" className="hover:text-blue-400 transition-colors">SEO Optimization</Link></li>
                 </ul>
              </div>
 
@@ -86,10 +86,10 @@ const Footer = () => {
              <div>
                 <h4 className="text-white font-bold mb-8 text-lg">Company</h4>
                 <ul className="space-y-4 text-base text-zinc-500">
-                   <li><a href="/about" className="hover:text-blue-400 transition-colors">About Us</a></li>
-                   <li><a href="/work" className="hover:text-blue-400 transition-colors">Our Work</a></li>
-                   <li><a href="/blogs" className="hover:text-blue-400 transition-colors">Insights / Blog</a></li>
-                   <li><a href="/book" className="hover:text-blue-400 transition-colors">Contact</a></li>
+                   <li><Link href="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+                   <li><Link href="/work" className="hover:text-blue-400 transition-colors">Our Work</Link></li>
+                   <li><Link href="/blogs" className="hover:text-blue-400 transition-colors">Insights / Blog</Link></li>
+                   <li><Link href="/book" className="hover:text-blue-400 transition-colors">Contact</Link></li>
                    {/* <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li> */}
                 </ul>
              </div>

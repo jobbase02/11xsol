@@ -2,6 +2,7 @@
 
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -80,16 +81,12 @@ export default function WebDevelopmentPage() {
               business, not just look good.
             </motion.p>
 
-            <motion.div variants={fadeUp}>
-              <a
-                href="/book"
-                className="group relative inline-flex items-center gap-2 px-7 py-3 bg-white text-black font-bold rounded-full overflow-hidden"
-              >
-                <span className="relative z-10">Build My Website</span>
-                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition" />
-                <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition" />
-              </a>
-            </motion.div>
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
+            >
+              Start Your Project <ArrowRight size={16} />
+            </Link>
           </motion.div>
 
           {/* IMAGE */}

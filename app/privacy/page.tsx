@@ -26,7 +26,7 @@ export default function PrivacyPage() {
 
             <section>
                 <h2 className="text-xl font-bold text-white mb-4">1. Data Collection</h2>
-                <p>ElevenX Solutions ("we", "us") collects data to provide engineering services. This includes:</p>
+                <p>ElevenX Solutions (we, us) collects data to provide engineering services. This includes:</p>
                 <ul className="list-disc pl-5 mt-2 space-y-1 text-zinc-400">
                     <li>Identity Data (Name, Job Title) via booking forms.</li>
                     <li>Contact Data (Email, Phone) via inquiry submission.</li>

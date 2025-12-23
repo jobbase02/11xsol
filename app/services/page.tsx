@@ -156,10 +156,10 @@ export default function ServicesPage() {
             </div>
             <div className="md:w-2/3 space-y-12">
                 {[
-                    { title: "01. Architecture", desc: "We don't start with design; we start with logic. We map out your database schema, API routes, and user flows before writing a line of code." },
+                    { title: "01. Architecture", desc: "We do not start with design; we start with logic. We map out your database schema, API routes, and user flows before writing a line of code." },
                     { title: "02. Development", desc: "We work in agile sprints. You get deployment links regularly to see progress. We adapt the tech stack to fit your specific scaling needs." },
                     { title: "03. Optimization", desc: "Once features are built, we obsess over speed. We optimize images, fonts, and scripts to ensure you hit that 100/100 Lighthouse score." },
-                    { title: "04. Handover", desc: "We don't hold your code hostage. You receive full repository access, documentation, and a training session on how to manage your content." }
+                    { title: "04. Handover", desc: "We do not hold your code hostage. You receive full repository access, documentation, and a training session on how to manage your content." }
                 ].map((step) => (
                     <div key={step.title} className="group">
                         <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{step.title}</h3>

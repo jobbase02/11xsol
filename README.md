@@ -34,3 +34,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Local environment
+
+1. Copy `.env.local.example` to `.env.local`:
+
+```bash
+# Windows (PowerShell)
+copy .env.local.example .env.local
+
+# macOS / Linux
+cp .env.local.example .env.local
+```
+
+2. Edit `.env.local` and add your secrets (e.g. `SENDGRID_API_KEY`).
+
+3. Start the dev server:
+
+```bash
+npm run dev
+```
+
+Notes:
+- Keep `.env.local` out of version control. Do not commit real API keys.
+- In production (Vercel), set `SENDGRID_API_KEY` in the project Secrets/Environment variables settings.

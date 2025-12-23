@@ -1,17 +1,19 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   ArrowRight,
   Search,
   LineChart,
   Zap,
   Globe,
-  ShieldCheck,
-  BarChart3,
+  Gauge,
   Users,
+  BarChart3,
+  ShieldCheck,
 } from "lucide-react";
 import img from "@/public/Seo-green.png";
 
@@ -70,25 +72,17 @@ export default function SEOOptimizationPage() {
               </span>
             </motion.h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="text-zinc-400 max-w-xl mx-auto md:mx-0 text-lg"
-            >
-              SEO is not about rankings alone.
-              It’s about visibility, authority, and predictable inbound demand.
-              We build SEO systems that generate traffic today and revenue tomorrow.
-            </motion.p>
+            <p className="text-zinc-400 max-w-xl">
+              We don&apos;t chase keywords — we engineer SEO foundations that drive
+              consistent traffic, higher rankings, and real business growth.
+            </p>
 
-            <motion.div variants={fadeUp}>
-              <a
-                href="/book"
-                className="group relative inline-flex items-center gap-2 px-7 py-3 bg-white text-black font-bold rounded-full overflow-hidden"
-              >
-                <span className="relative z-10">Grow with SEO</span>
-                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-1 transition" />
-                <span className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 opacity-0 group-hover:opacity-100 transition" />
-              </a>
-            </motion.div>
+            <Link
+              href="/book"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
+            >
+              Optimize Your Website <ArrowRight size={16} />
+            </Link>
           </motion.div>
 
           {/* IMAGE */}

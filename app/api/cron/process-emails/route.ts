@@ -2,13 +2,20 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import sgMail from '@sendgrid/mail';
 
-// 1. Initialize SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+// 1. Initialize SendGrid (safe-guarded)
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const SENDGRID_ENABLED = !!SENDGRID_API_KEY && SENDGRID_API_KEY.startsWith('SG.');
+
+if (SENDGRID_ENABLED) {
+  sgMail.setApiKey(SENDGRID_API_KEY as string);
+} else {
+  console.warn('SendGrid API key missing or invalid; email sending is disabled in this environment.');
+}
 
 // Force this route to be dynamic so it doesn't cache the DB result
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // Check if supabase is configured
     if (!supabase) {
@@ -132,11 +139,17 @@ export async function GET(request: Request) {
           `,
         };
 
-        // Send both emails in parallel
-        await Promise.all([
-          sgMail.send(adminMsg),
-          sgMail.send(userMsg)
-        ]);
+        // Send both emails in parallel (only if SendGrid is enabled)
+        if (SENDGRID_ENABLED) {
+          await Promise.all([
+            sgMail.send(adminMsg),
+            sgMail.send(userMsg)
+          ]);
+        } else {
+          console.warn(`Skipping email send for lead ID ${id} because SendGrid is not configured.`);
+          results.push({ id, status: 'skipped_email', reason: 'SendGrid API key missing or invalid' });
+          continue; // don't mark as seen; try again when key is available
+        }
 
         // 4. Update Database: Mark as seen
         // THIS IS THE UPDATE YOU REQUESTED
@@ -153,10 +166,11 @@ export async function GET(request: Request) {
           results.push({ id, status: 'success' });
         }
 
-      } catch (emailError: any) {
-        console.error(`Failed to email ID ${id}:`, emailError);
+      } catch (emailError: unknown) {
+        const msg = emailError instanceof Error ? emailError.message : String(emailError);
+        console.error(`Failed to email ID ${id}:`, msg);
         // Important: We do NOT update 'seen' here, so the script will try again next time.
-        results.push({ id, status: 'failed_email', error: emailError.message });
+        results.push({ id, status: 'failed_email', error: msg });
       }
     }
 
@@ -166,10 +180,11 @@ export async function GET(request: Request) {
       details: results 
     });
 
-  } catch (err: any) {
-    console.error('Cron Job Error:', err);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('Cron Job Error:', msg);
     return NextResponse.json(
-      { error: 'Internal Server Error', details: err.message },
+      { error: 'Internal Server Error', details: msg },
       { status: 500 }
     );
   }

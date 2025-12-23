@@ -56,7 +56,7 @@ export default function NotFound() {
                    </h1>
                    <div className="h-px w-12 bg-blue-500 mx-auto mb-4 rounded-full"></div>
                    <p className="text-zinc-400 text-sm leading-relaxed">
-                     We couldn't locate that page. It might have been moved, deleted, or lost in the void.
+                     We could not locate that page. It might have been moved, deleted, or lost in the void.
                    </p>
                </div>
 

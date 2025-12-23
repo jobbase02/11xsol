@@ -9,14 +9,12 @@ import {
   Loader2, 
   ShieldCheck, 
   Sparkles,
-  Cpu,
   Globe,
   ShoppingBag,
   Rocket,
   Zap,
   Building2,
   Check,
-  Terminal
 } from "lucide-react";
 
 // --- STATIC DATA ---
@@ -24,7 +22,7 @@ const SERVICES = [
   { id: "seo", label: "SEO Optimization", icon: <Sparkles size={18} /> },
   { id: "web-dev", label: "Website Development", icon: <Globe size={18} /> },
   { id: "shopify", label: "Shopify Development", icon: <ShoppingBag size={18} /> },
-  { id: "app-dev", label: "App Development", icon: <Cpu size={18} /> },
+  { id: "app-dev", label: "App Development", icon: <Rocket size={18} /> },
 ];
 
 const PLANS = [
@@ -46,14 +44,10 @@ const TechGridBackground = () => (
 
 // Mock Next.js useSearchParams for standalone React preview
 const useSearchParams = () => {
-  const [params, setParams] = useState(new URLSearchParams());
-  
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setParams(new URLSearchParams(window.location.search));
-    }
-  }, []);
-  
+  const [params] = useState(() => {
+    if (typeof window !== "undefined") return new URLSearchParams(window.location.search);
+    return new URLSearchParams();
+  });
   return params;
 };
 
@@ -141,9 +135,10 @@ function BookingForm() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to submit booking.');
       setSubmitted(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Booking Error:", error);
-      setErrorMessage(error.message || "Connection failed. Please try again.");
+      const msg = error instanceof Error ? error.message : String(error);
+      setErrorMessage(msg || "Connection failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -371,13 +366,13 @@ export default function BookingPage() {
              </div>
 
              <h1 className="text-5xl md:text-6xl font-bold font-almarena tracking-tight leading-[1] mb-6 text-white">
-               Let’s Build <br/>
+               Let&apos;s Build <br/>
                <span className="text-zinc-500">Something Legendary.</span>
              </h1>
              
              <p className="text-zinc-400 text-lg leading-relaxed mb-12">
                Whether you need a rapid MVP launch or an enterprise-grade scaling strategy, our engineers are ready. 
-               Tell us your vision, and we'll architect the solution.
+               Tell us your vision, and we&apos;ll architect the solution.
              </p>
 
              <div className="space-y-8 border-l border-white/10 pl-8">
@@ -387,7 +382,7 @@ export default function BookingPage() {
                   </div>
                   <div>
                     <h5 className="font-bold text-white text-lg mb-1 group-hover:text-blue-400 transition-colors">Fast-Track Execution</h5>
-                    <p className="text-sm text-zinc-500 leading-relaxed">We don't do fluff. We ship code and campaigns that perform from Day 1.</p>
+                    <p className="text-sm text-zinc-500 leading-relaxed">We don&apos;t do fluff. We ship code and campaigns that perform from Day 1.</p>
                   </div>
                </div>
                
