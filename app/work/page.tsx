@@ -314,14 +314,14 @@ export default function WorkPage() {
               transition={{ duration: 0.6 }}
               className="relative rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/40 backdrop-blur-sm min-h-[360px]"
             >
-              <div className={`absolute inset-0 bg-linear-to-br ${featuredProject.color} opacity-30`}></div>
+              <div className={`absolute inset-0 bg-gradient-to-br ${featuredProject.color} opacity-30`}></div>
               <Image
                 src={featuredProject.image}
                 alt={featuredProject.title}
                 fill
                 className="object-cover opacity-60"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
               <div className="absolute bottom-0 w-full p-8 flex flex-col gap-4 z-10">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 text-[10px] font-mono uppercase tracking-widest text-white">
