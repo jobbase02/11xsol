@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,9 @@ import {
   Zap,
   Globe,
   Gauge,
+  Users,
+  BarChart3,
+  ShieldCheck,
 } from "lucide-react";
 import img from "@/public/Seo-green.png";
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import {
   Layers,
   Workflow,
   ShieldCheck,
+  Layout,
 } from "lucide-react";
 import img from "@/public/ui-ux.png";
 
