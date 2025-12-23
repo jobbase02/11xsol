@@ -214,7 +214,7 @@ const PerformanceGrid = ({ perf }: { perf: { lcp: number; fcp: number; ttfb: num
               <div className="text-sm font-semibold text-white">{formatPerf(m.val)}</div>
             </div>
             <div className="mt-3 h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-2 bg-linear-to-r from-green-400 to-blue-500 rounded-full" style={{ width: `${width}%` }} />
+              <div className="h-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full" style={{ width: `${width}%` }} />
             </div>
             <div className="text-xs text-zinc-500 mt-2">{m.desc}</div>
           </div>
