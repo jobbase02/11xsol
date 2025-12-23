@@ -288,7 +288,7 @@ export default function WorkPage() {
             Selected Case Studies
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold font-almarena tracking-tighter mb-6">
-            Our <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-purple-400">Work</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Work</span>
           </h1>
           <p className="text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">
             Engineering-first builds with measurable lifts. Explore how we ship, scale, and optimize digital revenue engines.
