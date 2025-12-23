@@ -2,8 +2,15 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import sgMail from '@sendgrid/mail';
 
-// 1. Initialize SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+// 1. Initialize SendGrid (safe-guarded)
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const SENDGRID_ENABLED = !!SENDGRID_API_KEY && SENDGRID_API_KEY.startsWith('SG.');
+
+if (SENDGRID_ENABLED) {
+  sgMail.setApiKey(SENDGRID_API_KEY as string);
+} else {
+  console.warn('SendGrid API key missing or invalid; email sending is disabled in this environment.');
+}
 
 // Force this route to be dynamic so it doesn't cache the DB result
 export const dynamic = 'force-dynamic';
@@ -132,11 +139,17 @@ export async function GET() {
           `,
         };
 
-        // Send both emails in parallel
-        await Promise.all([
-          sgMail.send(adminMsg),
-          sgMail.send(userMsg)
-        ]);
+        // Send both emails in parallel (only if SendGrid is enabled)
+        if (SENDGRID_ENABLED) {
+          await Promise.all([
+            sgMail.send(adminMsg),
+            sgMail.send(userMsg)
+          ]);
+        } else {
+          console.warn(`Skipping email send for lead ID ${id} because SendGrid is not configured.`);
+          results.push({ id, status: 'skipped_email', reason: 'SendGrid API key missing or invalid' });
+          continue; // don't mark as seen; try again when key is available
+        }
 
         // 4. Update Database: Mark as seen
         // THIS IS THE UPDATE YOU REQUESTED
