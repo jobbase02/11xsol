@@ -427,7 +427,7 @@ export default function WorkPage() {
                 onClick={() => setSelectedProject(project)}
                 className={`group relative rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/40 backdrop-blur-sm hover:border-white/30 transition-colors cursor-pointer ${spanPattern[idx % spanPattern.length]}`}
               >
-                <div className={`absolute inset-0 bg-linear-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-0`}></div>
                 <div className="absolute inset-0 z-0">
                   <Image
                     src={project.image}
@@ -435,7 +435,7 @@ export default function WorkPage() {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105 group-hover:opacity-40 opacity-60"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 </div>
 
                 <div className="absolute inset-0 z-10 p-6 flex flex-col justify-between">
