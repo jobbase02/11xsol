@@ -42,6 +42,7 @@ const Navbar: React.FC = () => {
 
   const serviceItems = [
     { label: "Web Development", href: "/WebDevelopment" },
+    { label: "AI Chatbox", href: "/ai-chatbox" },
     { label: "SaaS Engineering", href: "/saasengineering" },
     { label: "UI/UX Design", href: "/ui-ux-design" },
     { label: "API Integration", href: "/api-integration" },
