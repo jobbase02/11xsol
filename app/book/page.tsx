@@ -15,14 +15,19 @@ import {
   Zap,
   Building2,
   Check,
+  BotMessageSquare,
+  MonitorCloud,
+  Settings
 } from "lucide-react";
 
 // --- STATIC DATA ---
 const SERVICES = [
   { id: "seo", label: "SEO Optimization", icon: <Sparkles size={18} /> },
+  { id: "ai-chatbox", label: "AI Chatbox", icon: <BotMessageSquare size={18} /> },
   { id: "web-dev", label: "Website Development", icon: <Globe size={18} /> },
-  { id: "shopify", label: "Shopify Development", icon: <ShoppingBag size={18} /> },
-  { id: "app-dev", label: "App Development", icon: <Rocket size={18} /> },
+  { id: "saas", label: "SAAS Development", icon: <MonitorCloud size={18} /> },
+  { id: "ui-ux", label: "UI/UX Development", icon: <Rocket size={18} /> },
+  { id: "api-integration", label: "API Integration", icon: <Settings size={18} /> },
 ];
 
 const PLANS = [
