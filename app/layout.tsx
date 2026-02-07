@@ -3,15 +3,15 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import LocalFont from "next/font/local"
 import Footer from "./components/Footer";
-
+import ChatBot from "./components/ChatBot";
 
 const almarena = LocalFont({
-    src: "/Fonts/Almarena/almarenaneue-regular.otf",
-    variable: "--font-almarena"
-}) 
+  src: "/Fonts/Almarena/almarenaneue-regular.otf",
+  variable: "--font-almarena"
+})
 
 const manrope = LocalFont({
-  src:"/Fonts/Manrope/Manrope-VariableFont_wght.ttf",
+  src: "/Fonts/Manrope/Manrope-VariableFont_wght.ttf",
   variable: "--font-manrope"
 })
 
@@ -26,11 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className= {`${almarena.variable} ${manrope.variable}`}>
+    <html lang="en" className={`${almarena.variable} ${manrope.variable}`}>
       <body className="font-manrope">
         <Navbar />
         {children}
-        <Footer/>
+        <Footer />
+        <ChatBot />
       </body>
     </html>
   );
