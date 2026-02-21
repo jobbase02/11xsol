@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import {
   Rocket,
@@ -16,6 +16,11 @@ import {
   BarChart,
   Terminal,
   Quote,
+  User,
+  Monitor,
+  Bot,
+  Layers,
+  Cpu,
 } from "lucide-react";
 // GlareHover was removed because it is not used in this file
 import CountUp from "@/components/CountUp";
@@ -24,26 +29,43 @@ import Link from "next/link";
 
 // --- Utility Components ---
 
+import HeroVisual from "./components/HeroVisual";
+
 const GridBackground = () => (
   <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-    {/* Grid */}
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-    {/* Radial Fade */}
-    <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,transparent_70%,black_100%)]"></div>
+    {/* Deep Mesh Gradient Orbs */}
+    <motion.div
+      animate={{
+        x: [0, 100, 0],
+        y: [0, 50, 0],
+      }}
+      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px]"
+    />
+    <motion.div
+      animate={{
+        x: [0, -100, 0],
+        y: [0, -50, 0],
+      }}
+      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+      className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-indigo-900/10 rounded-full blur-[120px]"
+    />
 
-    {/* Colored Orbs */}
-    <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-800/20 rounded-full blur-[100px] mix-blend-screen animate-pulse duration-[8000ms]" />
-    <div className="absolute top-[20%] right-[-5%] w-[500px] h-[500px] bg-purple-800/10 rounded-full blur-[100px] mix-blend-screen" />
+    {/* Primary Grid */}
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+
+    {/* Vignette & Masking */}
+    <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_80%_80%_at_50%_40%,transparent_0%,black_100%)]"></div>
   </div>
 );
 
 // --- Animation Variants ---
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any },
   },
 };
 
@@ -52,320 +74,128 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
     },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  hidden: { opacity: 0, y: 24, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.55,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as any,
     },
   },
 };
 
 // --- Sections ---
 
-// Inside app/page.tsx
 const Hero = () => {
-  // Simple Typewriter Logic for the code block
-  const [codeLines, setCodeLines] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fullCode = [
-      " WhatYouGet  {",
-      "Fast Delivery: 'Yes';",
-      "Fast Delivery: 'Yes';",
-      "Clear Results: 'Guaranteed';",
-      "Future Ready: 'Always';",
-      "}",
-    ];
-
-    let currentLine = 0;
-    const interval = setInterval(() => {
-      if (currentLine < fullCode.length) {
-        setCodeLines((prev) => [...prev, fullCode[currentLine]]);
-        currentLine++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 600);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-32 pb-12 overflow-hidden bg-black selection:bg-blue-600/30">
+    <section className="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden bg-black selection:bg-blue-600/40">
       <GridBackground />
-        
-        {/* LEFT COLUMN: Copy (Same as before) */}
-      <div className="max-w-6xl mx-auto px-6 w-full z-10 grid lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
-        {/* LEFT COLUMN */}
-        {/* CHANGED: Added 'h-full flex flex-col justify-between py-4' to spread content vertically */}
+
+      <div className="max-w-7xl mx-auto px-6 w-full z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        {/* TEXT CONTENT */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="relative flex flex-col justify-center gap-8"
+          className="relative space-y-10"
         >
-          <div className="space-y-6">
-            <motion.div
-              variants={fadeInUp}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/20 border border-blue-500/20 text-blue-400 text-xs font-semibold backdrop-blur-sm"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-              </span>
-              Accepting New Clients
-            </motion.div>
+          {/* Badge */}
+          <motion.div
+            variants={fadeInUp}
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
+          >
+            <div className="relative flex h-2 w-2">
+              <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></div>
+              <div className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></div>
+            </div>
+            <span className="text-zinc-400 text-xs font-bold tracking-widest uppercase">
+              Now accepting 2026 projects
+            </span>
+          </motion.div>
 
+          <div className="space-y-6">
             <motion.h1
               variants={fadeInUp}
-              className="text-5xl md:text-7xl font-bold font-almarena text-white leading-[1.05] tracking-tight"
+              className="text-6xl md:text-8xl font-bold font-almarena text-white leading-[0.95] tracking-tighter"
             >
-              We Engineer <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                Digital Dominance.
+              Architecting <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white/20">
+                Digital Legacies.
               </span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
-              className="text-lg text-zinc-400 max-w-lg leading-relaxed"
+              className="text-xl text-zinc-400 max-w-xl leading-relaxed font-light"
             >
-              ElevenXSolutions transforms your ideas into scalable, high
-              performance web applications. We build digital weapons your
-              business can win with.
+              We engineer high-performance digital ecosystems for the next generation of visionary brands. From custom software to immersive web experiences.
             </motion.p>
-
-            <motion.div
-              variants={fadeInUp}
-              className="flex flex-col sm:flex-row items-center gap-4 pt-4"
-            >
-              <Link
-                href="/book?utm_source=hero"
-                className="px-8 py-4 w-full md:w-fit bg-white text-black font-bold text-lg rounded-xl hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-              >
-                Initialize Project <ArrowRight size={20} />
-              </Link>
-
-              <Link
-                href="/work"
-                className="px-8 py-4 w-full md:w-fit block bg-zinc-900 border border-zinc-800 text-white font-medium text-lg rounded-xl hover:bg-zinc-800 transition-all text-center"
-              >
-                View Case Studies
-              </Link>
-            </motion.div>
           </div>
 
-          {/* Stats Section */}
-          {/* CHANGED: Added 'w-full justify-between' to take whole width and 'text-white' for icons */}
+          {/* CTA Buttons */}
           <motion.div
             variants={fadeInUp}
-            className="w-full flex justify-between items-center border-t border-white/5 pt-6 mt-4"
+            className="flex flex-col sm:flex-row items-center gap-5"
           >
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp
-                  from={0}
-                  to={5}
-                  separator=","
-                  direction="up"
-                  duration={1}
-                />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">+</span>
+            <Link
+              href="/book"
+              className="group relative px-10 py-5 w-full sm:w-fit bg-green-500 text-white font-bold text-lg rounded-2xl overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                Initialize Project <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Years Exp.
+              <div className="absolute inset-0 bg-zinc-200 transition-transform translate-y-full group-hover:translate-y-0" />
+            </Link>
+
+            <Link
+              href="/work"
+              className="px-10 py-5 w-full sm:w-fit bg-zinc-900/50 backdrop-blur-md border border-white/10 text-white font-bold text-lg rounded-2xl hover:bg-zinc-800 transition-all text-center"
+            >
+              View Archive
+            </Link>
+          </motion.div>
+
+          {/* Micro Stats */}
+          <motion.div
+            variants={fadeInUp}
+            className="flex items-center gap-12 pt-8 border-t border-white/5"
+          >
+            {[
+              { label: "Execution Time", val: "< 45 Days" },
+              { label: "Performance Score", val: "99/100" },
+              { label: "Satisfaction Rate", val: "100%" }
+            ].map((stat, i) => (
+              <div key={i}>
+                <div className="text-white font-bold text-lg font-mono">{stat.val}</div>
+                <div className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">{stat.label}</div>
               </div>
-            </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp
-                  from={0}
-                  to={100}
-                  separator=","
-                  direction="up"
-                  duration={1}
-                />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">%</span>
-              </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Custom Built
-              </div>
-            </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white flex items-baseline">
-                <CountUp
-                  from={0}
-                  to={98}
-                  separator=","
-                  direction="up"
-                  duration={1}
-                />
-                {/* CHANGED: Removed blue color */}
-                <span className="text-white">%</span>
-              </div>
-              <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">
-                Uptime SLA
-              </div>
-            </div>
-            <div>
-              <h4 className="text-xl md:text-2xl font-bold text-white">&lt;100ms</h4>
-              <p className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-wide font-medium mt-1">Latency API</p>
-            </div>
+            ))}
           </motion.div>
         </motion.div>
 
-        {/* RIGHT COLUMN: The Visual Hook */}
-        <motion.div
-  initial={{ opacity: 0, scale: 0.92, y: 20 }}
-  animate={{ opacity: 1, scale: 1, y: 0 }}
-  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-  whileHover={{ y: -6 }}
-  className="relative flex items-center justify-center lg:justify-end py-6 lg:py-0"
->
-  <div className="relative w-full max-w-sm aspect-square md:aspect-[4/5] lg:aspect-[4/5] mx-auto">
+        {/* VISUAL CONTENT */}
+        <HeroVisual />
+      </div>
 
-    {/* Animated Glow */}
-    <motion.div
-      animate={{
-        opacity: [0.4, 0.7, 0.4],
-        scale: [1, 1.05, 1],
-        rotate: [3, 6, 3],
-      }}
-      transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-      className="absolute inset-0 bg-gradient-to-tr from-blue-600/30 to-purple-600/30 rounded-[3rem] blur-3xl"
-    />
-
-    {/* Main Card */}
-    <motion.div
-      animate={{ y: [0, -2, 0] }}
-      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-      className="absolute inset-0 bg-[#0A0A0A] border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col z-10"
-    >
-
-      {/* Header */}
+      {/* Scroll Indicator */}
       <motion.div
-        animate={{ opacity: [0.9, 1, 0.9] }}
-        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-        className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <div className="flex gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/30" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/30" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/30" />
-        </div>
-        <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-          <Terminal size={10} />
-          <span>server-main.tsx</span>
-        </div>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-blue-500/0 via-blue-500/50 to-blue-500/0" />
+        <span className="text-[10px] text-zinc-500 uppercase tracking-[0.3em] font-bold">Scroll</span>
       </motion.div>
-
-      {/* Code Content */}
-      <div className="flex-1 p-5 md:p-6 font-mono text-xs md:text-sm space-y-3 relative">
-        <div className="absolute top-0 right-8 w-[1px] h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-
-        <div className="space-y-2">
-          {codeLines.map((line, idx) => {
-            if (!line) return null;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="flex gap-3"
-              >
-                <span className="text-zinc-600 select-none">
-                  {(idx + 1).toString().padStart(2, "0")}
-                </span>
-                <span
-                  className="text-zinc-200"
-                  dangerouslySetInnerHTML={{
-                    __html: (line || "").replace(
-                      /'(.*?)'/g,
-                      "<span class='text-white/90'>'$1'</span>"
-                    ),
-                  }}
-                />
-              </motion.div>
-            );
-          })}
-
-          {/* Cursor */}
-          <motion.div
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-            className="w-1.5 h-4 bg-white/80 ml-7 rounded-sm"
-          />
-        </div>
-
-        {/* System Status */}
-        <div className="absolute bottom-6 left-6 right-6 p-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
-          <div className="text-zinc-400 text-[9px] uppercase tracking-widest mb-1.5 font-bold">
-            System Status
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.4)]" />
-            <span className="text-white font-bold text-xs">
-              Live & Stable
-            </span>
-          </div>
-
-          <div className="mt-2 h-0.5 w-full bg-white/10 rounded-full overflow-hidden">
-            <motion.div
-              animate={{ width: ["0%", "100%"] }}
-              transition={{
-                duration: 2.2,
-                ease: "circOut",
-                repeat: Infinity,
-                repeatDelay: 3,
-              }}
-              className="h-full bg-gradient-to-r from-white/70 to-white"
-            />
-          </div>
-        </div>
-      </div>
-    </motion.div>
-
-    {/* Floating Zap */}
-    <motion.div
-      animate={{ y: [0, -14, 0], rotate: [-2, 2, -2] }}
-      transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-      className="absolute -right-4 top-20 bg-zinc-900/90 backdrop-blur-xl p-3 rounded-xl border border-zinc-800 shadow-2xl z-20"
-    >
-      <Zap className="text-yellow-400 w-6 h-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]" />
-    </motion.div>
-
-    {/* Floating Growth */}
-    <motion.div
-      animate={{ y: [0, 12, 0], rotate: [1, -1, 1] }}
-      transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 0.5 }}
-      className="absolute -left-8 bottom-32 bg-zinc-900/90 backdrop-blur-xl p-3 rounded-xl border border-zinc-800 shadow-2xl z-20 flex items-center gap-2"
-    >
-      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-600/20">
-        <BarChart className="text-white w-4 h-4" />
-      </div>
-      <div>
-        <div className="text-[10px] text-zinc-400">Growth</div>
-        <div className="text-white font-bold text-sm">+114%</div>
-      </div>
-    </motion.div>
-  </div>
-</motion.div>
-
-      </div>
     </section>
   );
 };
@@ -455,175 +285,240 @@ const Hero = () => {
 //   );
 // };
 
+
+// Services Section
+const ServiceCard = ({ service, index, variant = "default" }: { service: any; index: number; variant?: "default" | "featured" | "wide" }) => {
+  return (
+    <motion.div
+      variants={cardVariants}
+      whileHover={{ y: -5, transition: { duration: 0.3 } }}
+      className={`group relative overflow-hidden rounded-[2.5rem] bg-[#080808] border border-white/[0.04] p-8 flex flex-col transition-all duration-500 hover:border-blue-500/20 hover:shadow-[0_0_80px_rgba(59,130,246,0.05)] ${variant === "wide" ? "md:col-span-2" : "md:col-span-1"
+        } ${variant === "featured" ? "h-full justify-between" : "justify-between"}`}
+    >
+      {/* Background decoration */}
+      <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${service.color} opacity-[0.02] group-hover:opacity-[0.08] rounded-bl-full blur-3xl transition-opacity duration-700`} />
+
+      <div className="relative z-10">
+        <div className={`mb-6 p-4 w-fit rounded-2xl bg-gradient-to-br ${service.color} bg-opacity-10 backdrop-blur-xl border border-white/10 group-hover:scale-110 transition-transform duration-500`}>
+          {service.icon}
+        </div>
+        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4 font-manrope">
+          {service.title}
+        </h3>
+        <p className="text-zinc-500 text-base leading-relaxed group-hover:text-zinc-400 transition-colors">
+          {service.desc}
+        </p>
+      </div>
+
+      <div className="mt-8 relative z-10 flex items-center justify-between">
+        <Link
+          href="/services"
+          className="flex items-center gap-2 text-xs font-bold text-zinc-600 hover:text-white transition-colors uppercase tracking-[0.2em]"
+        >
+          Explore Protocol <ChevronRight size={14} />
+        </Link>
+        <div className="text-[10px] font-mono text-zinc-800">
+          0{index + 1}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Services = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const services = [
     {
-      icon: <Layout className="text-white" size={24} />,
-      title: "Website Development",
-      desc: "Make your brand stand out online with high-performance, custom-engineered web applications.",
-      color: "from-blue-600 to-blue-400",
+      icon: <Monitor className="text-white" size={28} />,
+      title: "Web Engineering",
+      desc: "Architecting high-velocity digital ecosystems for the elite 1% of market leaders.",
+      color: "from-blue-600 to-cyan-500",
     },
     {
-      icon: <Book className="text-white" size={24} />,
-      title: "Booking Systems",
-      desc: "Custom booking engines that sync seamlessly with your calendar and payment gateways like Stripe.",
-      color: "from-indigo-600 to-indigo-400",
+      icon: <Layers className="text-white" size={28} />,
+      title: "UI/UX Design",
+      desc: "Neuro-centric interfaces designed for absolute user retention and conversion.",
+      color: "from-purple-600 to-pink-500",
     },
     {
-      icon: <Globe className="text-white" size={24} />,
-      title: "Influencer Marketing",
-      desc: "Turn influencer power into unstoppable brand momentum. More reach, more trust, more sales.",
-      color: "from-purple-600 to-purple-400",
+      icon: <Bot className="text-white" size={28} />,
+      title: "AI Automation",
+      desc: "Bespoke neural agents that handle your sales while you sleep.",
+      color: "from-emerald-600 to-teal-500",
     },
     {
-      icon: <Database className="text-white" size={24} />,
-      title: "API Development",
-      desc: "Scalable REST and GraphQL APIs that serve as the backbone for your mobile and web ecosystem.",
-      color: "from-teal-600 to-teal-400",
+      icon: <Rocket className="text-white" size={28} />,
+      title: "SaaS Systems",
+      desc: "Full-stack SaaS solutions engineered for multi-tenant scalability and edge-speed performance.",
+      color: "from-orange-600 to-amber-500",
     },
   ];
 
   return (
-    <section id="services" className="py-20 lg:py-24 bg-black relative">
-      {/* Subtle moving gradient background */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-72 max-w-3xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-teal-500/10 blur-3xl"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <section id="services" className="relative bg-[#030303] py-24 lg:py-32 overflow-hidden">
+      {/* Background Cinematic Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
+        <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px]" />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-almarena">
-            Expertise That Matters
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-0.5 w-12 bg-blue-500" />
+            <span className="text-xs font-bold uppercase tracking-[0.5em] text-blue-500">Expertise</span>
+          </div>
+          <h2 className="font-almarena text-5xl md:text-7xl font-bold tracking-tighter text-white leading-none">
+            Architecting <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white/20">Digital Dominance.</span>
           </h2>
-          <p className="text-zinc-400 max-w-3xl mx-auto text-lg leading-relaxed">
-            Tell us how you work? ElevenX Solution will build you the system
-            that works for you.
-            <br className="hidden md:block" /> Built to grow, Built to win.
-          </p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainer}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {services.map((service, index) => (
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Main Feature / Left Column */}
+          <div className="md:col-span-1 lg:col-span-1 flex flex-col gap-6">
             <motion.div
-              key={index}
               variants={cardVariants}
-              whileHover={{
-                y: -8,
-                scale: 1.02,
-                rotateX: 2,
-                rotateY: -2,
-              }}
-              whileTap={{ scale: 0.98, rotateX: 0, rotateY: 0 }}
-              transition={{ type: "spring", stiffness: 220, damping: 18 }}
-              className="bg-zinc-900/30 p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
+              className="relative flex-1 overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-blue-600/20 to-transparent border border-white/[0.04] p-10 flex flex-col justify-end group"
             >
-              {/* Animated diagonal shimmer on hover */}
-              <motion.div
-                className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100"
-                initial={{ x: "-120%" }}
-                animate={{ x: ["-120%", "120%"] }}
-                transition={{
-                  duration: 1.4,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  ease: "easeInOut",
-                }}
-                style={{
-                  background:
-                    "linear-gradient(120deg, transparent, rgba(255,255,255,0.16), transparent)",
-                }}
-              />
-
-              {/* Soft color gradient burst in top-right */}
-              <div
-                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 rounded-bl-full blur-2xl transition-opacity duration-500`}
-              ></div>
-
-              {/* Floating icon */}
-              <motion.div
-                className={`mb-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg relative z-10`}
-                animate={{
-                  y: [0, -4, 0],
-                }}
-                transition={{
-                  duration: 3 + index * 0.4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                {service.icon}
-              </motion.div>
-
-              <h3 className="text-xl font-bold text-white mb-4 relative z-10">
-                {service.title}
-              </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6 relative z-10">
-                {service.desc}
-              </p>
-
-              <div className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer relative z-10">
-                <span className="relative">
-                  <motion.span
-                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-white/30 origin-left"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                  />
-                  <Link href="/services" className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
-   Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-</Link>
-                </span>
-                <ChevronRight
-                  size={14}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
+              <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent_50%,#fff_50%)] bg-[size:100%_4px] opacity-[0.03]" />
+              <div className="relative z-10 space-y-6">
+                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
+                  <Zap size={32} className="text-blue-400" />
+                </div>
+                <h3 className="text-4xl font-bold text-white leading-tight font-manrope">Execution <br /> Protocol.</h3>
+                <p className="text-zinc-500 text-lg">We deliver high-fidelity systems from ideation to launch in &lt; 45 days.</p>
+              </div>
+              <div className="absolute -right-10 top-10 opacity-10 group-hover:rotate-12 transition-transform duration-1000">
+                <Rocket size={240} className="text-white" />
               </div>
             </motion.div>
-          ))}
+          </div>
+
+          {/* Right Column Grid */}
+          <div className="md:col-span-2 lg:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+              {/* Horizontal Top Card */}
+              <motion.div
+                variants={cardVariants}
+                className="md:col-span-2 relative overflow-hidden rounded-[2.5rem] bg-[#0A0A0A] border border-white/[0.04] p-8 flex flex-col md:flex-row items-center justify-between gap-8 group"
+              >
+                <div className="flex-1 space-y-4">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] font-bold tracking-widest uppercase w-fit">
+                    Optimized Performance
+                  </div>
+                  <h3 className="text-3xl font-bold text-white font-manrope">Performance Engine</h3>
+                  <p className="text-zinc-500 max-w-sm">Every build is scored 99+ on lighthouse to ensure absolute speed and SEO dominance.</p>
+                </div>
+                <div className="relative w-full md:w-64 aspect-video bg-zinc-900/50 rounded-2xl border border-white/5 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <BarChart size={64} className="text-blue-500/20 group-hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: "95%" }}
+                      transition={{ duration: 1.5, delay: 0.5 }}
+                      className="h-full bg-blue-500"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Smaller Service Cards */}
+              {services.map((service, index) => (
+                <ServiceCard key={index} service={service} index={index} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Interaction Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-20 flex flex-col md:flex-row items-center justify-between gap-8 py-8 border-t border-white/5"
+        >
+          <div className="flex items-center gap-6">
+            <p className="text-zinc-600 text-sm font-mono tracking-widest uppercase">Encryption Status: <span className="text-green-500">Secure</span></p>
+            <div className="h-1 w-24 bg-zinc-900 overflow-hidden rounded-full">
+              <motion.div animate={{ x: ["-100%", "100%"] }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} className="h-full w-full bg-blue-500/30" />
+            </div>
+          </div>
+          <Link href="/book" className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition">
+            Initialize Project Now
+          </Link>
         </motion.div>
       </div>
     </section>
   );
 };
 
+
+
+// Our Story section
 const OurStory = () => {
   return (
     <section className="py-24 bg-black relative overflow-hidden border-t border-white/5">
-      {/* Background Tech Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.2, 0.1],
+            x: [0, 50, 0]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.05, 0.15, 0.05],
+            x: [0, -50, 0]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px]"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
             className="max-w-2xl"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-white font-manrope mb-6">
-              The <span className="text-blue-500">ElevenX</span> Origin
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-6"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              Our Philosophy
+            </motion.div>
+            <h2 className="text-5xl md:text-7xl font-bold text-white font-manrope leading-[0.9] tracking-tighter mb-8">
+              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">ElevenX</span> Origin.
             </h2>
-            <p className="text-zinc-400 text-lg leading-relaxed">
-              We did not start as an agency. We started as engineers tired of
-              slow, bloated software. We built ElevenX to prove that speed,
-              aesthetics, and code quality can coexist.
+            <p className="text-zinc-400 text-xl leading-relaxed font-light">
+              We started as engineers frustrated by the status quo. Tenacious performance, absolute aesthetics, and unbreakable code aren't just goals — they're our baseline.
             </p>
           </motion.div>
 
@@ -631,143 +526,125 @@ const OurStory = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="hidden md:block"
+            className="hidden lg:block bg-white/5 border border-white/10 px-6 py-4 rounded-2xl backdrop-blur-md"
           >
-            <div className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-zinc-400 text-sm font-mono flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              System Status: Scaling
+            <div className="text-zinc-500 text-[10px] uppercase tracking-widest mb-1 font-bold font-mono">Status Dashboard</div>
+            <div className="flex items-center gap-4">
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-400">
+                    {i}
+                  </div>
+                ))}
+              </div>
+              <div className="h-4 w-px bg-white/10" />
+              <div className="text-white font-mono text-xs scale-90">ENGINE: <span className="text-green-400">ACTIVE</span></div>
             </div>
           </motion.div>
         </div>
 
-        {/* BENTO GRID LAYOUT */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* CARD 1: THE SPARK (Wide) */}
+        {/* BENTO GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6 h-auto md:h-[600px]">
+          {/* Bento Card 1: The Spark (4/6 wide) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/30 p-8 md:p-12 hover:border-blue-500/30 transition-colors"
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            className="md:col-span-4 relative group overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/20 p-10 flex flex-col justify-end transition-colors hover:border-blue-500/20"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-10 right-10 scale-150 opacity-10 group-hover:opacity-20 group-hover:rotate-12 transition-all duration-500">
+              <Zap size={120} className="text-blue-500" />
+            </div>
 
-            <div className="relative z-10 flex flex-col h-full justify-between gap-8">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 mb-4">
+            <div className="relative z-10 space-y-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                 <Zap size={24} />
               </div>
-
-              <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                  Born from Frustration
-                </h3>
-                <p className="text-zinc-400 leading-relaxed text-base md:text-lg max-w-lg">
-                  We saw too many great businesses held back by clunky websites.
-                  We realized the market did not need more developers — it needed
-                  <span className="text-white">better architects</span>. ElevenX
-                  started in a small room with one obsession: Performance.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* CARD 2: THE PHILOSOPHY (Tall) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/30 p-8 hover:border-purple-500/30 transition-colors flex flex-col"
-          >
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 to-transparent z-0"></div>
-
-            {/* Abstract Code Visual */}
-            <div className="absolute inset-0 opacity-20 font-mono text-[10px] p-4 text-blue-300 leading-none overflow-hidden select-none">
-              {Array(20)
-                .fill("010110 const engine = new ElevenX(); return speed; ")
-                .map((s, i) => (
-                  <div key={i}>{s}</div>
-                ))}
-            </div>
-
-            <div className="relative z-10 mt-auto">
-              <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20 text-purple-400 mb-4">
-                <Terminal size={20} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Code First</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed">
-                While others sold templates, we wrote custom engines. We adopted
-                Serverless & Edge computing before they were cool.
+              <h3 className="text-3xl font-bold text-white tracking-tight">Born from Frustration</h3>
+              <p className="text-zinc-400 text-lg leading-relaxed max-w-xl">
+                We saw too many businesses held back by bloated, clunky software. We decided to stop complaining and started building digital weapons that win.
               </p>
             </div>
           </motion.div>
 
-          {/* CARD 3: THE SCALE (Tall) */}
+          {/* Bento Card 2: Code First (2/6 wide) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="md:col-span-1 relative group overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/30 p-8 hover:border-green-500/30 transition-colors"
+            transition={{ delay: 0.1 }}
+            whileHover={{ y: -5 }}
+            className="md:col-span-2 relative group overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/20 p-10 flex flex-col justify-center transition-colors hover:border-purple-500/20"
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-green-500/10 blur-[50px] rounded-full"></div>
-
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center border border-green-500/20 text-green-400">
-                <Globe size={20} />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative z-10 space-y-6">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:rotate-6 transition-transform">
+                <Terminal size={24} />
               </div>
-
-              <div className="mt-8">
-                <h3 className="text-xl font-bold text-white mb-2">
-                  Global Impact
-                </h3>
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-3">Code First</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
-                  From local startups to enterprise giants. Our systems now
-                  handle millions of requests, driving revenue across 12
-                  countries.
+                  While others sold bloated templates, we built custom high-performance engines. Speed is not a feature; it is our foundation.
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* CARD 4: THE FUTURE (Wide) */}
+          {/* Bento Card 3: Global Impact (2/6 wide) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ y: -5 }}
+            className="md:col-span-2 relative group overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/20 p-10 flex flex-col justify-between transition-colors hover:border-green-500/20"
+          >
+            <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+              <Globe size={300} className="text-white" />
+            </div>
+            <div className="w-12 h-12 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-400">
+              <Globe size={24} />
+            </div>
+            <div className="relative z-10">
+              <h3 className="text-2xl font-bold text-white mb-2">Global Impact</h3>
+              <p className="text-zinc-500 text-sm">Scaling requests across 12 countries with &lt;100ms latency.</p>
+            </div>
+          </motion.div>
+
+          {/* Bento Card 4: The Future (4/6 wide) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-zinc-900/30 p-8 md:p-12 hover:border-indigo-500/30 transition-colors"
+            whileHover={{ y: -5 }}
+            className="md:col-span-4 relative group overflow-hidden rounded-[2.5rem] border border-white/5 bg-zinc-900/20 p-10 flex items-start justify-between gap-10 transition-colors hover:border-indigo-500/20"
           >
-            {/* Background Gradient Animation */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-purple-900/10 to-blue-900/10 opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-              <div className="max-w-md">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400">
-                    <Rocket size={20} />
-                  </div>
-                  <span className="text-indigo-400 font-bold tracking-widest text-xs uppercase">
-                    Vision 2025
-                  </span>
+            <div className="relative z-10 flex-1 space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                  <Rocket size={24} />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                  11x and Beyond
-                </h3>
-                <p className="text-zinc-400 text-base leading-relaxed">
-                  We are evolving from a dev shop to a strategic growth partner.
-                  We are currently building proprietary AI-driven interfaces
-                  that will define the next decade of web.
-                </p>
+                <span className="text-indigo-400 font-bold text-[10px] tracking-widest uppercase">Launch Alpha 2026</span>
               </div>
+              <h3 className="text-3xl font-bold text-white">11x and Beyond</h3>
+              <p className="text-zinc-400 text-lg leading-relaxed max-w-lg">
+                We are evolving into a strategic growth partner, building proprietary AI-driven interfaces that will define the next decade of user interaction.
+              </p>
+            </div>
 
-              {/* Decorative Stat */}
-              <div className="hidden md:block">
-                <div className="p-4 rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md">
-                  <div className="text-xs text-zinc-500 uppercase mb-1">
-                    R&D Investment
-                  </div>
-                  <div className="text-2xl font-bold text-white">+400%</div>
-                </div>
+            <div className="hidden md:flex flex-col gap-4 relative z-10">
+              <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                <div className="text-[10px] text-zinc-500 uppercase font-bold mb-1">R&D Scale</div>
+                <div className="text-3xl font-bold text-white tracking-tighter">+400%</div>
+              </div>
+              <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                <div className="text-[10px] text-zinc-500 uppercase font-bold mb-1">Architecture</div>
+                <div className="text-xl font-bold text-blue-400">EDGE_FIRST</div>
               </div>
             </div>
           </motion.div>
@@ -962,6 +839,7 @@ const Pricing = () => {
   );
 };
 
+// InfiniteTestimonials section
 const InfiniteTestimonials = () => {
   const testimonials = [
     {
@@ -1052,14 +930,8 @@ const InfiniteTestimonials = () => {
               </div>
 
               <div className="relative z-10 flex items-center gap-4 border-t border-white/5 pt-6">
-                <div className="w-12 h-12 bg-zinc-800 rounded-full overflow-hidden border border-white/10 group-hover:border-blue-500/50 transition-colors">
-                  <Image
-                    src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${item.img}&backgroundColor=transparent`}
-                    alt={item.name}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border border-white/10 group-hover:border-blue-500/50 transition-colors">
+                  <User size={24} className="text-zinc-500 group-hover:text-blue-500 transition-colors" />
                 </div>
                 <div>
                   <div className="text-white font-bold text-base">

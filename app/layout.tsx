@@ -5,6 +5,8 @@ import LocalFont from "next/font/local"
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
 
+import SmoothScroll from "./components/SmoothScroll";
+
 const almarena = LocalFont({
   src: "/Fonts/Almarena/almarenaneue-regular.otf",
   variable: "--font-almarena"
@@ -28,10 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${almarena.variable} ${manrope.variable}`}>
       <body className="font-manrope">
-        <Navbar />
-        {children}
-        <Footer />
-        <ChatBot />
+        <SmoothScroll>
+          <Navbar />
+          {children}
+          <Footer />
+          <ChatBot />
+        </SmoothScroll>
       </body>
     </html>
   );
