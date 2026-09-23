@@ -53,10 +53,10 @@ export default function WebDevelopmentPage() {
       </Head>
 
       {/* ================= HERO ================= */}
-      <section className="relative min-h-screen bg-zinc-950 flex items-center overflow-hidden">
+      <section className="relative min-h-screen bg-white flex items-center overflow-hidden">
         {/* Animated Orbs */}
-        <motion.div {...float} className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-600/20 blur-[160px]" />
-        <motion.div {...float} className="absolute bottom-[-200px] right-[-200px] w-[520px] h-[520px] bg-purple-600/20 blur-[180px]" />
+        <motion.div {...float} className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-600/10 blur-[160px]" />
+        <motion.div {...float} className="absolute bottom-[-200px] right-[-200px] w-[520px] h-[520px] bg-purple-600/10 blur-[180px]" />
 
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-35 lg:mt-0">
           {/* TEXT */}
@@ -66,7 +66,7 @@ export default function WebDevelopmentPage() {
             variants={stagger}
             className="space-y-6 text-center md:text-left"
           >
-            <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-bold text-white leading-tight">
+            <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-bold text-zinc-900 leading-tight">
               Web Development <br />
               <span className="text-blue-500 relative">
                 That Converts & Scales
@@ -74,7 +74,7 @@ export default function WebDevelopmentPage() {
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="text-zinc-400 max-w-xl mx-auto md:mx-0 text-lg">
+            <motion.p variants={fadeUp} className="text-zinc-600 max-w-xl mx-auto md:mx-0 text-lg">
               A website is no longer just an online presence — it’s your first
               impression, sales engine, and credibility layer. We build fast,
               secure, and conversion-focused websites designed to grow your
@@ -83,7 +83,7 @@ export default function WebDevelopmentPage() {
 
             <Link
               href="/book"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white font-bold rounded-full hover:bg-zinc-800 transition shadow-md"
             >
               Start Your Project <ArrowRight size={16} />
             </Link>
@@ -100,7 +100,7 @@ export default function WebDevelopmentPage() {
             <Image
               src={img}
               alt="Web Development Dashboard"
-              className="rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+              className="rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
               priority
             />
           </motion.div>
@@ -108,89 +108,87 @@ export default function WebDevelopmentPage() {
       </section>
 
       {/* ================= WHY WEB DEVELOPMENT ================= */}
-      {/* ================= WHY WEB DEVELOPMENT (NEW DESIGN) ================= */}
-<section className="relative py-20 bg-black overflow-hidden border-t border-white/5">
-  {/* subtle background texture */}
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.12),transparent_45%)]" />
+      <section className="relative py-20 bg-zinc-50 overflow-hidden border-t border-zinc-200">
+        {/* subtle background texture */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.06),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.06),transparent_45%)]" />
 
-  <div className="relative z-10 max-w-6xl mx-auto px-6">
-    
-    {/* Heading */}
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className="text-center max-w-3xl mx-auto mb-20"
-    >
-      <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
-        Why Web Development <br />
-        <span className="text-zinc-400">
-          Decides Your <span className="text-blue-500">Brand’s Future</span>?
-        </span>
-      </h2>
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          
+          {/* Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 leading-tight">
+              Why Web Development <br />
+              <span className="text-zinc-600">
+                Decides Your <span className="text-blue-500">Brand’s Future</span>?
+              </span>
+            </h2>
 
-      <p className="mt-6 text-zinc-500 text-lg">
-        In a digital first world, your website is no longer optional.
-        It is the foundation of trust, growth, and conversion.
-      </p>
-    </motion.div>
-
-    {/* Content Rows */}
-    <div className="space-y-14">
-      {[
-        {
-          tag: "FIRST IMPRESSION",
-          title: "People trust your website before they trust you",
-          desc: "The moment someone hears about your brand, they search for you. What they see in those first few seconds determines credibility, interest, and action."
-        },
-        {
-          tag: "SILENT SALES ENGINE",
-          title: "Your website works even when you don’t",
-          desc: "While you focus on running your business, your website should educate, build confidence, and convert visitors — automatically, every day."
-        },
-        {
-          tag: "STRATEGY OVER DESIGN",
-          title: "Good design looks nice. Smart development makes money.",
-          desc: "A visually pleasing site means nothing without speed, structure, clarity, and performance. Results come from strategy, not decoration."
-        },
-        {
-          tag: "LONG-TERM GROWTH",
-          title: "Built to scale, not rebuilt every year",
-          desc: "We develop websites that grow with your business — adaptable, maintainable, and ready for future expansion without starting from scratch."
-        },
-      ].map((item, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: i * 0.1 }}
-          className="grid md:grid-cols-[180px_1fr] gap-6 items-start"
-        >
-          {/* Tag */}
-          <div className="text-sm font-bold text-blue-500 tracking-widest">
-            {item.tag}
-          </div>
-
-          {/* Text */}
-          <div>
-            <h3 className="text-2xl font-semibold text-white mb-3 leading-snug">
-              {item.title}
-            </h3>
-            <p className="text-zinc-400 leading-relaxed max-w-3xl">
-              {item.desc}
+            <p className="mt-6 text-zinc-600 text-lg">
+              In a digital first world, your website is no longer optional.
+              It is the foundation of trust, growth, and conversion.
             </p>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-</section>
+          </motion.div>
 
+          {/* Content Rows */}
+          <div className="space-y-14">
+            {[
+              {
+                tag: "FIRST IMPRESSION",
+                title: "People trust your website before they trust you",
+                desc: "The moment someone hears about your brand, they search for you. What they see in those first few seconds determines credibility, interest, and action."
+              },
+              {
+                tag: "SILENT SALES ENGINE",
+                title: "Your website works even when you don’t",
+                desc: "While you focus on running your business, your website should educate, build confidence, and convert visitors — automatically, every day."
+              },
+              {
+                tag: "STRATEGY OVER DESIGN",
+                title: "Good design looks nice. Smart development makes money.",
+                desc: "A visually pleasing site means nothing without speed, structure, clarity, and performance. Results come from strategy, not decoration."
+              },
+              {
+                tag: "LONG-TERM GROWTH",
+                title: "Built to scale, not rebuilt every year",
+                desc: "We develop websites that grow with your business — adaptable, maintainable, and ready for future expansion without starting from scratch."
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+                className="grid md:grid-cols-[180px_1fr] gap-6 items-start"
+              >
+                {/* Tag */}
+                <div className="text-sm font-bold text-blue-500 tracking-widest">
+                  {item.tag}
+                </div>
+
+                {/* Text */}
+                <div>
+                  <h3 className="text-2xl font-semibold text-zinc-900 mb-3 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-zinc-600 leading-relaxed max-w-3xl">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ================= FEATURES ================= */}
-      <section className="py-10 lg:py-20 bg-zinc-950">
+      <section className="py-10 lg:py-20 bg-white border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
@@ -242,11 +240,11 @@ export default function WebDevelopmentPage() {
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="p-6 rounded-2xl bg-zinc-900/60 backdrop-blur border border-white/10 hover:border-blue-500/40 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.6)] transition"
+                className="p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200 hover:border-blue-500/40 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.2)] transition"
               >
                 <div className="text-blue-500 mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-zinc-400 text-sm">{item.desc}</p>
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">{item.title}</h3>
+                <p className="text-zinc-600 text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -254,13 +252,13 @@ export default function WebDevelopmentPage() {
       </section>
 
       {/* ================= PROCESS ================= */}
-      <section className="py-10 lg:py-20 bg-black">
+      <section className="py-10 lg:py-20 bg-zinc-50 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             variants={fadeUp}
-            className="text-3xl md:text-4xl font-bold text-white mb-12"
+            className="text-3xl md:text-4xl font-bold text-zinc-900 mb-12"
           >
             Our Web Development Process
           </motion.h2>
@@ -278,12 +276,12 @@ export default function WebDevelopmentPage() {
                 whileInView="visible"
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="relative p-6 rounded-xl bg-zinc-900 border border-white/10"
+                className="relative p-6 rounded-xl bg-white border border-zinc-200 shadow-sm"
               >
-                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-blue-600 text-black flex items-center justify-center font-bold">
+                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md">
                   {i + 1}
                 </span>
-                <h4 className="text-white font-bold mt-6">{step}</h4>
+                <h4 className="text-zinc-900 font-bold mt-6">{step}</h4>
               </motion.div>
             ))}
           </div>
@@ -291,7 +289,7 @@ export default function WebDevelopmentPage() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-10 lg:py-24 bg-zinc-950 border-t border-white/5">
+      <section className="py-10 lg:py-24 bg-white border-t border-zinc-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             animate={{ scale: [1, 1.08, 1] }}
@@ -300,17 +298,17 @@ export default function WebDevelopmentPage() {
             <Code2 className="mx-auto text-blue-500 mb-4" size={42} />
           </motion.div>
 
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Build a <span className="text-blue-500">Website</span>  That <span className="text-blue-500">Works</span>?
+          <h2 className="text-3xl font-bold text-zinc-900 mb-4">
+            Ready to Build a <span className="text-blue-500">Website</span> That <span className="text-blue-500">Works</span>?
           </h2>
-          <p className="text-zinc-400 mb-8">
+          <p className="text-zinc-600 mb-8">
             Let’s create a fast, scalable, and conversion-driven website that
             supports your business goals — today and in the future.
           </p>
 
           <a
             href="/book"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition shadow-lg shadow-blue-500/25"
           >
             Book a Free Consultation <ArrowRight size={16} />
           </a>

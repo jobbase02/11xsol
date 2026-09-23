@@ -49,9 +49,9 @@ export default function SEOOptimizationPage() {
       </Head>
 
       {/* ================= HERO ================= */}
-      <section className="relative min-h-screen bg-zinc-950 flex items-center overflow-hidden">
-        <motion.div {...float} className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-green-600/20 blur-[170px]" />
-        <motion.div {...float} className="absolute bottom-[-220px] right-[-220px] w-[520px] h-[520px] bg-blue-600/20 blur-[180px]" />
+      <section className="relative min-h-screen bg-white flex items-center overflow-hidden">
+        <motion.div {...float} className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-green-600/10 blur-[170px]" />
+        <motion.div {...float} className="absolute bottom-[-220px] right-[-220px] w-[520px] h-[520px] bg-blue-600/10 blur-[180px]" />
 
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-30 lg:mt-0">
           {/* TEXT */}
@@ -63,23 +63,23 @@ export default function SEOOptimizationPage() {
           >
             <motion.h1
               variants={fadeUp}
-              className="text-4xl md:text-6xl font-bold text-white leading-tight"
+              className="text-4xl md:text-6xl font-bold text-zinc-900 leading-tight"
             >
               SEO Optimization <br />
-              <span className="text-green-500 relative">
+              <span className="text-green-600 relative">
                 That Compounds Growth
                 <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-gradient-to-r from-green-500 to-blue-500 hidden lg:block" />
               </span>
             </motion.h1>
 
-            <p className="text-zinc-400 max-w-xl">
+            <p className="text-zinc-600 max-w-xl">
               We don&apos;t chase keywords — we engineer SEO foundations that drive
               consistent traffic, higher rankings, and real business growth.
             </p>
 
             <Link
               href="/book"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white font-bold rounded-full hover:bg-zinc-800 transition shadow-md"
             >
               Optimize Your Website <ArrowRight size={16} />
             </Link>
@@ -96,7 +96,7 @@ export default function SEOOptimizationPage() {
             <Image
               src={img}
               alt="SEO Performance Dashboard"
-              className="rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+              className="rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
               priority
             />
           </motion.div>
@@ -104,7 +104,7 @@ export default function SEOOptimizationPage() {
       </section>
 
       {/* ================= WHY SEO ================= */}
-      <section className="relative py-20 bg-black border-t border-white/5">
+      <section className="relative py-20 bg-zinc-50 border-t border-zinc-200">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -113,10 +113,10 @@ export default function SEOOptimizationPage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-white">
-              Why SEO Is a <span className="text-green-500">Long-Term Asset</span>
+            <h2 className="text-3xl md:text-5xl font-bold text-zinc-900">
+              Why SEO Is a <span className="text-green-600">Long-Term Asset</span>
             </h2>
-            <p className="mt-6 text-zinc-500 text-lg">
+            <p className="mt-6 text-zinc-600 text-lg">
               SEO compounds when strategy, execution, and consistency align.
             </p>
           </motion.div>
@@ -152,14 +152,14 @@ export default function SEOOptimizationPage() {
                 transition={{ duration: 0.7, delay: i * 0.1 }}
                 className="grid md:grid-cols-[180px_1fr] gap-6"
               >
-                <div className="text-sm font-bold text-green-500 tracking-widest">
+                <div className="text-sm font-bold text-green-600 tracking-widest">
                   {item.tag}
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">
+                  <h3 className="text-2xl font-semibold text-zinc-900 mb-3">
                     {item.title}
                   </h3>
-                  <p className="text-zinc-400 max-w-3xl">
+                  <p className="text-zinc-600 max-w-3xl">
                     {item.desc}
                   </p>
                 </div>
@@ -170,13 +170,13 @@ export default function SEOOptimizationPage() {
       </section>
 
       {/* ================= FEATURES ================= */}
-      <section className="py-20 bg-zinc-950">
+      <section className="py-20 bg-white border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             variants={fadeUp}
-            className="text-3xl md:text-6xl font-bold text-green-500 mb-12"
+            className="text-3xl md:text-6xl font-bold text-green-600 mb-12"
           >
             What Our SEO Covers
           </motion.h2>
@@ -222,13 +222,13 @@ export default function SEOOptimizationPage() {
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="p-6 rounded-2xl bg-zinc-900/60 backdrop-blur border border-white/10 hover:border-green-500/40 hover:shadow-[0_0_40px_-10px_rgba(34,197,94,0.6)] transition"
+                className="p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200 hover:border-green-500/40 hover:shadow-[0_10px_30px_-10px_rgba(34,197,94,0.2)] transition"
               >
-                <div className="text-green-500 mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">
+                <div className="text-green-600 mb-4">{item.icon}</div>
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-zinc-400 text-sm">{item.desc}</p>
+                <p className="text-zinc-600 text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -236,13 +236,13 @@ export default function SEOOptimizationPage() {
       </section>
 
       {/* ================= SEO PROCESS ================= */}
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-zinc-50 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             variants={fadeUp}
-            className="text-3xl md:text-4xl font-bold text-white mb-12"
+            className="text-3xl md:text-4xl font-bold text-zinc-900 mb-12"
           >
             Our SEO Optimization Process
           </motion.h2>
@@ -272,15 +272,15 @@ export default function SEOOptimizationPage() {
                 whileInView="visible"
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="relative p-6 rounded-xl bg-zinc-900 border border-white/10"
+                className="relative p-6 rounded-xl bg-white border border-zinc-200 shadow-sm"
               >
-                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-green-600 text-black flex items-center justify-center font-bold">
+                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold shadow-md">
                   {i + 1}
                 </span>
-                <h4 className="text-white font-bold mt-6 mb-2">
+                <h4 className="text-zinc-900 font-bold mt-6 mb-2">
                   {step.title}
                 </h4>
-                <p className="text-zinc-400 text-sm">
+                <p className="text-zinc-600 text-sm">
                   {step.desc}
                 </p>
               </motion.div>
@@ -290,25 +290,25 @@ export default function SEOOptimizationPage() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-24 bg-zinc-950 border-t border-white/5">
+      <section className="py-24 bg-white border-t border-zinc-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             animate={{ scale: [1, 1.08, 1] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
-            <Zap className="mx-auto text-green-500 mb-4" size={42} />
+            <Zap className="mx-auto text-green-600 mb-4" size={42} />
           </motion.div>
 
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Build <span className="text-green-500">Organic Authority</span>?
+          <h2 className="text-3xl font-bold text-zinc-900 mb-4">
+            Ready to Build <span className="text-green-600">Organic Authority</span>?
           </h2>
-          <p className="text-zinc-400 mb-8">
+          <p className="text-zinc-600 mb-8">
             Let’s turn search visibility into long-term, compounding growth.
           </p>
 
           <a
             href="/book"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white font-bold rounded-full hover:bg-green-500 transition"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white font-bold rounded-full hover:bg-green-500 transition shadow-lg shadow-green-500/25"
           >
             Book a Free SEO Strategy Call <ArrowRight size={16} />
           </a>

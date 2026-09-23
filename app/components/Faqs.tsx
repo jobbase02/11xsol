@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
@@ -46,30 +46,38 @@ const FaqItem = ({
   i: number;
   expanded: number | false;
   setExpanded: (i: number | false) => void;
-  item: typeof faqs[0];
+  item: (typeof faqs)[0];
 }) => {
   const isOpen = i === expanded;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      whileHover={{ y: -2 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{
         duration: 0.45,
         ease: [0.22, 1, 0.36, 1],
-        delay: i * 0.05,
+        delay: i * 0.04,
       }}
       onClick={() => setExpanded(isOpen ? false : i)}
-      className={`group relative overflow-hidden cursor-pointer transition-all duration-500 border-b border-white/10 ${
-        isOpen ? "bg-white/[0.02]" : "bg-transparent hover:bg-white/[0.02]"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setExpanded(isOpen ? false : i);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-expanded={isOpen}
+      className={`group relative overflow-hidden cursor-pointer transition-all duration-300 border-b border-zinc-200/90 select-none ${
+        isOpen ? "bg-zinc-50/70" : "bg-transparent hover:bg-zinc-50/40"
       }`}
     >
       {/* Soft open-state glow orb */}
       {isOpen && (
         <motion.div
-          className="pointer-events-none absolute -top-24 right-0 w-48 h-48 bg-blue-500/20 blur-3xl"
+          className="pointer-events-none absolute -top-24 right-0 w-48 h-48 bg-[#1757EE]/5 blur-3xl"
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
@@ -77,70 +85,74 @@ const FaqItem = ({
         />
       )}
 
-      <div className="relative z-10 px-4 py-8 md:px-8">
-        <div className="flex justify-between items-center gap-6">
-          <div className="flex items-center gap-6 md:gap-8">
-            {/* Animated ID chip */}
-            <div className="relative">
+      <div className="relative z-10 px-3.5 sm:px-6 md:px-8 py-5 sm:py-6 md:py-7">
+        <div className="flex items-start sm:items-center justify-between gap-3 sm:gap-6">
+          <div className="flex items-start sm:items-center gap-3 sm:gap-5 md:gap-7 flex-1 min-w-0">
+            {/* ID Chip */}
+            <div className="relative shrink-0 pt-0.5 sm:pt-0">
               {isOpen && (
                 <motion.span
                   layoutId="faq-id-glow"
-                  className="absolute -inset-1 rounded-full bg-blue-500/20 blur-md"
+                  className="absolute -inset-1 rounded-full bg-[#1757EE]/10 blur-sm"
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 />
               )}
               <span
-                className={`relative font-mono text-sm transition-colors ${
-                  isOpen ? "text-blue-400" : "text-zinc-600"
+                className={`relative font-mono text-xs sm:text-sm transition-colors ${
+                  isOpen ? "text-[#1757EE] font-bold" : "text-zinc-400"
                 }`}
               >
                 /{item.id}
               </span>
             </div>
 
+            {/* Question Heading */}
             <motion.h3
               layout
-              className={`text-lg md:text-2xl font-medium transition-colors ${
+              className={`text-base sm:text-lg md:text-xl lg:text-[22px] font-medium tracking-tight leading-snug transition-colors ${
                 isOpen
-                  ? "text-white"
-                  : "text-zinc-300 group-hover:text-white"
+                  ? "text-zinc-950 font-semibold"
+                  : "text-zinc-800 group-hover:text-[#1757EE]"
               }`}
             >
               {item.question}
             </motion.h3>
           </div>
 
+          {/* Plus/Minus Circular Toggle Badge */}
           <motion.div
-            animate={isOpen ? { rotate: 180, scale: 1.05 } : { rotate: 0, scale: 1 }}
-            transition={{ duration: 0.25 }}
-            className="flex items-center justify-center"
+            animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className={`shrink-0 w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-colors mt-0.5 sm:mt-0 ${
+              isOpen
+                ? "bg-[#1757EE]/10 text-[#1757EE]"
+                : "bg-zinc-100 text-zinc-500 group-hover:bg-[#1757EE]/10 group-hover:text-[#1757EE]"
+            }`}
           >
             {isOpen ? (
-              <Minus size={24} className="text-blue-500" />
+              <Minus className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
             ) : (
-              <Plus
-                size={24}
-                className="text-zinc-500 group-hover:text-white"
-              />
+              <Plus className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
             )}
           </motion.div>
         </div>
 
+        {/* Answer Accordion */}
         <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div
               key={item.id}
-              initial={{ height: 0, opacity: 0, y: -8 }}
-              animate={{ height: "auto", opacity: 1, y: 0 }}
-              exit={{ height: 0, opacity: 0, y: -8 }}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <motion.div
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -8 }}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
                 transition={{ delay: 0.05, duration: 0.25 }}
-                className="pt-6 pl-12 md:pl-[4rem] pr-4 md:pr-24 text-zinc-400 leading-relaxed text-base md:text-lg max-w-4xl"
+                className="pt-3 sm:pt-4 pl-7 sm:pl-10 md:pl-12 pr-2 sm:pr-8 md:pr-16 text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-3xl"
               >
                 {item.answer}
               </motion.div>
@@ -153,7 +165,7 @@ const FaqItem = ({
       {isOpen && (
         <motion.div
           layoutId="active-glow"
-          className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+          className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-[#1757EE] to-transparent"
           transition={{
             type: "spring",
             stiffness: 260,
@@ -171,47 +183,50 @@ const Faq = () => {
   return (
     <section
       id="faq"
-      className="py-24 lg:py-32 bg-black relative overflow-hidden"
+      className="py-16 sm:py-24 lg:py-32 bg-white relative overflow-hidden text-zinc-900"
     >
-      {/* Background Tech Grid (Subtle texture, no color) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-
       {/* Slow drifting gradient orbs */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -left-32 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"
+        className="pointer-events-none absolute -top-32 -left-32 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-blue-500/5 blur-3xl"
         animate={{ x: [0, 20, -10, 0], y: [0, 10, -10, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 right-0 w-72 h-72 rounded-full bg-indigo-500/5 blur-3xl"
+        className="pointer-events-none absolute -bottom-40 right-0 w-56 sm:w-72 h-56 sm:h-72 rounded-full bg-indigo-500/5 blur-3xl"
         animate={{ x: [0, -15, 10, 0], y: [0, -10, 10, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
       />
 
       <motion.div
-        className="max-w-5xl mx-auto px-6 relative z-10"
-        initial={{ opacity: 0, y: 40 }}
+        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Centered Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-10 sm:mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-[#1757EE] font-semibold mb-3">
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>Got Questions?</span>
+          </div>
+
           <motion.h2
-            className="text-4xl md:text-6xl font-bold text-white font-almarena mb-6"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-zinc-950 font-almarena tracking-tight mb-4 sm:mb-6"
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
             Frequently Asked{" "}
-            <span className="text-blue-500">Questions</span>
+            <span className="text-[#1757EE]">Questions</span>
           </motion.h2>
+
           <motion.p
-            className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 16 }}
+            className="text-sm sm:text-base md:text-lg text-zinc-600 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0"
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -223,7 +238,7 @@ const Faq = () => {
 
         {/* List Layout */}
         <motion.div
-          className="border-t border-white/10"
+          className="border-t border-zinc-200/90"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -231,7 +246,7 @@ const Faq = () => {
         >
           {faqs.map((faq, i) => (
             <FaqItem
-              key={i}
+              key={faq.id}
               i={i}
               expanded={expanded}
               setExpanded={setExpanded}
