@@ -16,8 +16,8 @@ import {
 
 const TechGridBackground = () => (
   <div className="fixed inset-0 pointer-events-none z-0">
-    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-    <div className="absolute inset-0 bg-black [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,transparent_70%,black_100%)]"></div>
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <div className="absolute inset-0 bg-white [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,transparent_70%,white_100%)]"></div>
   </div>
 );
 
@@ -38,20 +38,20 @@ const ServiceSection = ({ title, desc, features, icon, align = "left" }: Service
   >
     {/* Visual Side */}
     <div className="w-full lg:w-1/2">
-        <div className="relative aspect-square md:aspect-[16/9] lg:aspect-square rounded-3xl overflow-hidden border border-white/10 bg-zinc-900/50 group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="relative aspect-square md:aspect-[16/9] lg:aspect-square rounded-3xl overflow-hidden border border-zinc-200 bg-zinc-50/80 shadow-md group">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             {/* Abstract UI Representation */}
             <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-3/4 h-3/4 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-2xl relative">
+                <div className="w-3/4 h-3/4 bg-white/95 backdrop-blur-xl border border-zinc-200 rounded-xl p-6 shadow-xl relative">
                    <div className="absolute -top-3 -right-3 w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
                       {icon}
                    </div>
-                   <div className="space-y-4 opacity-50">
-                      <div className="h-2 w-1/3 bg-zinc-700 rounded-full"></div>
-                      <div className="h-2 w-full bg-zinc-800 rounded-full"></div>
-                      <div className="h-2 w-5/6 bg-zinc-800 rounded-full"></div>
-                      <div className="h-32 w-full bg-zinc-800/50 rounded-lg border border-white/5 mt-6"></div>
+                   <div className="space-y-4 opacity-70">
+                      <div className="h-2 w-1/3 bg-zinc-300 rounded-full"></div>
+                      <div className="h-2 w-full bg-zinc-200 rounded-full"></div>
+                      <div className="h-2 w-5/6 bg-zinc-200 rounded-full"></div>
+                      <div className="h-32 w-full bg-zinc-100/70 rounded-lg border border-zinc-200 mt-6"></div>
                    </div>
                 </div>
             </div>
@@ -60,13 +60,13 @@ const ServiceSection = ({ title, desc, features, icon, align = "left" }: Service
 
     {/* Content Side */}
     <div className="w-full lg:w-1/2">
-        <h3 className="text-3xl md:text-4xl font-bold font-almarena text-white mb-6">{title}</h3>
-        <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+        <h3 className="text-3xl md:text-4xl font-bold font-almarena text-zinc-900 mb-6">{title}</h3>
+        <p className="text-zinc-600 text-lg leading-relaxed mb-8">
             {desc}
         </p>
         <ul className="space-y-4">
             {features.map((item: string) => (
-                <li key={item} className="flex items-start gap-3 text-zinc-300">
+                <li key={item} className="flex items-start gap-3 text-zinc-700">
                     <CheckCircle2 className="text-blue-500 shrink-0 mt-1" size={18} />
                     <span>{item}</span>
                 </li>
@@ -78,7 +78,7 @@ const ServiceSection = ({ title, desc, features, icon, align = "left" }: Service
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-blue-500/30 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-blue-500/30 selection:text-zinc-900 overflow-x-hidden">
       <TechGridBackground />
 
       {/* --- HERO SECTION --- */}
@@ -88,15 +88,15 @@ export default function ServicesPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-[10px] font-mono font-bold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/20 bg-purple-50 text-purple-600 text-[10px] font-mono font-bold uppercase tracking-widest mb-6">
             <Server size={12} />
             System Capabilities
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold font-almarena text-white leading-[1.1] mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold font-almarena text-zinc-900 leading-[1.1] mb-6">
             Engineering <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Digital Dominance.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Digital Dominance.</span>
           </h1>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-zinc-600 text-lg max-w-2xl mx-auto leading-relaxed">
             We move beyond templates. We architect custom, high-performance digital ecosystems tailored to scale your revenue.
           </p>
         </motion.div>
@@ -147,10 +147,10 @@ export default function ServicesPage() {
       </section>
 
       {/* --- THE PROCESS --- */}
-      <section className="py-24 px-6 max-w-7xl mx-auto relative z-10 border-t border-white/10">
+      <section className="py-24 px-6 max-w-7xl mx-auto relative z-10 border-t border-zinc-200">
         <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
             <div className="md:w-1/3">
-                <h2 className="text-4xl font-bold font-almarena text-white mb-6 sticky top-32">
+                <h2 className="text-4xl font-bold font-almarena text-zinc-900 mb-6 sticky top-32">
                     How We <br/> <span className="text-blue-500">Deploy.</span>
                 </h2>
             </div>
@@ -162,8 +162,8 @@ export default function ServicesPage() {
                     { title: "04. Handover", desc: "We do not hold your code hostage. You receive full repository access, documentation, and a training session on how to manage your content." }
                 ].map((step) => (
                     <div key={step.title} className="group">
-                        <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">{step.title}</h3>
-                        <p className="text-zinc-400 leading-relaxed max-w-lg">{step.desc}</p>
+                        <h3 className="text-2xl font-bold text-zinc-900 mb-4 group-hover:text-blue-600 transition-colors">{step.title}</h3>
+                        <p className="text-zinc-600 leading-relaxed max-w-lg">{step.desc}</p>
                     </div>
                 ))}
             </div>
@@ -171,15 +171,15 @@ export default function ServicesPage() {
       </section>
 
       {/* --- CTA --- */}
-      <section className="py-20 border-t border-white/10 bg-black relative overflow-hidden text-center">
+      <section className="py-20 border-t border-zinc-200 bg-zinc-50 relative overflow-hidden text-center">
          <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <h2 className="text-4xl font-bold font-almarena text-white mb-8">Ready to upgrade your infrastructure?</h2>
-            <Link href="/book?utm_source=services_page" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-all">
+            <h2 className="text-4xl font-bold font-almarena text-zinc-900 mb-8">Ready to upgrade your infrastructure?</h2>
+            <Link href="/book?utm_source=services_page" className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white font-bold rounded-xl hover:bg-zinc-800 transition-all shadow-md">
                 Book Engineering Call <ArrowRight size={20} />
             </Link>
          </div>
          {/* Background Glow */}
-         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-blue-900/20 blur-[100px] pointer-events-none"></div>
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-blue-500/10 blur-[100px] pointer-events-none"></div>
       </section>
 
     </div>

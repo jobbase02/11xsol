@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X, ChevronDown } from "lucide-react";
+import { usePreloader } from "./Preloader";
 
 interface NavLink {
   name: string;
@@ -11,13 +13,40 @@ interface NavLink {
 }
 
 const Navbar: React.FC = () => {
+  const { isLoaded } = usePreloader();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Background pill styling threshold
+      setScrolled(currentScrollY > 20);
+
+      // Always show near the very top of the page
+      if (currentScrollY <= 40) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Scroll Down -> Fade away
+      if (currentScrollY > lastScrollY.current + 8) {
+        setIsVisible(false);
+      }
+      // Scroll Up -> Fade back in
+      else if (currentScrollY < lastScrollY.current - 8) {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -26,19 +55,11 @@ const Navbar: React.FC = () => {
   }, [isOpen]);
 
   const navLinks: NavLink[] = [
-    { name: "Work", href: "/work" },
+
     { name: "About", href: "/about" },
     { name: "Services", href: "/services" },
     { name: "Insights", href: "/blogs" },
   ];
-
-  // const serviceItems = [
-  //   "Web Development",
-  //   "SaaS Engineering",
-  //   "UI/UX Design",
-  //   "API Integration",
-  //   "SEO Optimization",
-  // ];
 
   const serviceItems = [
     { label: "Web Development", href: "/WebDevelopment" },
@@ -53,26 +74,38 @@ const Navbar: React.FC = () => {
     <>
       {/* NAVBAR */}
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed inset-x-0 top-0 z-50 flex justify-center ${
+        initial={{ y: -80, opacity: 0 }}
+        animate={
+          !isLoaded
+            ? { y: -80, opacity: 0 }
+            : isVisible || isOpen
+            ? { y: 0, opacity: 1 }
+            : { y: -80, opacity: 0 }
+        }
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-[padding] duration-500 ${
           scrolled ? "pt-4" : "pt-6"
-        }`}
+        } ${isVisible || isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
       >
         <div
-          className={`relative flex items-center justify-between px-6 transition-all duration-500 ${
-            scrolled || isOpen
-              ? "w-[95%] md:w-[70%] lg:w-[60%] bg-zinc-900/80 backdrop-blur-xl border border-white/10 shadow-2xl py-3 rounded-full"
-              : "w-[95%] md:w-[85%] bg-transparent py-4"
-          }`}
+          className={`relative flex items-center justify-between px-6 transition-all duration-500 ${scrolled || isOpen
+            ? "w-[95%] md:w-[70%] lg:w-[60%] bg-white/85 backdrop-blur-xl border border-zinc-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.06)] py-3 rounded-full text-zinc-900"
+            : "w-[95%] md:w-[85%] bg-transparent py-4 text-zinc-900"
+            }`}
         >
           {/* LOGO */}
-          <Link href="/" className="flex items-center gap-2 z-50">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
-              <span className="text-white font-bold">11X</span>
+          <Link href="/" className="flex items-center gap-2.5 z-50 group">
+            <div className="relative w-16 h-16 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <Image
+                src="/logo3.png"
+                alt="11X Solutions Logo"
+                width={100}
+                height={100}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
-            <span className="text-white font-bold text-lg">Solutions</span>
+
           </Link>
 
           {/* DESKTOP NAV */}
@@ -81,7 +114,7 @@ const Navbar: React.FC = () => {
               link.name === "Services" ? (
                 <div key={link.name} className="relative group">
                   {/* Trigger */}
-                  <div className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white cursor-pointer">
+                  <div className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-zinc-600 hover:text-black cursor-pointer">
                     <span className="relative z-10">Services</span>
                     <ChevronDown
                       size={14}
@@ -89,7 +122,7 @@ const Navbar: React.FC = () => {
                     />
 
                     {/* Hover underline */}
-                    <span className="absolute left-3 right-3 bottom-1 h-[1px] bg-gradient-to-r from-blue-500/0 via-blue-500/60 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="absolute left-3 right-3 bottom-1 h-[1px] bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
                   {/* Dropdown */}
@@ -97,9 +130,9 @@ const Navbar: React.FC = () => {
                     className="
             absolute top-full left-1/2 -translate-x-1/2
             w-64 rounded-2xl
-            bg-zinc-900/95 backdrop-blur-xl
-            border border-white/10
-            shadow-[0_20px_50px_rgba(0,0,0,0.6)]
+            bg-white/95 backdrop-blur-xl
+            border border-zinc-200
+            shadow-[0_20px_50px_rgba(0,0,0,0.12)]
             opacity-0 translate-y-3 scale-[0.97]
             group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
             pointer-events-none group-hover:pointer-events-auto
@@ -107,7 +140,7 @@ const Navbar: React.FC = () => {
           "
                   >
                     {/* Glow */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/10 to-transparent opacity-60 pointer-events-none" />
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50 to-transparent opacity-60 pointer-events-none" />
 
                     <div className="relative py-3">
                       {serviceItems.map((service) => (
@@ -119,19 +152,19 @@ const Navbar: React.FC = () => {
                   group/item flex items-center justify-between
                   px-5 py-2.5
                   text-sm font-light font-almarena
-                  text-zinc-400 hover:text-white
-                  transition-all
+                  text-zinc-600 hover:text-black hover:bg-zinc-50
+                  transition-all rounded-lg mx-2
                 "
                         >
                           <span className="relative">
                             {service.label}
                             {/* left accent bar */}
-                            <span className="absolute -left-3 top-1/2 -translate-y-1/2 h-0 w-[2px] bg-blue-500 rounded-full group-hover/item:h-4 transition-all duration-200" />
+                            <span className="absolute -left-2 top-1/2 -translate-y-1/2 h-0 w-[2px] bg-blue-500 rounded-full group-hover/item:h-4 transition-all duration-200" />
                           </span>
 
                           {/* subtle arrow */}
                           <span className="text-blue-500 opacity-0 translate-x-[-4px] group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200">
-                            →
+                            â†’
                           </span>
                         </Link>
                       ))}
@@ -142,7 +175,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors rounded-full"
+                  className="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-black transition-colors rounded-full"
                 >
                   {link.name}
                 </Link>
@@ -154,7 +187,7 @@ const Navbar: React.FC = () => {
           <div className="hidden md:block">
             <Link
               href="/book"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full hover:bg-zinc-200 transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-bold rounded-full hover:bg-zinc-800 transition shadow-md shadow-black/5"
             >
               Book Call <ArrowRight size={14} />
             </Link>
@@ -163,7 +196,7 @@ const Navbar: React.FC = () => {
           {/* MOBILE TOGGLE */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white z-50"
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-zinc-100 border border-zinc-200 text-zinc-900 z-50"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -197,19 +230,18 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black md:hidden px-6 flex flex-col justify-center"
+            className="fixed inset-0 z-40 bg-white md:hidden px-6 flex flex-col justify-center"
           >
             <div className="space-y-6">
               {/* SERVICES ACCORDION */}
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center justify-between w-full text-3xl font-bold text-white"
+                className="flex items-center justify-between w-full text-3xl font-bold text-zinc-900"
               >
                 Services
                 <ChevronDown
-                  className={`transition-transform ${
-                    mobileServicesOpen ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${mobileServicesOpen ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
@@ -229,7 +261,7 @@ const Navbar: React.FC = () => {
                           setIsOpen(false);
                           setMobileServicesOpen(false);
                         }}
-                        className="block text-lg text-zinc-400 hover:text-blue-500 transition-colors"
+                        className="block text-lg text-zinc-600 hover:text-blue-500 transition-colors"
                       >
                         {service.label}
                       </Link>
@@ -246,7 +278,7 @@ const Navbar: React.FC = () => {
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="block text-3xl font-bold text-white hover:text-blue-500"
+                    className="block text-3xl font-bold text-zinc-900 hover:text-blue-500"
                   >
                     {link.name}
                   </Link>
@@ -260,3 +292,5 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
+

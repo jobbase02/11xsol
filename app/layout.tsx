@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
 
 import SmoothScroll from "./components/SmoothScroll";
+import PreloaderProvider from "./components/Preloader";
 
 const almarena = LocalFont({
   src: "/Fonts/Almarena/almarenaneue-regular.otf",
@@ -20,6 +21,11 @@ const manrope = LocalFont({
 export const metadata: Metadata = {
   title: "ElevenXsolutions",
   description: "Your Digital Partner",
+  icons: {
+    icon: "/logo2.png",
+    shortcut: "/logo2.png",
+    apple: "/logo2.png",
+  },
 };
 
 export default function RootLayout({
@@ -29,13 +35,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${almarena.variable} ${manrope.variable}`}>
-      <body className="font-manrope">
-        <SmoothScroll>
-          <Navbar />
-          {children}
-          <Footer />
-          <ChatBot />
-        </SmoothScroll>
+      <body className="bg-white text-zinc-900 font-manrope selection:bg-blue-500/20 selection:text-blue-950">
+        <PreloaderProvider>
+          <SmoothScroll>
+            <Navbar />
+            {children}
+            <Footer />
+            <ChatBot />
+          </SmoothScroll>
+        </PreloaderProvider>
       </body>
     </html>
   );
