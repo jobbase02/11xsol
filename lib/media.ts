@@ -56,9 +56,12 @@ export async function getImageUrl(fileNameOrPath: string): Promise<string> {
  */
 export function getPublicMediaUrl(fileNameOrPath: string): string {
   const cleanPath = fileNameOrPath.replace(/^\/+/, "").replace(/^public\//, "");
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (supabaseUrl && supabaseUrl.startsWith("http") && !supabaseUrl.includes("your-project")) {
-    return `${supabaseUrl}/storage/v1/object/public/${BUCKET_NAME}/${cleanPath}`;
+  // Only route to remote Supabase Storage if explicitly activated by the user
+  if (process.env.NEXT_PUBLIC_USE_SUPABASE_STORAGE === "true") {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    if (supabaseUrl && supabaseUrl.startsWith("http") && !supabaseUrl.includes("your-project")) {
+      return `${supabaseUrl}/storage/v1/object/public/${BUCKET_NAME}/${cleanPath}`;
+    }
   }
   return `/${cleanPath}`;
 }

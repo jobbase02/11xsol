@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 interface CaseStudy {
   id: string;
@@ -20,42 +19,42 @@ const caseStudies: CaseStudy[] = [
     id: "jobbase",
     title: "Jobbase",
     tags: ["Recruitment Platform", "Web"],
-    image: getPublicMediaUrl("projects/jobbase.webp"),
+    image: "/projects/jobbase.webp",
     link: "https://jobbase-v2.vercel.app/",
   },
   {
     id: "Mockup-Test",
     title: "Mockup-Test",
     tags: ["Education Platform", "Web"],
-    image: getPublicMediaUrl("projects/Mockup-Test.webp"),
+    image: "/projects/Mockup-Test.webp",
     link: "https://yourprepcorner.vercel.app/",
   },
   {
     id: "Real-estate",
     title: "Real-estate",
     tags: ["Real Estate", "Web"],
-    image: getPublicMediaUrl("projects/Real-estate.webp"),
+    image: "/projects/Real-estate.webp",
     link: "https://real-estate-ten-zeta-24.vercel.app/",
   },
   {
     id: "E-commerce",
     title: "E-commerce",
     tags: ["E-commerce", "Web"],
-    image: getPublicMediaUrl("projects/E-commerce.webp"),
+    image: "/projects/E-commerce.webp",
     link: "https://www.divasbucket.store/",
   },
   {
     id: "Gym",
     title: "Gym",
     tags: ["Gym", "Web"],
-    image: getPublicMediaUrl("projects/Gym.webp"),
+    image: "/projects/Gym.webp",
     link: "https://www.bajrangfitness.com/",
   },
   {
     id: "Kitchen",
     title: "Kitchen",
     tags: ["Restaurant", "Web"],
-    image: getPublicMediaUrl("projects/kitchen.webp"),
+    image: "/projects/kitchen.webp",
     link: "https://elysian-table.vercel.app/",
   },
 ];
