@@ -15,7 +15,7 @@ import {
   BarChart3,
   Workflow,
 } from "lucide-react";
-import img from "@/public/web-team.png";
+import img from "@/public/web-team.webp";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -33,7 +33,7 @@ const stagger = {
 
 const float = {
   animate: { y: [0, -14, 0] },
-  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
 };
 
 export default function WebDevelopmentPage() {
@@ -113,7 +113,7 @@ export default function WebDevelopmentPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.06),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(168,85,247,0.06),transparent_45%)]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-          
+
           {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

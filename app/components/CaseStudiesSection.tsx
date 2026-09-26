@@ -16,46 +16,46 @@ interface CaseStudy {
 
 const caseStudies: CaseStudy[] = [
   {
-    id: "geon-leasing",
-    title: "Geon Leasing",
+    id: "jobbase",
+    title: "Jobbase",
     tags: ["Brand", "Web"],
-    image: "/projects/Geon Leasing Portfolio Design.webp",
-    link: "#",
+    image: "/projects/jobbase.webp",
+    link: "https://jobbase-v2.vercel.app/",
   },
   {
-    id: "noramble",
-    title: "Noramble",
+    id: "Mockup-Test",
+    title: "Mockup-Test",
     tags: ["Brand", "Web"],
-    image: "/projects/Noramble Work Portfolio Design.webp",
-    link: "#",
+    image: "/projects/Mockup-Test.webp",
+    link: "https://yourprepcorner.vercel.app/",
   },
   {
-    id: "apex-cloud",
-    title: "Apex Cloud",
+    id: "Real-estate",
+    title: "Real-estate",
     tags: ["Brand", "Web"],
-    image: "/projects/1db04fd3-5a07-4eae-92a5-d298873f82ba.webp",
-    link: "#",
+    image: "/projects/Real-estate.webp",
+    link: "https://real-estate-ten-zeta-24.vercel.app/",
   },
   {
-    id: "pulse-commerce",
-    title: "Pulse Commerce",
+    id: "E-commerce",
+    title: "E-commerce",
     tags: ["Brand", "Web"],
-    image: "/projects/32563503-a597-4011-abb9-5dda91d01ec9.webp",
-    link: "#",
+    image: "/projects/E-commerce.webp",
+    link: "https://www.divasbucket.store/",
   },
   {
-    id: "veloce-systems",
-    title: "Veloce Systems",
+    id: "Gym",
+    title: "Gym",
     tags: ["Brand", "Web"],
-    image: "/projects/d7dd4681-dd87-4a13-936c-af506b89313a.png",
-    link: "#",
+    image: "/projects/Gym.webp",
+    link: "https://www.bajrangfitness.com/",
   },
   {
-    id: "flex-studios",
-    title: "Flex Studios",
+    id: "Kitchen",
+    title: "Kitchen",
     tags: ["Brand", "Web"],
-    image: "/projects/Untitled-Made with FlexClip.png",
-    link: "#",
+    image: "/projects/Kitchen.webp",
+    link: "https://elysian-table.vercel.app/",
   },
 ];
 
@@ -146,15 +146,20 @@ export default function CaseStudiesSection() {
             transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
             className="w-[84vw] sm:w-[500px] md:w-[580px] lg:w-[640px] shrink-0 snap-start group"
           >
-            <Link href={project.link} className="block select-none md:cursor-none">
+            <Link
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block select-none md:cursor-none"
+            >
               {/* Image Container with rounded corners matching reference */}
-              <div className="relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-200 shadow-sm border border-zinc-200/60">
+              <div className="relative w-full aspect-[16/9] rounded-lg sm:rounded-xl overflow-hidden bg-zinc-200 shadow-sm border border-zinc-200/60">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   sizes="(max-width: 640px) 85vw, (max-width: 1024px) 580px, 640px"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
 
