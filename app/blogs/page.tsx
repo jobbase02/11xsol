@@ -211,7 +211,7 @@ export default function BlogPage() {
       <TechGridBackground />
 
       {/* --- HERO SECTION --- */}
-      <header className="relative z-10 pt-28 sm:pt-36 md:pt-40 pb-6 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="relative z-10 pt-28 sm:pt-36 md:pt-40 pb-6 sm:pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-0">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}

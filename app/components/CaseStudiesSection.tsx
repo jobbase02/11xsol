@@ -77,6 +77,17 @@ export default function CaseStudiesSection() {
     cursorY.set(e.clientY);
   };
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = 0;
@@ -140,10 +151,10 @@ export default function CaseStudiesSection() {
         {caseStudies.map((project, index) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+            initial={isDesktop ? { opacity: 0, y: 24 } : false}
+            whileInView={isDesktop ? { opacity: 1, y: 0 } : undefined}
+            viewport={isDesktop ? { once: true, margin: "-40px" } : undefined}
+            transition={isDesktop ? { duration: 0.5, delay: index * 0.08, ease: "easeOut" } : undefined}
             className="w-[84vw] sm:w-[500px] md:w-[580px] lg:w-[640px] shrink-0 snap-start group"
           >
             <Link
@@ -163,22 +174,29 @@ export default function CaseStudiesSection() {
                 />
               </div>
 
-              {/* Card Footer: Project Title + Tags as in screenshot */}
-              <div className="mt-3.5 sm:mt-4 flex items-center gap-2.5">
-                <span className="font-normal text-zinc-900 text-sm sm:text-base tracking-tight">
-                  {project.title}
-                </span>
+              {/* Card Footer: Project Title + Tags + Mobile "Click to visit" indicator */}
+              <div className="mt-3.5 sm:mt-4 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+                  <span className="font-normal text-zinc-900 text-sm sm:text-base tracking-tight">
+                    {project.title}
+                  </span>
 
-                <div className="flex items-center gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-0.5 text-[11px] sm:text-xs rounded-md bg-[#ECE8E1] text-zinc-700 font-normal tracking-wide"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-0.5 text-[11px] sm:text-xs rounded-md bg-[#ECE8E1] text-zinc-700 font-normal tracking-wide"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Mobile text: "Click to visit" (hidden on md+ where custom floating cursor is used) */}
+                <span className="md:hidden shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 bg-blue-50/90 px-2 py-0.5 rounded-md border border-blue-100">
+                  Click to visit <ArrowUpRight className="w-3 h-3" />
+                </span>
               </div>
             </Link>
           </motion.div>

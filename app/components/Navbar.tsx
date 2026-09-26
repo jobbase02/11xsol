@@ -79,13 +79,12 @@ const Navbar: React.FC = () => {
           !isLoaded
             ? { y: -80, opacity: 0 }
             : isVisible || isOpen
-            ? { y: 0, opacity: 1 }
-            : { y: -80, opacity: 0 }
+              ? { y: 0, opacity: 1 }
+              : { y: -80, opacity: 0 }
         }
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-[padding] duration-500 ${
-          scrolled ? "pt-4" : "pt-6"
-        } ${isVisible || isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-[padding] duration-500 ${scrolled ? "pt-4" : "pt-2"
+          } ${isVisible || isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
       >
         <div
           className={`relative flex items-center justify-between px-6 transition-all duration-500 ${scrolled || isOpen

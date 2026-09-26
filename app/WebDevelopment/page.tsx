@@ -58,13 +58,13 @@ export default function WebDevelopmentPage() {
         <motion.div {...float} className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-600/10 blur-[160px]" />
         <motion.div {...float} className="absolute bottom-[-200px] right-[-200px] w-[520px] h-[520px] bg-purple-600/10 blur-[180px]" />
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-35 lg:mt-0">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-30 lg:mt-0">
           {/* TEXT */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={stagger}
-            className="space-y-6 text-center md:text-left"
+            className="space-y-6 text-left md:text-left"
           >
             <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-bold text-zinc-900 leading-tight">
               Web Development <br />
