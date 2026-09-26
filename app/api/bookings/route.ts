@@ -3,6 +3,16 @@ import { supabase } from '@/lib/supabase';
 import { resend } from '@/lib/resend';
 import { bookingRatelimit } from '@/lib/redis';
 
+// Prevent HTML injection & XSS attacks in email templates
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export async function POST(request: Request) {
   try {
     // 0. Rate limiting (active if Upstash is configured)
@@ -28,6 +38,23 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const cleanEmail = String(email).trim().toLowerCase().slice(0, 120);
+    if (!emailRegex.test(cleanEmail)) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address.' },
+        { status: 400 }
+      );
+    }
+
+    // Sanitize & length-cap inputs to prevent HTML injection and memory exhaustion
+    const safeName = escapeHtml(String(name).trim().slice(0, 100));
+    const safeEmail = escapeHtml(cleanEmail);
+    const safeService = escapeHtml(String(service || 'Strategy Call').trim().slice(0, 100));
+    const safePlan = plan ? escapeHtml(String(plan).trim().slice(0, 100)) : null;
+    const safeMessage = escapeHtml(String(message).trim().slice(0, 5000));
 
     // 3. Optional Database persistence with Supabase (if configured)
     let savedToDb = false;
@@ -69,13 +96,13 @@ export async function POST(request: Request) {
     if (resend) {
       try {
         // --- EMAIL 1: Detailed notification to Admin / You ---
-        const formattedMessage = String(message).replace(/\n/g, '<br/>');
+        const formattedMessage = safeMessage.replace(/\n/g, '<br/>');
 
         const adminEmailResult = await resend.emails.send({
           from: fromAddress,
           to: adminRecipient,
-          replyTo: `${name} <${email}>`,
-          subject: `🔔 New Booking Inquiry: ${name} (${service || 'General'})`,
+          replyTo: `${safeName} <${cleanEmail}>`,
+          subject: `🔔 New Booking Inquiry: ${safeName} (${safeService})`,
           html: `
             <!DOCTYPE html>
             <html>
@@ -106,21 +133,21 @@ export async function POST(request: Request) {
                 <div class="content">
                   <div class="field-group">
                     <div class="label">Lead Name</div>
-                    <div class="value">${name}</div>
+                    <div class="value">${safeName}</div>
                   </div>
                   <div class="field-group">
                     <div class="label">Email Address</div>
-                    <div class="value"><a href="mailto:${email}" style="color: #1757EE; text-decoration: none;">${email}</a></div>
+                    <div class="value"><a href="mailto:${safeEmail}" style="color: #1757EE; text-decoration: none;">${safeEmail}</a></div>
                   </div>
                   <div style="display: flex; gap: 20px;" class="field-group">
                     <div>
                       <div class="label">Service Focus</div>
-                      <span class="badge">${service || 'Strategy Call'}</span>
+                      <span class="badge">${safeService}</span>
                     </div>
-                    ${plan ? `
+                    ${safePlan ? `
                     <div style="margin-left: 20px;">
                       <div class="label">Sprint Plan</div>
-                      <div class="value" style="font-size: 14px;">${plan}</div>
+                      <div class="value" style="font-size: 14px;">${safePlan}</div>
                     </div>` : ''}
                   </div>
                   <div class="field-group">
@@ -128,8 +155,8 @@ export async function POST(request: Request) {
                     <div class="message-box">${formattedMessage}</div>
                   </div>
                   <div style="text-align: center;">
-                    <a href="mailto:${email}?subject=Re: Your inquiry with Eleven X Solutions" class="reply-btn">
-                      Reply Directly to ${name} &rarr;
+                    <a href="mailto:${safeEmail}?subject=Re: Your inquiry with Eleven X Solutions" class="reply-btn">
+                      Reply Directly to ${safeName} &rarr;
                     </a>
                   </div>
                 </div>
@@ -153,7 +180,7 @@ export async function POST(request: Request) {
         try {
           await resend.emails.send({
             from: fromAddress,
-            to: email,
+            to: cleanEmail,
             subject: 'We have received your inquiry — Eleven X Solutions',
             html: `
               <!DOCTYPE html>
@@ -175,8 +202,8 @@ export async function POST(request: Request) {
                     <h2>ELEVEN X SOLUTIONS</h2>
                   </div>
                   <div class="body-content">
-                    <p style="font-size: 18px; font-weight: 600; margin-top: 0;">Hi ${name},</p>
-                    <p>Thank you for reaching out to us. We have received your inquiry regarding <strong>${service || 'engineering & design strategy'}</strong>.</p>
+                    <p style="font-size: 18px; font-weight: 600; margin-top: 0;">Hi ${safeName},</p>
+                    <p>Thank you for reaching out to us. We have received your inquiry regarding <strong>${safeService}</strong>.</p>
                     <p>Our technical team is reviewing your project roadmap. We respond to all qualified inquiries within 24 business hours to coordinate an introductory discovery sprint.</p>
                     <div style="text-align: center; margin: 30px 0;">
                       <a href="https://elevenxsolutions.com" class="btn">Explore Our Work</a>
