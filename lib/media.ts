@@ -79,4 +79,48 @@ export async function getImageUrls(paths: string[]): Promise<Record<string, stri
   return result;
 }
 
+/**
+ * Resolves a signed URL for private assets with Redis caching:
+ * Caches the signed URL for the duration of its validity minus 60s buffer.
+ */
+export async function getSignedImageUrl(
+  fileNameOrPath: string,
+  expiresInSeconds: number = 3600
+): Promise<string | null> {
+  const cleanPath = fileNameOrPath.replace(/^\/+/, "").replace(/^public\//, "");
+  const cacheKey = `img:signed:${cleanPath}`;
+
+  // 1. Check Redis Cache
+  if (redis) {
+    try {
+      const cached = await redis.get<string>(cacheKey);
+      if (cached) return cached;
+    } catch (err) {
+      console.warn("[Redis Cache Error for signed URL]:", err);
+    }
+  }
+
+  // 2. Request new signed URL from Supabase
+  if (supabase) {
+    try {
+      const { data, error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .createSignedUrl(cleanPath, expiresInSeconds);
+
+      if (!error && data?.signedUrl) {
+        // 3. Cache in Redis (TTL = expiresInSeconds - 60s safety buffer)
+        if (redis) {
+          const ttl = Math.max(60, expiresInSeconds - 60);
+          await redis.set(cacheKey, data.signedUrl, { ex: ttl });
+        }
+        return data.signedUrl;
+      }
+    } catch (err) {
+      console.warn("[Supabase Signed URL Error]:", err);
+    }
+  }
+
+  return null;
+}
+
 

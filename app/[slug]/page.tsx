@@ -68,10 +68,25 @@ export default function BlogPostPage() {
 
     const fetchPost = async () => {
       try {
-        const res = await fetch(
+        // 1. Try fetching from high-speed Redis-cached API endpoint
+        const res = await fetch(`/api/blogs?slug=${params.slug}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.post) {
+            setPost({
+              ...json.post,
+              date: formatDate(json.post.date),
+            });
+            setLoading(false);
+            return;
+          }
+        }
+
+        // 2. Fallback to direct WordPress API
+        const wpRes = await fetch(
           `https://cms.elevenxsolutions.com/wp-json/wp/v2/posts?slug=${params.slug}&_embed`
         );
-        const data = await res.json();
+        const data = await wpRes.json();
 
         if (!data || data.length === 0) {
           setError(true);
