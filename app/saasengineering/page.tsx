@@ -14,7 +14,7 @@ import {
   Users,
   BarChart3,
 } from "lucide-react";
-import img from "@/public/saas.jpg";
+import img from "@/public/saas.webp";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -32,7 +32,7 @@ const stagger = {
 
 const float = {
   animate: { y: [0, -14, 0] },
-  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
 };
 
 export default function SaaSPage() {

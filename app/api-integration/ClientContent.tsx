@@ -10,50 +10,74 @@ import {
   ShieldCheck,
   Workflow,
 } from "lucide-react";
-import img from "@/public/api-integration.jpg";
+import img from "@/public/api-integration.webp";
+
+/* ---------------- ANIMATIONS ---------------- */
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0 },
 };
 
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const float = {
+  animate: { y: [0, -14, 0] },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
+};
+
 export default function ClientContent() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center bg-zinc-950 overflow-hidden">
-        <div className="absolute -top-40 left-[-20%] w-[520px] h-[520px] bg-blue-600/20 blur-[160px]" />
+      {/* ================= HERO ================= */}
+      <section className="relative min-h-screen flex items-center bg-white overflow-hidden">
+        {/* Animated Orbs */}
+        <motion.div {...float} className="absolute -top-40 -left-40 w-[520px] h-[520px] bg-blue-600/10 blur-[160px]" />
+        <motion.div {...float} className="absolute bottom-[-200px] right-[-200px] w-[520px] h-[520px] bg-purple-600/10 blur-[180px]" />
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center relative z-10 mt-35 lg:mt-0">
           <motion.div
             initial="hidden"
             animate="visible"
-            variants={fadeUp}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
+            variants={stagger}
+            className="space-y-6 text-center md:text-left"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+            <motion.h1
+              variants={fadeUp}
+              className="text-4xl md:text-6xl font-bold text-zinc-900 leading-tight"
+            >
               API Integration <br />
-              <span className="text-blue-500">That Just Works</span>
-            </h1>
+              <span className="text-blue-500 relative">
+                That Just Works
+                <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 hidden lg:block" />
+              </span>
+            </motion.h1>
 
-            <p className="text-zinc-400 max-w-xl">
+            <motion.p variants={fadeUp} className="text-zinc-600 max-w-xl mx-auto md:mx-0 text-lg">
               We integrate APIs that are fast, secure, and reliable — connecting
               your products, platforms, and services without breaking your
               system or slowing it down.
-            </p>
+            </motion.p>
 
-            <Link
-              href="/book"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition"
-            >
-              Integrate Your Systems <ArrowRight size={16} />
-            </Link>
+            <motion.div variants={fadeUp}>
+              <Link
+                href="/book"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white font-bold rounded-full hover:bg-zinc-800 transition shadow-md"
+              >
+                Integrate Your Systems <ArrowRight size={16} />
+              </Link>
+            </motion.div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.04 }}
             transition={{ duration: 1 }}
             className="relative"
           >
@@ -62,21 +86,22 @@ export default function ClientContent() {
               alt="API Integration Architecture"
               width={600}
               height={500}
-              className="rounded-2xl shadow-2xl"
+              className="rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
+              priority
             />
           </motion.div>
         </div>
       </section>
 
-      {/* WHAT WE INTEGRATE */}
-      <section className="py-24 bg-zinc-950 border-t border-white/5">
+      {/* ================= WHAT WE INTEGRATE ================= */}
+      <section className="py-10 lg:py-20 bg-white border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="text-3xl md:text-4xl font-bold text-white mb-12"
+            className="text-3xl md:text-5xl font-bold text-blue-500 mb-12"
           >
             What We Integrate
           </motion.h2>
@@ -106,25 +131,26 @@ export default function ClientContent() {
                 viewport={{ once: true }}
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-zinc-900/50 border border-white/10 hover:border-blue-500/40 transition"
+                whileHover={{ y: -10 }}
+                className="p-6 rounded-2xl bg-zinc-50/70 border border-zinc-200 hover:border-blue-500/40 hover:shadow-[0_10px_30px_-10px_rgba(59,130,246,0.2)] transition"
               >
                 <div className="text-blue-500 mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-zinc-400 text-sm">{item.desc}</p>
+                <h3 className="text-xl font-bold text-zinc-900 mb-2">{item.title}</h3>
+                <p className="text-zinc-600 text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PROCESS */}
-      <section className="py-24 bg-black">
+      {/* ================= PROCESS ================= */}
+      <section className="py-10 lg:py-20 bg-zinc-50 border-t border-zinc-200">
         <div className="max-w-7xl mx-auto px-6">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             variants={fadeUp}
-            className="text-3xl md:text-4xl font-bold text-white mb-12"
+            className="text-3xl md:text-4xl font-bold text-zinc-900 mb-12"
           >
             Our API Integration Process
           </motion.h2>
@@ -142,26 +168,39 @@ export default function ClientContent() {
                 whileInView="visible"
                 variants={fadeUp}
                 transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-xl bg-zinc-900 border border-white/10"
+                className="relative p-6 rounded-xl bg-white border border-zinc-200 shadow-sm"
               >
-                <span className="text-blue-500 font-mono text-sm">0{i + 1}</span>
-                <h4 className="text-white font-bold mt-2">{step}</h4>
+                <span className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md">
+                  {i + 1}
+                </span>
+                <h4 className="text-zinc-900 font-bold mt-6">{step}</h4>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* TRUST / RELIABILITY */}
-      <section className="py-24 bg-zinc-950 border-t border-white/5">
+      {/* ================= TRUST / RELIABILITY & CTA ================= */}
+      <section className="py-10 lg:py-24 bg-white border-t border-zinc-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <ShieldCheck className="mx-auto text-blue-500 mb-4" size={42} />
-          <h2 className="text-3xl font-bold text-white mb-4">Secure, Reliable, Production-Ready Integrations</h2>
-          <p className="text-zinc-400">
+          <motion.div animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 4, repeat: Infinity }}>
+            <ShieldCheck className="mx-auto text-blue-500 mb-4" size={42} />
+          </motion.div>
+          <h2 className="text-3xl font-bold text-zinc-900 mb-4">
+            Secure, Reliable, Production-Ready Integrations
+          </h2>
+          <p className="text-zinc-600 mb-8 max-w-2xl mx-auto">
             We follow best practices for authentication, rate limiting,
             validation, and error handling — so your integrations stay stable
             under real-world load.
           </p>
+
+          <Link
+            href="/book"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition shadow-lg shadow-blue-500/25"
+          >
+            Book a Free Consultation <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
     </>

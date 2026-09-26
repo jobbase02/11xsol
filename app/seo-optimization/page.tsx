@@ -15,7 +15,7 @@ import {
   BarChart3,
   ShieldCheck,
 } from "lucide-react";
-import img from "@/public/Seo-green.png";
+import img from "@/public/Seo-green.webp";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -33,7 +33,7 @@ const stagger = {
 
 const float = {
   animate: { y: [0, -14, 0] },
-  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+  transition: { duration: 6, repeat: Infinity, ease: "easeInOut" as const },
 };
 
 export default function SEOOptimizationPage() {

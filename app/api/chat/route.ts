@@ -52,15 +52,21 @@ export async function POST(req: Request) {
         
         Use this knowledge to answer user questions accurately.`;
 
+        const apiKey = process.env.GROK_API_KEY || process.env.GROQ_API_KEY;
+        if (!apiKey) {
+            console.error("GROK_API_KEY is missing in environment variables.");
+            return new Response(JSON.stringify({ error: "API key is not configured" }), { status: 500 });
+        }
+
         // Using direct fetch to bypass AI SDK formatting bugs with certain providers like Groq
         const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${process.env.GROK_API_KEY}`,
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'llama-3.3-70b-versatile',
+                model: process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
                 messages: [
                     { role: 'system', content: systemPrompt },
                     ...cleanMessages

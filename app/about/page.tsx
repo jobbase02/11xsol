@@ -66,7 +66,7 @@ export default function AboutPage() {
           className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-100 shadow-sm"
         >
           <Image
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&auto=format&fit=crop&q=80"
+            src="/Team.webp"
             alt="ElevenX Engineering Team Collaboration"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"
@@ -85,7 +85,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-zinc-950 text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-14 lg:p-16 relative overflow-hidden shadow-xl"
+          className="bg-zinc-900 text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-14 lg:p-16 relative overflow-hidden shadow-xl"
         >
           {/* Headline Statement */}
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-serif tracking-tight text-white leading-[1.25] mb-8 sm:mb-12 max-w-4xl">
@@ -270,7 +270,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src="/dashboard-design-example-hcare.png"
+                src="/dashboard-design-example-hcare.webp"
                 alt="SaaS Analytics & Data Architecture"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -292,7 +292,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src="/saas.jpg"
+                src="/saas.webp"
                 alt="SaaS Engineering & Workflows"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -314,7 +314,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src="/ui-ux.png"
+                src="/Design.webp"
                 alt="UI/UX Design Systems"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -336,7 +336,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src="/software.png"
+                src="/software.webp"
                 alt="Backend Scalability & Cloud Infrastructure"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
