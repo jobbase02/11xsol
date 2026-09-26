@@ -8,7 +8,7 @@ import { ArrowRight, ArrowUpRight, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white text-zinc-900 font-manrope selection:bg-blue-500/20 selection:text-blue-950 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white text-zinc-900 font-manrope selection:bg-blue-500/20 selection:text-blue-950 relative overflow-x-hidden pt-6 sm:pt-0">
       {/* ========================================================================= */}
       {/* 1. HERO SECTION: Header & Wide Collaborative Team Photo */}
       {/* ========================================================================= */}

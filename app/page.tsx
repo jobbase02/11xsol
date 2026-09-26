@@ -119,7 +119,7 @@ const Hero = () => {
   const { isLoaded } = usePreloader();
 
   return (
-    <section className="relative min-h-[88vh] lg:min-h-screen flex items-center pt-36 sm:pt-40 lg:pt-44 pb-20 sm:pb-24 lg:pb-32 overflow-hidden bg-white selection:bg-blue-600/40">
+    <section className="relative min-h-[88vh] lg:min-h-screen flex items-center pt-30 sm:pt-40 lg:pt-44 pb-20 sm:pb-24 lg:pb-32 overflow-hidden bg-white selection:bg-blue-600/40">
       <GridBackground />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full z-10">
@@ -156,90 +156,6 @@ const Hero = () => {
     </section>
   );
 };
-//     },
-//     {
-//       icon: <Book className="text-white" size={24} />,
-//       title: "Booking Systems",
-//       desc: "Custom booking engines that sync seamlessly with your calendar and payment gateways like Stripe.",
-//       color: "from-indigo-600 to-indigo-400",
-//     },
-//     {
-//       icon: <Globe className="text-white" size={24} />,
-//       title: "Influencer Marketing",
-//       desc: "Turn influencer power into unstoppable brand momentum. More reach, more trust, more sales.",
-//       color: "from-purple-600 to-purple-400",
-//     },
-//     {
-//       icon: <Database className="text-white" size={24} />,
-//       title: "API Development",
-//       desc: "Scalable REST and GraphQL APIs that serve as the backbone for your mobile and web ecosystem.",
-//       color: "from-teal-600 to-teal-400",
-//     },
-//   ];
-
-//   return (
-//     <section id="services" className="py-20 lg:py-24 bg-black relative">
-//       <div className="max-w-7xl mx-auto px-6">
-//         <motion.div
-//           initial="hidden"
-//           whileInView="visible"
-//           viewport={{ once: true, margin: "-100px" }}
-//           variants={fadeInUp}
-//           className="text-center mb-16"
-//         >
-//           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-almarena">
-//             Expertise That Matters
-//           </h2>
-//           <p className="text-zinc-400 max-w-3xl mx-auto text-lg leading-relaxed">
-//             Tell us how you work? ElevenX Solution will build you the system that works for you.
-//             <br className="hidden md:block" /> Built to grow, Built to win.
-//           </p>
-//         </motion.div>
-
-//         <motion.div
-//           initial="hidden"
-//           whileInView="visible"
-//           viewport={{ once: true, margin: "-50px" }}
-//           variants={staggerContainer}
-//           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-//         >
-//           {services.map((service, index) => (
-//             <motion.div
-//               key={index}
-//               variants={{
-//                 hidden: { opacity: 0, y: 20 },
-//                 visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-//               }}
-//               whileHover={{ y: -5 }}
-//               className="bg-zinc-900/30 p-8 rounded-3xl border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
-//             >
-//               <div
-//                 className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 rounded-bl-full blur-2xl transition-opacity duration-500`}
-//               ></div>
-
-//               <div
-//                 className={`mb-6 w-12 h-12 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}
-//               >
-//                 {service.icon}
-//               </div>
-
-//               <h3 className="text-xl font-bold text-white mb-4">
-//                 {service.title}
-//               </h3>
-//               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-//                 {service.desc}
-//               </p>
-
-//               <div className="flex items-center gap-2 text-sm font-semibold text-white/40 group-hover:text-white transition-colors cursor-pointer">
-//                 Learn more <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-//               </div>
-//             </motion.div>
-//           ))}
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// };
 
 
 // Services Section
