@@ -14,7 +14,6 @@ import {
   ShieldCheck,
   Layout,
 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -99,7 +98,7 @@ export default function UIUXDesignPage() {
             className="relative"
           >
             <Image
-              src={getPublicMediaUrl("ui-ux.webp")}
+              src="/ui-ux.webp"
               alt="UI UX Design Dashboard"
               width={700}
               height={450}

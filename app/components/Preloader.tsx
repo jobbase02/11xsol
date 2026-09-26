@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SlidingNumber } from '@/components/core/sliding-number';
-import { getPublicMediaUrl } from '@/lib/media';
 
 interface PreloaderContextType {
   isLoaded: boolean;
@@ -104,7 +103,7 @@ export function PreloaderProvider({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col items-center">
               <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
                 <Image
-                  src={getPublicMediaUrl("logo3.png")}
+                  src="/logo3.png"
                   alt="ElevenX Logo"
                   width={112}
                   height={112}

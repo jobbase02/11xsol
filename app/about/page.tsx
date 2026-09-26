@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Sparkles, CheckCircle2 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 export default function AboutPage() {
   return (
@@ -67,7 +66,7 @@ export default function AboutPage() {
           className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl sm:rounded-3xl overflow-hidden bg-zinc-100 shadow-sm"
         >
           <Image
-            src={getPublicMediaUrl("Team.webp")}
+            src="/Team.webp"
             alt="ElevenX Engineering Team Collaboration"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"
@@ -271,7 +270,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src={getPublicMediaUrl("dashboard-design-example-hcare.webp")}
+                src="/dashboard-design-example-hcare.webp"
                 alt="SaaS Analytics & Data Architecture"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -293,7 +292,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src={getPublicMediaUrl("saas.webp")}
+                src="/saas.webp"
                 alt="SaaS Engineering & Workflows"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -315,7 +314,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src={getPublicMediaUrl("design.webp")}
+                src="/design.webp"
                 alt="UI/UX Design Systems"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -337,7 +336,7 @@ export default function AboutPage() {
           <div className="border border-zinc-200/90 rounded-2xl overflow-hidden bg-white hover:shadow-md transition-all group">
             <div className="relative aspect-[16/10] w-full bg-zinc-100 overflow-hidden">
               <Image
-                src={getPublicMediaUrl("software.webp")}
+                src="/software.webp"
                 alt="Backend Scalability & Cloud Infrastructure"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

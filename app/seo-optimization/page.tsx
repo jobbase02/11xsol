@@ -15,7 +15,6 @@ import {
   BarChart3,
   ShieldCheck,
 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -94,7 +93,7 @@ export default function SEOOptimizationPage() {
             className="relative"
           >
             <Image
-              src={getPublicMediaUrl("Seo-green.webp")}
+              src="/Seo-green.webp"
               alt="SEO Performance Dashboard"
               width={700}
               height={450}
