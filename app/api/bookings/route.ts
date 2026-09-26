@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
 import { resend } from '@/lib/resend';
 import { bookingRatelimit } from '@/lib/redis';
 
@@ -29,7 +28,7 @@ export async function POST(request: Request) {
 
     // 1. Parse the incoming JSON body
     const body = await request.json();
-    const { name, email, service, plan, message, utm } = body;
+    const { name, email, service, plan, message } = body;
 
     // 2. Server-side Validation
     if (!name || !email || !message) {
@@ -56,39 +55,7 @@ export async function POST(request: Request) {
     const safePlan = plan ? escapeHtml(String(plan).trim().slice(0, 100)) : null;
     const safeMessage = escapeHtml(String(message).trim().slice(0, 5000));
 
-    // 3. Optional Database persistence with Supabase (if configured)
-    let savedToDb = false;
-    let dbRecordId: string | number | null = null;
-
-    if (supabase) {
-      try {
-        const bookingData = {
-          name,
-          email,
-          service: service || null,
-          plan: plan || null,
-          message,
-          utm: utm || null,
-          seen: false,
-        };
-
-        const { data, error } = await supabase
-          .from('bookings')
-          .insert([bookingData])
-          .select();
-
-        if (error) {
-          console.warn('Supabase Insertion Warning (proceeding with email):', error.message);
-        } else if (data && data.length > 0) {
-          savedToDb = true;
-          dbRecordId = data[0].id;
-        }
-      } catch (dbErr) {
-        console.warn('Supabase DB error (proceeding with email):', dbErr);
-      }
-    }
-
-    // 4. Send Email via Resend
+    // 3. Send Email via Resend
     let emailSent = false;
     const adminRecipient = process.env.CONTACT_EMAIL || 'info@elevenxsolutions.com';
     const fromAddress = process.env.RESEND_FROM_EMAIL || 'Eleven X Solutions <onboarding@resend.dev>';
@@ -223,10 +190,6 @@ export async function POST(request: Request) {
           console.log('Client auto-reply skipped or pending domain verification:', leadEmailErr);
         }
 
-        // Mark Supabase record as seen if email was successfully dispatched
-        if (savedToDb && dbRecordId && supabase) {
-          await supabase.from('bookings').update({ seen: true }).eq('id', dbRecordId);
-        }
       } catch (resendErr) {
         console.error('Resend Dispatch Exception:', resendErr);
       }
@@ -234,13 +197,12 @@ export async function POST(request: Request) {
       console.warn('RESEND_API_KEY is not set. In local dev, configure RESEND_API_KEY in .env.local to send live emails.');
     }
 
-    // 5. Success Response back to the frontend
+    // 4. Success Response back to the frontend
     return NextResponse.json(
       {
         success: true,
         message: 'Inquiry received successfully',
         emailDispatched: emailSent,
-        savedToDatabase: savedToDb,
       },
       { status: 200 }
     );
