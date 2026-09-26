@@ -159,14 +159,6 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/work"
-                    className="inline-flex items-center min-h-[38px] sm:min-h-0 py-1 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:text-blue-600"
-                  >
-                    Our Work
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     href="/blogs"
                     className="inline-flex items-center min-h-[38px] sm:min-h-0 py-1 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:text-blue-600"
                   >
