@@ -58,7 +58,7 @@ export default function PrivacyPage() {
                 <ul className="list-disc pl-5 mt-2 space-y-1 text-zinc-600">
                     <li>Vercel (Hosting & Analytics)</li>
                     <li>Supabase (Database)</li>
-                    <li>SendGrid (Email Transaction)</li>
+                    <li>Resend (Email Delivery)</li>
                 </ul>
             </section>
 

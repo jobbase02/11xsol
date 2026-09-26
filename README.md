@@ -47,7 +47,7 @@ copy .env.local.example .env.local
 cp .env.local.example .env.local
 ```
 
-2. Edit `.env.local` and add your secrets (e.g. `SENDGRID_API_KEY`).
+2. Edit `.env.local` and add your secrets (e.g. `RESEND_API_KEY`, `GROK_API_KEY`).
 
 3. Start the dev server:
 
@@ -57,4 +57,4 @@ npm run dev
 
 Notes:
 - Keep `.env.local` out of version control. Do not commit real API keys.
-- In production (Vercel), set `SENDGRID_API_KEY` in the project Secrets/Environment variables settings.
+- In production (Vercel), set `RESEND_API_KEY` and other secrets in the project Environment Variables settings.
