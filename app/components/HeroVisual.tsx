@@ -9,9 +9,9 @@ const HeroVisual = () => {
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 35, filter: "blur(6px)" }}
-            animate={isLoaded ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 35, filter: "blur(6px)" }}
-            transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative space-y-8 max-w-xl"
         >
             {/* Editorial Narrative Paragraph */}
