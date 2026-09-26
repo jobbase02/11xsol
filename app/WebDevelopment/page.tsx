@@ -15,7 +15,6 @@ import {
   BarChart3,
   Workflow,
 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -98,7 +97,7 @@ export default function WebDevelopmentPage() {
             className="relative"
           >
             <Image
-              src={getPublicMediaUrl("web-team.webp")}
+              src="/web-team.webp"
               alt="Web Development Dashboard"
               width={700}
               height={450}

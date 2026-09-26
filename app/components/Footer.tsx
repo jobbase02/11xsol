@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { getPublicMediaUrl } from "@/lib/media";
 import {
   Github,
   Twitter,
@@ -37,7 +36,7 @@ const Footer = () => {
               {/* Logo - Sized properly for mobile and desktop without excessive whitespace */}
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-3 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                 <Image
-                  src={getPublicMediaUrl("logo3.png")}
+                  src="/logo3.png"
                   alt="ElevenX Solutions Logo"
                   width={80}
                   height={80}

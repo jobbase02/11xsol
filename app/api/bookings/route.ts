@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
 import { resend } from '@/lib/resend';
 import { bookingRatelimit } from '@/lib/redis';
+
+// Prevent HTML injection & XSS attacks in email templates
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
 
 export async function POST(request: Request) {
   try {
@@ -19,7 +28,7 @@ export async function POST(request: Request) {
 
     // 1. Parse the incoming JSON body
     const body = await request.json();
-    const { name, email, service, plan, message, utm } = body;
+    const { name, email, service, plan, message } = body;
 
     // 2. Server-side Validation
     if (!name || !email || !message) {
@@ -29,39 +38,24 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Optional Database persistence with Supabase (if configured)
-    let savedToDb = false;
-    let dbRecordId: string | number | null = null;
-
-    if (supabase) {
-      try {
-        const bookingData = {
-          name,
-          email,
-          service: service || null,
-          plan: plan || null,
-          message,
-          utm: utm || null,
-          seen: false,
-        };
-
-        const { data, error } = await supabase
-          .from('bookings')
-          .insert([bookingData])
-          .select();
-
-        if (error) {
-          console.warn('Supabase Insertion Warning (proceeding with email):', error.message);
-        } else if (data && data.length > 0) {
-          savedToDb = true;
-          dbRecordId = data[0].id;
-        }
-      } catch (dbErr) {
-        console.warn('Supabase DB error (proceeding with email):', dbErr);
-      }
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const cleanEmail = String(email).trim().toLowerCase().slice(0, 120);
+    if (!emailRegex.test(cleanEmail)) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address.' },
+        { status: 400 }
+      );
     }
 
-    // 4. Send Email via Resend
+    // Sanitize & length-cap inputs to prevent HTML injection and memory exhaustion
+    const safeName = escapeHtml(String(name).trim().slice(0, 100));
+    const safeEmail = escapeHtml(cleanEmail);
+    const safeService = escapeHtml(String(service || 'Strategy Call').trim().slice(0, 100));
+    const safePlan = plan ? escapeHtml(String(plan).trim().slice(0, 100)) : null;
+    const safeMessage = escapeHtml(String(message).trim().slice(0, 5000));
+
+    // 3. Send Email via Resend
     let emailSent = false;
     const adminRecipient = process.env.CONTACT_EMAIL || 'info@elevenxsolutions.com';
     const fromAddress = process.env.RESEND_FROM_EMAIL || 'Eleven X Solutions <onboarding@resend.dev>';
@@ -69,13 +63,13 @@ export async function POST(request: Request) {
     if (resend) {
       try {
         // --- EMAIL 1: Detailed notification to Admin / You ---
-        const formattedMessage = String(message).replace(/\n/g, '<br/>');
+        const formattedMessage = safeMessage.replace(/\n/g, '<br/>');
 
         const adminEmailResult = await resend.emails.send({
           from: fromAddress,
           to: adminRecipient,
-          replyTo: `${name} <${email}>`,
-          subject: `🔔 New Booking Inquiry: ${name} (${service || 'General'})`,
+          replyTo: `${safeName} <${cleanEmail}>`,
+          subject: `🔔 New Booking Inquiry: ${safeName} (${safeService})`,
           html: `
             <!DOCTYPE html>
             <html>
@@ -106,21 +100,21 @@ export async function POST(request: Request) {
                 <div class="content">
                   <div class="field-group">
                     <div class="label">Lead Name</div>
-                    <div class="value">${name}</div>
+                    <div class="value">${safeName}</div>
                   </div>
                   <div class="field-group">
                     <div class="label">Email Address</div>
-                    <div class="value"><a href="mailto:${email}" style="color: #1757EE; text-decoration: none;">${email}</a></div>
+                    <div class="value"><a href="mailto:${safeEmail}" style="color: #1757EE; text-decoration: none;">${safeEmail}</a></div>
                   </div>
                   <div style="display: flex; gap: 20px;" class="field-group">
                     <div>
                       <div class="label">Service Focus</div>
-                      <span class="badge">${service || 'Strategy Call'}</span>
+                      <span class="badge">${safeService}</span>
                     </div>
-                    ${plan ? `
+                    ${safePlan ? `
                     <div style="margin-left: 20px;">
                       <div class="label">Sprint Plan</div>
-                      <div class="value" style="font-size: 14px;">${plan}</div>
+                      <div class="value" style="font-size: 14px;">${safePlan}</div>
                     </div>` : ''}
                   </div>
                   <div class="field-group">
@@ -128,8 +122,8 @@ export async function POST(request: Request) {
                     <div class="message-box">${formattedMessage}</div>
                   </div>
                   <div style="text-align: center;">
-                    <a href="mailto:${email}?subject=Re: Your inquiry with Eleven X Solutions" class="reply-btn">
-                      Reply Directly to ${name} &rarr;
+                    <a href="mailto:${safeEmail}?subject=Re: Your inquiry with Eleven X Solutions" class="reply-btn">
+                      Reply Directly to ${safeName} &rarr;
                     </a>
                   </div>
                 </div>
@@ -153,7 +147,7 @@ export async function POST(request: Request) {
         try {
           await resend.emails.send({
             from: fromAddress,
-            to: email,
+            to: cleanEmail,
             subject: 'We have received your inquiry — Eleven X Solutions',
             html: `
               <!DOCTYPE html>
@@ -175,8 +169,8 @@ export async function POST(request: Request) {
                     <h2>ELEVEN X SOLUTIONS</h2>
                   </div>
                   <div class="body-content">
-                    <p style="font-size: 18px; font-weight: 600; margin-top: 0;">Hi ${name},</p>
-                    <p>Thank you for reaching out to us. We have received your inquiry regarding <strong>${service || 'engineering & design strategy'}</strong>.</p>
+                    <p style="font-size: 18px; font-weight: 600; margin-top: 0;">Hi ${safeName},</p>
+                    <p>Thank you for reaching out to us. We have received your inquiry regarding <strong>${safeService}</strong>.</p>
                     <p>Our technical team is reviewing your project roadmap. We respond to all qualified inquiries within 24 business hours to coordinate an introductory discovery sprint.</p>
                     <div style="text-align: center; margin: 30px 0;">
                       <a href="https://elevenxsolutions.com" class="btn">Explore Our Work</a>
@@ -196,10 +190,6 @@ export async function POST(request: Request) {
           console.log('Client auto-reply skipped or pending domain verification:', leadEmailErr);
         }
 
-        // Mark Supabase record as seen if email was successfully dispatched
-        if (savedToDb && dbRecordId && supabase) {
-          await supabase.from('bookings').update({ seen: true }).eq('id', dbRecordId);
-        }
       } catch (resendErr) {
         console.error('Resend Dispatch Exception:', resendErr);
       }
@@ -207,13 +197,12 @@ export async function POST(request: Request) {
       console.warn('RESEND_API_KEY is not set. In local dev, configure RESEND_API_KEY in .env.local to send live emails.');
     }
 
-    // 5. Success Response back to the frontend
+    // 4. Success Response back to the frontend
     return NextResponse.json(
       {
         success: true,
         message: 'Inquiry received successfully',
         emailDispatched: emailSent,
-        savedToDatabase: savedToDb,
       },
       { status: 200 }
     );

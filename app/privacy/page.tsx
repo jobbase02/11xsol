@@ -47,7 +47,7 @@ export default function PrivacyPage() {
             <section>
                 <h2 className="text-xl font-bold text-zinc-900 mb-4">3. Security</h2>
                 <p>
-                    We employ enterprise-grade security including SSL encryption and secure database storage (Supabase). 
+                    We employ enterprise-grade security including SSL encryption and secure communication protocols. 
                     However, no transmission over the internet is 100% secure.
                 </p>
             </section>
@@ -57,8 +57,7 @@ export default function PrivacyPage() {
                 <p>Our infrastructure utilizes trusted partners:</p>
                 <ul className="list-disc pl-5 mt-2 space-y-1 text-zinc-600">
                     <li>Vercel (Hosting & Analytics)</li>
-                    <li>Supabase (Database)</li>
-                    <li>SendGrid (Email Transaction)</li>
+                    <li>Resend (Email Delivery)</li>
                 </ul>
             </section>
 

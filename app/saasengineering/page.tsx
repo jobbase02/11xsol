@@ -14,7 +14,6 @@ import {
   Users,
   BarChart3,
 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -94,7 +93,7 @@ export default function SaaSPage() {
             className="relative"
           >
             <Image
-              src={getPublicMediaUrl("saas.webp")}
+              src="/saas.webp"
               alt="SaaS Product Dashboard"
               width={700}
               height={450}

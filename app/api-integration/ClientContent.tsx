@@ -10,7 +10,6 @@ import {
   ShieldCheck,
   Workflow,
 } from "lucide-react";
-import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -82,7 +81,7 @@ export default function ClientContent() {
             className="relative"
           >
             <Image
-              src={getPublicMediaUrl("api-integration.webp")}
+              src="/api-integration.webp"
               alt="API Integration Architecture"
               width={600}
               height={500}

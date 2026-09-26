@@ -6,7 +6,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X, ChevronDown } from "lucide-react";
 import { usePreloader } from "./Preloader";
-import { getPublicMediaUrl } from "@/lib/media";
 
 interface NavLink {
   name: string;
@@ -97,7 +96,7 @@ const Navbar: React.FC = () => {
           <Link href="/" className="flex items-center gap-2.5 z-50 group">
             <div className="relative w-16 h-16 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
               <Image
-                src={getPublicMediaUrl("logo3.png")}
+                src="/logo3.png"
                 alt="11X Solutions Logo"
                 width={100}
                 height={100}

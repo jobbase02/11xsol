@@ -99,11 +99,31 @@ export default function BlogPage() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Fetch blog data from existing WordPress API
+  // Fetch blog data from Redis-cached API endpoint
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
       try {
+        const res = await fetch("/api/blogs");
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted) {
+            if (Array.isArray(data.categories)) {
+              setCategories(data.categories);
+            }
+            if (Array.isArray(data.posts)) {
+              setPosts(
+                data.posts.map((p: BlogPost) => ({
+                  ...p,
+                  date: formatDate(p.date),
+                }))
+              );
+            }
+            return;
+          }
+        }
+
+        // Fallback to direct WordPress API if local route is unavailable
         const [postsRes, categoriesRes] = await Promise.all([
           fetch(
             "https://cms.elevenxsolutions.com/wp-json/wp/v2/posts?_embed&per_page=12"
@@ -123,7 +143,7 @@ export default function BlogPage() {
             .map((cat) => {
               const c = cat as Record<string, unknown>;
               return {
-                id: Number(c.id as unknown ?? 0),
+                id: Number((c.id as unknown) ?? 0),
                 name: String(c.name ?? ""),
                 count: Number(c.count ?? 0),
                 slug: String(c.slug ?? ""),
@@ -143,7 +163,7 @@ export default function BlogPage() {
               | undefined;
             const imageUrl = String(
               featured?.[0]?.["source_url"] ??
-              "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80"
+                "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80"
             );
             const terms = embedded?.["wp:term"] as unknown as
               | Array<unknown>
@@ -164,7 +184,7 @@ export default function BlogPage() {
               .trim();
 
             return {
-              id: Number(p.id as unknown ?? 0),
+              id: Number((p.id as unknown) ?? 0),
               title: decodeHtml(
                 String(
                   ((p.title as unknown as Record<string, unknown>)?.rendered) ?? ""

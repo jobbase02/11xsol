@@ -20,14 +20,28 @@ export async function POST(req: Request) {
         const json = await req.json();
         const { messages } = json;
 
-        // Clean messages for Groq compatibility (it expects simple strings for content)
-        // This avoids 400 errors when complex content formats are sent in multi-turn
-        const cleanMessages = messages.map((m: any) => ({
-            role: m.role,
-            content: Array.isArray(m.content)
-                ? m.content.map((c: any) => c.text || c.input_text || '').join('')
-                : m.content
-        }));
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return new Response(JSON.stringify({ error: "Invalid or empty messages payload" }), { status: 400 });
+        }
+
+        // Token protection: Keep only the last 10 messages to prevent token bombing & context exhaustion
+        const recentMessages = messages.slice(-10);
+
+        // Clean messages for Groq compatibility & cap text to 1,000 chars per message
+        const cleanMessages = recentMessages.map((m: any) => {
+            const rawContent = Array.isArray(m?.content)
+                ? m.content.map((c: any) => c?.text || c?.input_text || '').join('')
+                : String(m?.content ?? '');
+
+            return {
+                role: m?.role === 'user' ? 'user' : 'assistant',
+                content: rawContent.slice(0, 1000).trim()
+            };
+        }).filter((m: any) => m.content.length > 0);
+
+        if (cleanMessages.length === 0) {
+            return new Response(JSON.stringify({ error: "Message content cannot be empty" }), { status: 400 });
+        }
 
         const systemPrompt = `You are Eleven, a premium sales strategist for ElevenX Solutions. Your goal is to convert website visitors into agency clients by sounding professional, tech-savvy, and premium. 
 
