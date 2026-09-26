@@ -14,7 +14,7 @@ import {
   Users,
   BarChart3,
 } from "lucide-react";
-import img from "@/public/saas.webp";
+import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -94,9 +94,11 @@ export default function SaaSPage() {
             className="relative"
           >
             <Image
-              src={img}
+              src={getPublicMediaUrl("saas.webp")}
               alt="SaaS Product Dashboard"
-              className="rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
+              width={700}
+              height={450}
+              className="w-full h-auto rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
               priority
             />
           </motion.div>

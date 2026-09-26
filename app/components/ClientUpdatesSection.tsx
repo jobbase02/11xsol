@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { getPublicMediaUrl } from "@/lib/media";
 import {
   MessageSquareCode,
   CalendarCheck2,
@@ -116,7 +117,7 @@ export default function ClientUpdatesSection() {
           >
             <div className="relative w-full max-w-md lg:max-w-none aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-md border border-zinc-200/70 bg-zinc-200">
               <Image
-                src="/client-updates.webp"
+                src={getPublicMediaUrl("client-updates.webp")}
                 alt="11x Solutions team collaborating with client on product updates"
                 fill
                 sizes="(max-width: 1024px) 90vw, 480px"

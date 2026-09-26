@@ -14,7 +14,7 @@ import {
   Workflow,
   BarChart3,
 } from "lucide-react";
-import img from "@/public/ai-chatbox-3.webp"; // replace with your image
+import { getPublicMediaUrl } from "@/lib/media";
 
 /* ---------------- ANIMATIONS ---------------- */
 
@@ -97,9 +97,11 @@ export default function AIChatbotPage() {
             className="relative"
           >
             <Image
-              src={img}
+              src={getPublicMediaUrl("ai-chatbox-3.webp")}
               alt="AI Chatbot Dashboard"
-              className="rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
+              width={700}
+              height={450}
+              className="w-full h-auto rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-zinc-200"
               priority
             />
           </motion.div>

@@ -1,8 +1,22 @@
+import { chatRatelimit } from "@/lib/redis";
+
 // Allow responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
     try {
+        // Rate limit check (active if Upstash is configured)
+        if (chatRatelimit) {
+            const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1";
+            const { success } = await chatRatelimit.limit(ip);
+            if (!success) {
+                return new Response(
+                    "You are sending messages too quickly. Please wait a moment before trying again.",
+                    { status: 429 }
+                );
+            }
+        }
+
         const json = await req.json();
         const { messages } = json;
 

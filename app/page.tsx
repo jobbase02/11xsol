@@ -49,23 +49,9 @@ const GridBackground = () => {
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none"
     >
-      {/* Deep Mesh Gradient Orbs */}
-      <motion.div
-        animate={{
-          x: [0, 80, 0],
-          y: [0, 40, 0],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] bg-blue-500/8 rounded-full blur-[140px]"
-      />
-      <motion.div
-        animate={{
-          x: [0, -80, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        className="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-indigo-500/8 rounded-full blur-[140px]"
-      />
+      {/* Deep Mesh Gradient Orbs (Static GPU-cached glow - zero scroll overhead) */}
+      <div className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] bg-blue-500/7 rounded-full blur-[80px] transform-gpu pointer-events-none" />
+      <div className="absolute -bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-indigo-500/7 rounded-full blur-[80px] transform-gpu pointer-events-none" />
 
       {/* Primary Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000006_1px,transparent_1px),linear-gradient(to_bottom,#00000006_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -126,9 +112,9 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-14 lg:gap-16 xl:gap-20 items-start lg:items-center">
           {/* LEFT: MASSIVE EDITORIAL HEADLINE */}
           <motion.div
-            initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-            animate={isLoaded ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 40, filter: "blur(8px)" }}
-            transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 32 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+            transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 xl:col-span-7 space-y-6 sm:space-y-8"
           >
 
@@ -154,46 +140,6 @@ const Hero = () => {
         </div>
       </div>
     </section>
-  );
-};
-
-
-// Services Section
-const ServiceCard = ({ service, index, variant = "default" }: { service: any; index: number; variant?: "default" | "featured" | "wide" }) => {
-  return (
-    <motion.div
-      variants={cardVariants}
-      whileHover={{ y: -5, transition: { duration: 0.3 } }}
-      className={`group relative overflow-hidden rounded-[2.5rem] bg-white border border-zinc-200/80 p-8 flex flex-col transition-all duration-500 hover:border-blue-500/40 hover:shadow-[0_20px_60px_rgba(59,130,246,0.08)] ${variant === "wide" ? "md:col-span-2" : "md:col-span-1"
-        } ${variant === "featured" ? "h-full justify-between" : "justify-between"}`}
-    >
-      {/* Background decoration */}
-      <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${service.color} opacity-[0.03] group-hover:opacity-[0.08] rounded-bl-full blur-3xl transition-opacity duration-700`} />
-
-      <div className="relative z-10">
-        <div className={`mb-6 p-4 w-fit rounded-2xl bg-gradient-to-br ${service.color} shadow-sm group-hover:scale-110 transition-transform duration-500`}>
-          {service.icon}
-        </div>
-        <h3 className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-4 font-manrope">
-          {service.title}
-        </h3>
-        <p className="text-zinc-600 text-base leading-relaxed group-hover:text-zinc-900 transition-colors">
-          {service.desc}
-        </p>
-      </div>
-
-      <div className="mt-8 relative z-10 flex items-center justify-between">
-        <Link
-          href="/services"
-          className="flex items-center gap-2 text-xs font-bold text-zinc-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]"
-        >
-          Explore Protocol <ChevronRight size={14} />
-        </Link>
-        <div className="text-[10px] font-mono text-zinc-400">
-          0{index + 1}
-        </div>
-      </div>
-    </motion.div>
   );
 };
 

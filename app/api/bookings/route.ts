@@ -1,9 +1,22 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { resend } from '@/lib/resend';
+import { bookingRatelimit } from '@/lib/redis';
 
 export async function POST(request: Request) {
   try {
+    // 0. Rate limiting (active if Upstash is configured)
+    if (bookingRatelimit) {
+      const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || '127.0.0.1';
+      const { success } = await bookingRatelimit.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: 'Too many booking requests. Please wait a few minutes before trying again.' },
+          { status: 429 }
+        );
+      }
+    }
+
     // 1. Parse the incoming JSON body
     const body = await request.json();
     const { name, email, service, plan, message, utm } = body;

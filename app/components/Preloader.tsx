@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SlidingNumber } from '@/components/core/sliding-number';
+import { getPublicMediaUrl } from '@/lib/media';
 
 interface PreloaderContextType {
   isLoaded: boolean;
@@ -74,7 +75,7 @@ export function PreloaderProvider({ children }: { children: React.ReactNode }) {
       document.body.style.overflow = '';
       const timer = setTimeout(() => {
         setIsLoaded(true);
-      }, 150);
+      }, 250);
       return () => clearTimeout(timer);
     }
     return () => {
@@ -92,17 +93,18 @@ export function PreloaderProvider({ children }: { children: React.ReactNode }) {
             exit={{
               y: '-100%',
               transition: {
-                duration: 0.85,
+                duration: 0.7,
                 ease: [0.76, 0, 0.24, 1],
               },
             }}
+            style={{ willChange: 'transform' }}
             className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white text-black px-8 py-12 select-none pointer-events-auto"
           >
             {/* Center Brand & Counter */}
             <div className="flex flex-col items-center">
               <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
                 <Image
-                  src="/logo3.png"
+                  src={getPublicMediaUrl("logo3.png")}
                   alt="ElevenX Logo"
                   width={112}
                   height={112}

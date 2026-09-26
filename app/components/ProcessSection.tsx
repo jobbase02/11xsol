@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { getPublicMediaUrl } from "@/lib/media";
 
 interface ProcessStep {
   step: string;
@@ -100,7 +101,7 @@ export default function ProcessSection() {
           {/* Mobile view: Single unified image card */}
           <div className="block md:hidden relative w-full h-[280px] sm:h-[360px] rounded-2xl overflow-hidden shadow-sm border border-zinc-200/80">
             <Image
-              src="/Process.webp"
+              src={getPublicMediaUrl("Process.webp")}
               alt="11xsol Engineering & Strategy Team in action"
               fill
               sizes="100vw"
@@ -114,7 +115,7 @@ export default function ProcessSection() {
             {/* Slit Panel 1 (left strip) */}
             <div className="relative w-14 lg:w-20 h-full rounded-2xl overflow-hidden shrink-0 border border-zinc-200/60 shadow-xs group">
               <Image
-                src="/Process.webp"
+                src={getPublicMediaUrl("Process.webp")}
                 alt="Process view slit 1"
                 fill
                 sizes="(max-width: 1200px) 100px, 150px"
@@ -126,7 +127,7 @@ export default function ProcessSection() {
             {/* Slit Panel 2 (middle strip) */}
             <div className="relative w-16 lg:w-24 h-full rounded-2xl overflow-hidden shrink-0 border border-zinc-200/60 shadow-xs group">
               <Image
-                src="/Process.webp"
+                src={getPublicMediaUrl("Process.webp")}
                 alt="Process view slit 2"
                 fill
                 sizes="(max-width: 1200px) 150px, 200px"
@@ -138,7 +139,7 @@ export default function ProcessSection() {
             {/* Primary Showcase Panel (expansive main view) */}
             <div className="relative flex-1 h-full rounded-2xl overflow-hidden border border-zinc-200/60 shadow-sm group">
               <Image
-                src="/Process.webp"
+                src={getPublicMediaUrl("Process.webp")}
                 alt="11xsol Strategy and Technical Execution in Action"
                 fill
                 sizes="(max-width: 1280px) 80vw, 1200px"
